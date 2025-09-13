@@ -1,0 +1,341 @@
+// Estilos mejorados para el componente Register - Consistente con Login
+
+.register-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f7f3f0 0%, #e8ddd4 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.register-card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  padding: 3rem;
+  width: 100%;
+  max-width: 500px;
+  border: 1px solid rgba(139, 90, 60, 0.1);
+}
+
+.register-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #8b5a3c;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.register-subtitle {
+  color: #a68a6b;
+  text-align: center;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.role-selection-container {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  padding: 3rem;
+  width: 100%;
+  max-width: 500px;
+  border: 1px solid rgba(139, 90, 60, 0.1);
+  margin-bottom: 2rem;
+}
+
+.role-selection-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #8b5a3c;
+  text-align: center;
+  margin-bottom: 2rem;
+  letter-spacing: -0.02em;
+}
+
+.role-selection-button {
+  width: 100%;
+  padding: 1.5rem;
+  text-align: left;
+  border: 2px solid #e5ddd6;
+  border-radius: 16px;
+  background: #faf9f7;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  
+  &:hover {
+    border-color: #c4a484;
+    background: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(139, 90, 60, 0.15);
+  }
+  
+  &:focus {
+    outline: none;
+    border-color: #8b5a3c;
+    box-shadow: 0 0 0 3px rgba(139, 90, 60, 0.1);
+  }
+  
+  &.selected {
+    border-color: #8b5a3c;
+    background: white;
+    box-shadow: 0 8px 25px rgba(139, 90, 60, 0.2);
+  }
+}
+
+.role-icon {
+  width: 3rem;
+  height: 3rem;
+  background: #8b5a3c;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  
+  svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: white;
+  }
+}
+
+.role-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #8b5a3c;
+  margin-bottom: 0.5rem;
+}
+
+.role-description {
+  color: #a68a6b;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.input-field {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border: 2px solid #e5ddd6;
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: #faf9f7;
+  
+  &:focus {
+    outline: none;
+    border-color: #8b5a3c;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(139, 90, 60, 0.1);
+    transform: translateY(-1px);
+  }
+  
+  &:hover {
+    border-color: #c4a484;
+  }
+  
+  &.error {
+    border-color: #ef4444;
+    background: #fef2f2;
+  }
+}
+
+.input-label {
+  display: block;
+  font-weight: 600;
+  color: #8b5a3c;
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+}
+
+.error-message {
+  color: #ef4444;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.btn-primary {
+  width: 100%;
+  background: linear-gradient(135deg, #8b5a3c 0%, #a68a6b 100%);
+  color: white;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(139, 90, 60, 0.3);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+.btn-secondary {
+  width: 100%;
+  background: white;
+  color: #8b5a3c;
+  padding: 1rem 2rem;
+  border: 2px solid #8b5a3c;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background: #8b5a3c;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(139, 90, 60, 0.2);
+  }
+  
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(139, 90, 60, 0.1);
+  }
+}
+
+.loading-spinner {
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 2px solid transparent;
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.auth-links {
+  text-align: center;
+  margin-top: 2rem;
+  
+  a {
+    color: #8b5a3c;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: inline-block;
+    margin: 0.5rem 0;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    
+    &:hover {
+      color: #6d4429;
+      background: rgba(139, 90, 60, 0.1);
+      transform: translateY(-1px);
+    }
+  }
+}
+
+.footer-text {
+  text-align: center;
+  color: #a68a6b;
+  font-size: 0.875rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e5ddd6;
+}
+
+// Sección de artesanos
+.artisan-section {
+  border-top: 2px solid #e5ddd6;
+  padding-top: 2rem;
+  margin-top: 2rem;
+}
+
+.artisan-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.artisan-icon {
+  width: 2rem;
+  height: 2rem;
+  background: #8b5a3c;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  svg {
+    width: 1rem;
+    height: 1rem;
+    color: white;
+  }
+}
+
+.artisan-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #8b5a3c;
+}
+
+.character-count {
+  font-size: 0.75rem;
+  color: #a68a6b;
+}
+
+// Animaciones suaves
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Responsive design
+@media (max-width: 640px) {
+  .register-card,
+  .role-selection-container {
+    padding: 2rem;
+    margin: 1rem;
+  }
+  
+  .register-title,
+  .role-selection-title {
+    font-size: 2rem;
+  }
+  
+  .input-field {
+    padding: 0.875rem 1rem;
+  }
+  
+  .role-selection-button {
+    padding: 1.25rem;
+  }
+}

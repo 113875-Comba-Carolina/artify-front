@@ -1,0 +1,56 @@
+// Estilos específicos del componente Home
+
+// Animaciones suaves para las tarjetas de productos
+.product-card {
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-4px);
+  }
+}
+
+// Estilos para los botones de categorías
+.category-card {
+  transition: all 0.2s ease;
+  
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+// Gradiente personalizado para el hero
+.hero-gradient {
+  background: linear-gradient(135deg, #f7f3f0 0%, #e8ddd4 100%);
+}
+
+// Efectos de hover para los enlaces
+.nav-link {
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -4px;
+    left: 0;
+    background-color: #8b5a3c;
+    transition: width 0.3s ease;
+  }
+  
+  &:hover::after {
+    width: 100%;
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+}
+

@@ -1,0 +1,107 @@
+<!-- Hero Section -->
+<section class="bg-gradient-to-r from-artisan-50 to-artisan-100 py-20">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h2 class="text-4xl md:text-6xl font-bold text-artisan-800 mb-6">
+      Descubre Arte Único
+    </h2>
+    <p class="text-xl text-artisan-600 mb-8 max-w-3xl mx-auto">
+      Conectamos artesanos talentosos con amantes del arte. Encuentra piezas únicas, 
+      hechas a mano con pasión y tradición.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a routerLink="/auth/register" class="bg-artisan-600 text-white px-8 py-3 rounded-lg text-lg font-medium hover:bg-artisan-700 transition-colors">
+        Comenzar a Vender
+      </a>
+      <a href="#productos" class="border-2 border-artisan-600 text-artisan-600 px-8 py-3 rounded-lg text-lg font-medium hover:bg-artisan-600 hover:text-white transition-colors">
+        Explorar Productos
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Categories Section -->
+<section class="py-16 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h3 class="text-3xl font-bold text-artisan-800 text-center mb-12">
+      Explora por Categorías
+    </h3>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+      <div *ngFor="let category of categories" 
+           class="bg-artisan-50 rounded-lg p-6 text-center hover:bg-artisan-100 transition-colors cursor-pointer">
+        <div class="text-4xl mb-2">{{ category.icon }}</div>
+        <h4 class="font-medium text-artisan-800">{{ category.name }}</h4>
+        <p class="text-sm text-artisan-600">{{ category.count }} productos</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Products Section -->
+<section id="productos" class="py-16 bg-artisan-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h3 class="text-3xl font-bold text-artisan-800 text-center mb-12">
+      Productos Destacados
+    </h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div *ngFor="let product of featuredProducts" 
+           class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+        <img [src]="product.image" 
+             [alt]="product.name"
+             class="w-full h-48 object-cover">
+        <div class="p-4">
+          <div class="text-sm text-artisan-600 mb-1">{{ product.category }}</div>
+          <h4 class="font-medium text-artisan-800 mb-2">{{ product.name }}</h4>
+          <div class="flex justify-between items-center">
+            <span class="text-lg font-bold text-artisan-600">${{ product.price }}</span>
+            <button class="bg-artisan-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-artisan-700 transition-colors">
+              Ver Detalles
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-8">
+      <a href="#" class="text-artisan-600 hover:text-artisan-800 font-medium">
+        Ver todos los productos →
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Stats Section -->
+<section class="py-16 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+      <div>
+        <div class="text-4xl font-bold text-artisan-600 mb-2">500+</div>
+        <div class="text-artisan-800">Artesanos Registrados</div>
+      </div>
+      <div>
+        <div class="text-4xl font-bold text-artisan-600 mb-2">2,500+</div>
+        <div class="text-artisan-800">Productos Únicos</div>
+      </div>
+      <div>
+        <div class="text-4xl font-bold text-artisan-600 mb-2">10,000+</div>
+        <div class="text-artisan-800">Clientes Satisfechos</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-16 bg-artisan-800 text-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h3 class="text-3xl font-bold mb-4">
+      ¿Eres Artesano?
+    </h3>
+    <p class="text-xl mb-8 max-w-2xl mx-auto">
+      Únete a nuestra comunidad y comparte tu arte con el mundo. 
+      Conecta con clientes que valoran el trabajo hecho a mano.
+    </p>
+    <a routerLink="/auth/register" 
+       class="bg-white text-artisan-800 px-8 py-3 rounded-lg text-lg font-medium hover:bg-artisan-100 transition-colors">
+      Comenzar Ahora
+    </a>
+  </div>
+</section>
+

@@ -1,0 +1,108 @@
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
+import { AuthService } from '../services/auth';
+
+@Component({
+  selector: 'app-register',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  templateUrl: './register.html',
+  styleUrls: ['./register.scss']
+})
+export class RegisterComponent implements OnInit {
+  registerForm!: FormGroup;
+  isArtesano = false;
+  loading = false;
+  submitted = false;
+  error = '';
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private authService: AuthService
+  ) {}
+
+  ngOnInit() {
+    this.registerForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', Validators.required],
+      nombre: ['', [Validators.required, Validators.minLength(2)]],
+      rol: ['', Validators.required],
+      // Campos adicionales para artesanos
+      nombreEmprendimiento: [''],
+      ubicacion: [''],
+      descripcion: ['', Validators.maxLength(1000)]
+    }, {
+      validators: this.passwordMatchValidator
+    });
+
+    // Escuchar cambios en el rol
+    this.registerForm.get('rol')?.valueChanges.subscribe(rol => {
+      this.isArtesano = rol === 'ARTESANO';
+      if (this.isArtesano) {
+        this.registerForm.get('nombreEmprendimiento')?.setValidators([Validators.required]);
+        this.registerForm.get('ubicacion')?.setValidators([Validators.required]);
+        this.registerForm.get('descripcion')?.setValidators([Validators.required]);
+      } else {
+        this.registerForm.get('nombreEmprendimiento')?.clearValidators();
+        this.registerForm.get('ubicacion')?.clearValidators();
+        this.registerForm.get('descripcion')?.clearValidators();
+      }
+      // Actualizar el estado de validación
+      this.registerForm.get('nombreEmprendimiento')?.updateValueAndValidity();
+      this.registerForm.get('ubicacion')?.updateValueAndValidity();
+      this.registerForm.get('descripcion')?.updateValueAndValidity();
+    });
+  }
+
+  // Validador personalizado para confirmar contraseña
+  passwordMatchValidator(g: FormGroup) {
+    return g.get('password')?.value === g.get('confirmPassword')?.value
+      ? null
+      : { mismatch: true };
+  }
+
+  // Getter para acceso fácil a los campos del formulario
+  get f() { return this.registerForm.controls; }
+
+  onSubmit() {
+    this.submitted = true;
+
+    if (this.registerForm.invalid) {
+      return;
+    }
+
+    this.loading = true;
+    const formData = this.registerForm.value;
+
+    if (this.isArtesano) {
+      this.authService.registerArtesano(formData).subscribe({
+        next: () => {
+          this.router.navigate(['/auth/login']);
+        },
+        error: (error: any) => {
+          this.error = error.error?.message || 'Error al registrar usuario';
+          this.loading = false;
+        }
+      });
+    } else {
+      this.authService.registerUsuario(formData).subscribe({
+        next: () => {
+          this.router.navigate(['/auth/login']);
+        },
+        error: (error: any) => {
+          this.error = error.error?.message || 'Error al registrar usuario';
+          this.loading = false;
+        }
+      });
+    }
+  }
+
+  onRoleSelect(rol: 'ARTESANO' | 'USUARIO') {
+    this.registerForm.patchValue({ rol });
+  }
+}
+

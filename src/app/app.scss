@@ -1,0 +1,84 @@
+// Estilos específicos del componente App
+
+// Header styles
+header {
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+// Navigation link styles
+.nav-link {
+  position: relative;
+  transition: all 0.3s ease;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(90deg, #8b5a3c, #a68a6b);
+    transition: width 0.3s ease;
+  }
+  
+  &:hover::after {
+    width: 100%;
+  }
+  
+  &.router-link-active {
+    color: #8b5a3c;
+    font-weight: 600;
+    
+    &::after {
+      width: 100%;
+    }
+  }
+}
+
+// Logo hover effects
+.logo-container {
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-1px);
+  }
+}
+
+// Auth button styles
+.auth-button {
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(139, 90, 60, 0.3);
+  }
+}
+
+// Animaciones para el menú móvil
+.menu-enter-active,
+.menu-leave-active {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.menu-enter-from,
+.menu-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+// Estilos para el contenedor principal
+main {
+  min-height: calc(100vh - theme('spacing.20') - theme('spacing.48')); // Altura total - header - footer
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .nav-link {
+    &::after {
+      display: none;
+    }
+  }
+}
+

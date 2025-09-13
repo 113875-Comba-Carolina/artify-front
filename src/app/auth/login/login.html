@@ -1,0 +1,99 @@
+<div class="login-container">
+  <div class="login-card">
+    <!-- Logo y título -->
+    <div class="text-center mb-8">
+      <h1 class="login-title">Artify</h1>
+      <p class="login-subtitle">Marketplace de Artesanías</p>
+    </div>
+
+    <!-- Formulario de login -->
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-6">
+      <!-- Campo de email -->
+      <div>
+        <label for="email" class="input-label">
+          Correo Electrónico
+        </label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          class="input-field"
+          [class.error]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+          placeholder="tu@email.com"
+        >
+        <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" 
+             class="error-message">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+          </svg>
+          <span *ngIf="loginForm.get('email')?.errors?.['required']">
+            El correo electrónico es requerido
+          </span>
+          <span *ngIf="loginForm.get('email')?.errors?.['email']">
+            Ingresa un correo electrónico válido
+          </span>
+        </div>
+      </div>
+
+      <!-- Campo de contraseña -->
+      <div>
+        <label for="password" class="input-label">
+          Contraseña
+        </label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          class="input-field"
+          [class.error]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+          placeholder="••••••••"
+        >
+        <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+             class="error-message">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+          </svg>
+          <span *ngIf="loginForm.get('password')?.errors?.['required']">
+            La contraseña es requerida
+          </span>
+          <span *ngIf="loginForm.get('password')?.errors?.['minlength']">
+            La contraseña debe tener al menos 6 caracteres
+          </span>
+        </div>
+      </div>
+
+      <!-- Mensaje de error general -->
+      <div *ngIf="error" class="error-message justify-center">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+        </svg>
+        {{ error }}
+      </div>
+
+      <!-- Botón de submit -->
+      <button
+        type="submit"
+        [disabled]="loginForm.invalid || loading"
+        class="btn-primary"
+      >
+        <span *ngIf="!loading">Iniciar Sesión</span>
+        <div *ngIf="loading" class="loading-spinner"></div>
+      </button>
+    </form>
+
+    <!-- Enlaces adicionales -->
+    <div class="auth-links">
+      <a routerLink="/auth/register">
+        ¿No tienes cuenta? Regístrate
+      </a>
+      <a routerLink="/auth/recuperar-password">
+        ¿Olvidaste tu contraseña?
+      </a>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer-text">
+      © 2025 Artify. Todos los derechos reservados.
+    </div>
+  </div>
+</div>

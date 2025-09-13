@@ -1,0 +1,209 @@
+<div class="min-h-screen bg-gradient-to-br from-artisan-50 to-artisan-100">
+  <!-- Header -->
+  <header class="bg-white shadow-lg border-b border-artisan-100 sticky top-0 z-50">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <!-- Logo -->
+        <div class="flex items-center">
+          <a routerLink="/" class="flex items-center space-x-3 group">
+            <div class="w-16 h-16 transition-all duration-300 group-hover:scale-110 overflow-hidden">
+              <img src="/logo.png" alt="Artify Logo" class="w-full h-full object-contain">
+            </div>
+            <div>
+              <h1 class="text-2xl font-bold text-artisan-800 group-hover:text-artisan-600 transition-colors duration-300">Artify</h1>
+              <p class="text-xs text-artisan-500 -mt-1">Marketplace de Artesanías</p>
+            </div>
+          </a>
+        </div>
+        
+        <!-- Navigation -->
+        <div class="hidden md:flex items-center space-x-8">
+          <a routerLink="/" class="nav-link text-artisan-600 hover:text-artisan-800 font-medium transition-colors duration-300">
+            Inicio
+          </a>
+          <a href="#categorias" class="nav-link text-artisan-600 hover:text-artisan-800 font-medium transition-colors duration-300">
+            Categorías
+          </a>
+          <a href="#artesanos" class="nav-link text-artisan-600 hover:text-artisan-800 font-medium transition-colors duration-300">
+            Artesanos
+          </a>
+          <a href="#sobre-nosotros" class="nav-link text-artisan-600 hover:text-artisan-800 font-medium transition-colors duration-300">
+            Sobre Nosotros
+          </a>
+        </div>
+        
+        <!-- Auth Buttons / User Menu -->
+        <div class="flex items-center space-x-4">
+          <!-- Guest User Buttons -->
+          <div *ngIf="!isLoggedIn" class="flex items-center space-x-4">
+            <a routerLink="/auth/login" class="text-artisan-600 hover:text-artisan-800 font-medium transition-colors duration-300 px-4 py-2 rounded-lg hover:bg-artisan-50">
+              Iniciar Sesión
+            </a>
+            <a routerLink="/auth/register" class="bg-gradient-to-r from-artisan-600 to-artisan-700 text-white px-6 py-2 rounded-lg font-medium hover:from-artisan-700 hover:to-artisan-800 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+              Registrarse
+            </a>
+          </div>
+          
+          <!-- Logged User Menu -->
+          <div *ngIf="isLoggedIn" class="flex items-center space-x-4">
+            <div class="flex items-center space-x-3">
+              <div class="text-right">
+                <p class="text-sm font-medium text-artisan-800">{{ currentUser?.nombre }}</p>
+                <p class="text-xs text-artisan-500">{{ currentUser?.rol }}</p>
+              </div>
+              <div class="w-8 h-8 bg-gradient-to-br from-artisan-600 to-artisan-700 rounded-full flex items-center justify-center">
+                <span class="text-white text-sm font-medium">{{ currentUser?.nombre?.charAt(0) }}</span>
+              </div>
+            </div>
+            <div class="flex items-center space-x-2">
+              <a href="#" class="text-artisan-600 hover:text-artisan-800 font-medium transition-colors duration-300 px-3 py-2 rounded-lg hover:bg-artisan-50 text-sm">
+                Mi Perfil
+              </a>
+              <button (click)="logout()" class="text-red-600 hover:text-red-800 font-medium transition-colors duration-300 px-3 py-2 rounded-lg hover:bg-red-50 text-sm">
+                Cerrar Sesión
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <router-outlet></router-outlet>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white text-artisan-800 py-16 border-t border-artisan-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <!-- Columna 1 - Logo y descripción -->
+        <div class="md:col-span-1">
+          <a routerLink="/" class="flex items-center space-x-3 mb-4 group">
+            <div class="w-16 h-16 rounded-lg overflow-hidden group-hover:scale-105 transition-transform duration-300">
+              <img src="/logo.png" alt="Artify Logo" class="w-full h-full object-contain">
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-artisan-800 group-hover:text-artisan-600 transition-colors duration-300">Artify</h3>
+              <p class="text-xs text-artisan-600 -mt-1">Marketplace de Artesanías</p>
+            </div>
+          </a>
+          <p class="text-artisan-600 text-sm leading-relaxed mb-4">
+            Conectando artesanos talentosos con amantes del arte hecho a mano. 
+            Descubre piezas únicas y comparte tu creatividad con el mundo.
+          </p>
+        </div>
+        
+        <!-- Columna 2 - Enlaces generales -->
+        <div>
+          <h4 class="text-lg font-semibold mb-4 text-artisan-800">Enlaces</h4>
+          <ul class="space-y-3 text-sm">
+            <li>
+              <a href="#sobre-nosotros" class="text-artisan-600 hover:text-artisan-800 transition-colors duration-300">
+                Sobre Nosotros
+              </a>
+            </li>
+            <li>
+              <a href="#categorias" class="text-artisan-600 hover:text-artisan-800 transition-colors duration-300">
+                Categorías
+              </a>
+            </li>
+            <li>
+              <a href="#artesanos" class="text-artisan-600 hover:text-artisan-800 transition-colors duration-300">
+                Artesanos
+              </a>
+            </li>
+            <li>
+              <a href="#" class="text-artisan-600 hover:text-artisan-800 transition-colors duration-300">
+                Términos y Condiciones
+              </a>
+            </li>
+          </ul>
+        </div>
+        
+        <!-- Columna 3 - Para artesanos -->
+        <div>
+          <h4 class="text-lg font-semibold mb-4 text-artisan-800">Para Artesanos</h4>
+          <ul class="space-y-3 text-sm">
+            <li>
+              <a href="#" class="text-artisan-600 hover:text-artisan-800 transition-colors duration-300">
+                Cómo Vender
+              </a>
+            </li>
+            <li>
+              <a href="#" class="text-artisan-600 hover:text-artisan-800 transition-colors duration-300">
+                Guía de Inicio
+              </a>
+            </li>
+            <li>
+              <a href="#" class="text-artisan-600 hover:text-artisan-800 transition-colors duration-300">
+                Consejos de Fotografía
+              </a>
+            </li>
+            <li>
+              <a href="#" class="text-artisan-600 hover:text-artisan-800 transition-colors duration-300">
+                Precios Sugeridos
+              </a>
+            </li>
+            <li>
+              <a href="#" class="text-artisan-600 hover:text-artisan-800 transition-colors duration-300">
+                Comunidad de Artesanos
+              </a>
+            </li>
+          </ul>
+        </div>
+        
+        <!-- Columna 4 - Contacto -->
+        <div>
+          <h4 class="text-lg font-semibold mb-4 text-artisan-800">Contacto</h4>
+          <ul class="space-y-3 text-sm">
+            <li class="flex items-start space-x-2">
+              <svg class="w-4 h-4 text-artisan-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+              </svg>
+              <a href="mailto:contacto@artify.com" class="text-artisan-600 hover:text-artisan-800 transition-colors duration-300">
+                contacto@artify.com
+              </a>
+            </li>
+            <li class="flex items-start space-x-2">
+              <svg class="w-4 h-4 text-artisan-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+              </svg>
+              <a href="tel:+123456789" class="text-artisan-600 hover:text-artisan-800 transition-colors duration-300">
+                (123) 456-789
+              </a>
+            </li>
+            <li class="flex items-start space-x-2">
+              <svg class="w-4 h-4 text-artisan-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              </svg>
+              <span class="text-artisan-600">Córdoba, Argentina</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Línea divisoria y copyright -->
+      <div class="border-t border-artisan-800 mt-12 pt-8">
+        <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+          <p class="text-artisan-600 text-sm">
+            &copy; 2025 Artify. Todos los derechos reservados.
+          </p>
+          <div class="flex space-x-6 text-sm">
+            <a href="#" class="text-artisan-600 hover:text-artisan-800 transition-colors duration-300">
+              Términos de Uso
+            </a>
+            <a href="#" class="text-artisan-600 hover:text-artisan-800 transition-colors duration-300">
+              Política de Privacidad
+            </a>
+            <a href="#" class="text-artisan-600 hover:text-artisan-800 transition-colors duration-300">
+              Cookies
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>

@@ -1,0 +1,180 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lora:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// Definir colores personalizados
+:root {
+  --artisan-50: #f7f3f0;
+  --artisan-100: #e8ddd4;
+  --artisan-200: #d4c4b0;
+  --artisan-300: #c4a484;
+  --artisan-400: #b8946a;
+  --artisan-500: #a68a6b;
+  --artisan-600: #8b5a3c;
+  --artisan-700: #6d4429;
+  --artisan-800: #5a381f;
+  --artisan-900: #4a2e18;
+}
+
+@layer base {
+  html {
+    @apply antialiased;
+  }
+  
+  body {
+    background-color: var(--artisan-50);
+    color: var(--artisan-900);
+    font-family: 'Lora', serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+  }
+}
+
+@layer components {
+  // Colores artisan
+  .bg-artisan-50 { background-color: var(--artisan-50); }
+  .bg-artisan-100 { background-color: var(--artisan-100); }
+  .bg-artisan-200 { background-color: var(--artisan-200); }
+  .bg-artisan-300 { background-color: var(--artisan-300); }
+  .bg-artisan-400 { background-color: var(--artisan-400); }
+  .bg-artisan-500 { background-color: var(--artisan-500); }
+  .bg-artisan-600 { background-color: var(--artisan-600); }
+  .bg-artisan-700 { background-color: var(--artisan-700); }
+  .bg-artisan-800 { background-color: var(--artisan-800); }
+  .bg-artisan-900 { background-color: var(--artisan-900); }
+
+  .text-artisan-50 { color: var(--artisan-50); }
+  .text-artisan-100 { color: var(--artisan-100); }
+  .text-artisan-200 { color: var(--artisan-200); }
+  .text-artisan-300 { color: var(--artisan-300); }
+  .text-artisan-400 { color: var(--artisan-400); }
+  .text-artisan-500 { color: var(--artisan-500); }
+  .text-artisan-600 { color: var(--artisan-600); }
+  .text-artisan-700 { color: var(--artisan-700); }
+  .text-artisan-800 { color: var(--artisan-800); }
+  .text-artisan-900 { color: var(--artisan-900); }
+
+  .border-artisan-50 { border-color: var(--artisan-50); }
+  .border-artisan-100 { border-color: var(--artisan-100); }
+  .border-artisan-200 { border-color: var(--artisan-200); }
+  .border-artisan-300 { border-color: var(--artisan-300); }
+  .border-artisan-400 { border-color: var(--artisan-400); }
+  .border-artisan-500 { border-color: var(--artisan-500); }
+  .border-artisan-600 { border-color: var(--artisan-600); }
+  .border-artisan-700 { border-color: var(--artisan-700); }
+  .border-artisan-800 { border-color: var(--artisan-800); }
+  .border-artisan-900 { border-color: var(--artisan-900); }
+
+  .hover\:bg-artisan-50:hover { background-color: var(--artisan-50); }
+  .hover\:bg-artisan-100:hover { background-color: var(--artisan-100); }
+  .hover\:bg-artisan-200:hover { background-color: var(--artisan-200); }
+  .hover\:bg-artisan-300:hover { background-color: var(--artisan-300); }
+  .hover\:bg-artisan-400:hover { background-color: var(--artisan-400); }
+  .hover\:bg-artisan-500:hover { background-color: var(--artisan-500); }
+  .hover\:bg-artisan-600:hover { background-color: var(--artisan-600); }
+  .hover\:bg-artisan-700:hover { background-color: var(--artisan-700); }
+  .hover\:bg-artisan-800:hover { background-color: var(--artisan-800); }
+  .hover\:bg-artisan-900:hover { background-color: var(--artisan-900); }
+
+  .hover\:text-artisan-50:hover { color: var(--artisan-50); }
+  .hover\:text-artisan-100:hover { color: var(--artisan-100); }
+  .hover\:text-artisan-200:hover { color: var(--artisan-200); }
+  .hover\:text-artisan-300:hover { color: var(--artisan-300); }
+  .hover\:text-artisan-400:hover { color: var(--artisan-400); }
+  .hover\:text-artisan-500:hover { color: var(--artisan-500); }
+  .hover\:text-artisan-600:hover { color: var(--artisan-600); }
+  .hover\:text-artisan-700:hover { color: var(--artisan-700); }
+  .hover\:text-artisan-800:hover { color: var(--artisan-800); }
+  .hover\:text-artisan-900:hover { color: var(--artisan-900); }
+
+  // Fuentes
+  .font-display { font-family: 'Playfair Display', serif; }
+  .font-body { font-family: 'Lora', serif; }
+
+  // Botones
+  .btn-primary {
+    background-color: var(--artisan-600);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+  }
+
+  .btn-primary:hover {
+    background-color: var(--artisan-700);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(139, 90, 60, 0.3);
+  }
+
+  .btn-secondary {
+    border: 2px solid var(--artisan-600);
+    color: var(--artisan-600);
+    background-color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+  }
+
+  .btn-secondary:hover {
+    background-color: var(--artisan-600);
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(139, 90, 60, 0.2);
+  }
+
+  // Campos de entrada
+  .input-field {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--artisan-200);
+    border-radius: 0.5rem;
+    background-color: white;
+    color: var(--artisan-900);
+    transition: all 0.3s ease;
+    outline: none;
+  }
+
+  .input-field:focus {
+    border-color: var(--artisan-600);
+    box-shadow: 0 0 0 3px rgba(139, 90, 60, 0.1);
+  }
+
+  .input-field:hover {
+    border-color: var(--artisan-300);
+  }
+
+  // Tarjetas
+  .card {
+    background-color: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    border: 1px solid var(--artisan-100);
+  }
+
+  // Utilidades adicionales
+  .text-white { color: white; }
+  .bg-white { background-color: white; }
+  .bg-gradient-to-r { background-image: linear-gradient(to right, var(--tw-gradient-stops)); }
+  .from-artisan-600 { --tw-gradient-from: var(--artisan-600); --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(139, 90, 60, 0)); }
+  .to-artisan-700 { --tw-gradient-to: var(--artisan-700); }
+  .hover\:from-artisan-700:hover { --tw-gradient-from: var(--artisan-700); }
+  .hover\:to-artisan-800:hover { --tw-gradient-to: var(--artisan-800); }
+}

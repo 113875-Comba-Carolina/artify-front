@@ -1,0 +1,249 @@
+<div class="register-container">
+  <!-- Selección de rol -->
+  <div *ngIf="!f['rol'].value" class="role-selection-container fade-in">
+    <h2 class="role-selection-title">¿Cómo te gustaría participar?</h2>
+    
+    <div>
+      <button 
+        (click)="onRoleSelect('ARTESANO')"
+        class="role-selection-button">
+        <div class="role-icon">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+          </svg>
+        </div>
+        <h3 class="role-title">Soy Artesano</h3>
+        <p class="role-description">Quiero vender mis productos artesanales y compartir mi arte con el mundo.</p>
+      </button>
+
+      <button 
+        (click)="onRoleSelect('USUARIO')"
+        class="role-selection-button">
+        <div class="role-icon">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+          </svg>
+        </div>
+        <h3 class="role-title">Soy Comprador</h3>
+        <p class="role-description">Quiero descubrir y adquirir productos artesanales únicos.</p>
+      </button>
+    </div>
+  </div>
+
+  <!-- Formulario de registro -->
+  <form *ngIf="f['rol'].value" [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-card">
+    <h2 class="register-title">
+      {{ isArtesano ? 'Registro de Artesano' : 'Registro de Usuario' }}
+    </h2>
+
+    <!-- Datos básicos -->
+    <div class="space-y-6">
+      <div>
+        <label for="nombre" class="input-label">
+          Nombre completo <span class="text-red-500">*</span>
+        </label>
+        <input
+          type="text"
+          id="nombre"
+          formControlName="nombre"
+          placeholder="Tu nombre completo"
+          class="input-field"
+          [class.error]="submitted && f['nombre'].errors"
+        />
+        <div *ngIf="submitted && f['nombre'].errors" class="error-message">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+          </svg>
+          <span *ngIf="f['nombre'].errors?.['required']">El nombre es requerido</span>
+          <span *ngIf="f['nombre'].errors?.['minlength']">El nombre debe tener al menos 2 caracteres</span>
+        </div>
+      </div>
+
+      <div>
+        <label for="email" class="input-label">
+          Correo electrónico <span class="text-red-500">*</span>
+        </label>
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          placeholder="tu@email.com"
+          class="input-field"
+          [class.error]="submitted && f['email'].errors"
+        />
+        <div *ngIf="submitted && f['email'].errors" class="error-message">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+          </svg>
+          <span *ngIf="f['email'].errors?.['required']">El correo electrónico es requerido</span>
+          <span *ngIf="f['email'].errors?.['email']">Ingrese un correo electrónico válido</span>
+        </div>
+      </div>
+
+      <div>
+        <label for="password" class="input-label">
+          Contraseña <span class="text-red-500">*</span>
+        </label>
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          placeholder="Mínimo 6 caracteres"
+          class="input-field"
+          [class.error]="submitted && f['password'].errors"
+        />
+        <div *ngIf="submitted && f['password'].errors" class="error-message">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+          </svg>
+          <span *ngIf="f['password'].errors?.['required']">La contraseña es requerida</span>
+          <span *ngIf="f['password'].errors?.['minlength']">La contraseña debe tener al menos 6 caracteres</span>
+        </div>
+      </div>
+
+      <div>
+        <label for="confirmPassword" class="input-label">
+          Confirmar contraseña <span class="text-red-500">*</span>
+        </label>
+        <input
+          type="password"
+          id="confirmPassword"
+          formControlName="confirmPassword"
+          placeholder="Repite tu contraseña"
+          class="input-field"
+          [class.error]="submitted && (f['confirmPassword'].errors || registerForm.errors?.['mismatch'])"
+        />
+        <div *ngIf="submitted && (f['confirmPassword'].errors || registerForm.errors?.['mismatch'])" class="error-message">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+          </svg>
+          <span *ngIf="f['confirmPassword'].errors?.['required']">Confirme su contraseña</span>
+          <span *ngIf="registerForm.errors?.['mismatch']">Las contraseñas no coinciden</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Campos adicionales para artesanos -->
+    <div *ngIf="isArtesano" class="artisan-section fade-in">
+      <div class="artisan-header">
+        <div class="artisan-icon">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+          </svg>
+        </div>
+        <h3 class="artisan-title">Información de tu emprendimiento</h3>
+      </div>
+      
+      <div class="space-y-6">
+        <div>
+          <label for="nombreEmprendimiento" class="input-label">
+            Nombre del emprendimiento <span class="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            id="nombreEmprendimiento"
+            formControlName="nombreEmprendimiento"
+            placeholder="Ej: Arte & Tradición, Taller Creativo..."
+            class="input-field"
+            [class.error]="submitted && f['nombreEmprendimiento'].errors"
+          />
+          <div *ngIf="submitted && f['nombreEmprendimiento'].errors" class="error-message">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+            </svg>
+            <span *ngIf="f['nombreEmprendimiento'].errors?.['required']">El nombre del emprendimiento es requerido</span>
+          </div>
+        </div>
+
+        <div>
+          <label for="ubicacion" class="input-label">
+            Ubicación <span class="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            id="ubicacion"
+            formControlName="ubicacion"
+            placeholder="Ej: Ciudad, País"
+            class="input-field"
+            [class.error]="submitted && f['ubicacion'].errors"
+          />
+          <div *ngIf="submitted && f['ubicacion'].errors" class="error-message">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+            </svg>
+            <span *ngIf="f['ubicacion'].errors?.['required']">La ubicación es requerida</span>
+          </div>
+        </div>
+
+        <div>
+          <label for="descripcion" class="input-label">
+            Descripción de tu emprendimiento <span class="text-red-500">*</span>
+          </label>
+          <textarea
+            id="descripcion"
+            formControlName="descripcion"
+            rows="4"
+            placeholder="Cuéntanos sobre tu emprendimiento, qué tipo de productos artesanales creas, tu historia, técnicas que utilizas..."
+            class="input-field resize-none"
+            [class.error]="submitted && f['descripcion'].errors"
+          ></textarea>
+          <div class="flex justify-between mt-1">
+            <div *ngIf="submitted && f['descripcion'].errors" class="error-message">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+              </svg>
+              <span *ngIf="f['descripcion'].errors?.['required']">La descripción es requerida</span>
+              <span *ngIf="f['descripcion'].errors?.['maxlength']">La descripción no puede exceder los 1000 caracteres</span>
+            </div>
+            <div class="character-count">
+              {{ f['descripcion'].value?.length || 0 }}/1000 caracteres
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Error general -->
+    <div *ngIf="error" class="error-message justify-center">
+      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+      </svg>
+      {{ error }}
+    </div>
+
+    <!-- Botones de acción -->
+    <div class="space-y-4">
+      <button
+        type="submit"
+        class="btn-primary"
+        [disabled]="loading">
+        <span *ngIf="!loading" class="flex items-center justify-center space-x-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+          </svg>
+          <span>{{ isArtesano ? 'Crear cuenta de artesano' : 'Crear cuenta de usuario' }}</span>
+        </span>
+        <div *ngIf="loading" class="loading-spinner"></div>
+      </button>
+
+      <button
+        type="button"
+        (click)="registerForm.patchValue({rol: ''})" 
+        class="btn-secondary">
+        <span class="flex items-center justify-center space-x-2">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18"></path>
+          </svg>
+          <span>Cambiar tipo de cuenta</span>
+        </span>
+      </button>
+
+      <div class="auth-links">
+        <a routerLink="/auth/login">
+          ¿Ya tienes una cuenta? Inicia sesión
+        </a>
+      </div>
+    </div>
+  </form>
+</div>
+
