@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../services/auth';
 
 @Component({
@@ -21,19 +21,27 @@ export class RegisterComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
     // Scroll hacia arriba cuando se carga el componente
     window.scrollTo(0, 0);
     
+    // Leer parámetro de query para preseleccionar rol
+    const roleParam = this.route.snapshot.queryParams['role'];
+    const preselectRole = roleParam === 'artesano' ? 'ARTESANO' : '';
+    
+    // Actualizar isArtesano basado en el parámetro
+    this.isArtesano = preselectRole === 'ARTESANO';
+    
     this.registerForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required],
       nombre: ['', [Validators.required, Validators.minLength(2)]],
-      rol: ['', Validators.required],
+      rol: [preselectRole, Validators.required],
       // Campos adicionales para artesanos
       nombreEmprendimiento: [''],
       ubicacion: [''],
@@ -41,6 +49,16 @@ export class RegisterComponent implements OnInit {
     }, {
       validators: this.passwordMatchValidator
     });
+
+    // Aplicar validaciones iniciales si es artesano
+    if (this.isArtesano) {
+      this.registerForm.get('nombreEmprendimiento')?.setValidators([Validators.required]);
+      this.registerForm.get('ubicacion')?.setValidators([Validators.required]);
+      this.registerForm.get('descripcion')?.setValidators([Validators.required]);
+      this.registerForm.get('nombreEmprendimiento')?.updateValueAndValidity();
+      this.registerForm.get('ubicacion')?.updateValueAndValidity();
+      this.registerForm.get('descripcion')?.updateValueAndValidity();
+    }
 
     // Escuchar cambios en el rol
     this.registerForm.get('rol')?.valueChanges.subscribe(rol => {

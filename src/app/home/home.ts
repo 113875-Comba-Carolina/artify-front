@@ -11,7 +11,17 @@ import { AuthService } from '../auth/services/auth';
   styleUrls: ['./home.scss']
 })
 export class HomeComponent {
-  constructor(private authService: AuthService, private router: Router) {}
+  isLoggedIn = false;
+  currentUser: any = null;
+
+  constructor(private authService: AuthService, private router: Router) {
+    this.checkAuthStatus();
+  }
+
+  checkAuthStatus() {
+    this.isLoggedIn = this.authService.isLoggedIn();
+    this.currentUser = this.authService.getCurrentUser();
+  }
 
   // Productos destacados con imágenes locales
   featuredProducts = [
@@ -69,6 +79,16 @@ export class HomeComponent {
     } else {
       // Usuario no logueado - redirigir a login
       this.router.navigate(['/auth/login']);
+    }
+  }
+
+  scrollToSection(sectionId: string) {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
     }
   }
 }

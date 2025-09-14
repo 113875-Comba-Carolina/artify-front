@@ -43,4 +43,23 @@ export class AppComponent implements OnInit {
   closeMobileMenu() {
     this.isMobileMenuOpen = false;
   }
+
+  scrollToSection(sectionId: string) {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+    this.closeMobileMenu();
+  }
+
+  scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+    this.closeMobileMenu();
+  }
 }

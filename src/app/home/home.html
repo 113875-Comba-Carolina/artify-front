@@ -7,24 +7,33 @@
       con pasión y tradición.
     </p>
     <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      @if (!isLoggedIn) {
+        <a
+          routerLink="/auth/register"
+          class="bg-artisan-600 text-white px-8 py-3 rounded-lg text-lg font-medium hover:bg-artisan-700 transition-colors"
+        >
+          Únete a Artify
+        </a>
+      } @else {
+        <a
+          (click)="scrollToSection('productos')"
+          class="bg-artisan-600 text-white px-8 py-3 rounded-lg text-lg font-medium hover:bg-artisan-700 transition-colors cursor-pointer"
+        >
+          Explorar Productos
+        </a>
+      }
       <a
-        routerLink="/auth/register"
-        class="bg-artisan-600 text-white px-8 py-3 rounded-lg text-lg font-medium hover:bg-artisan-700 transition-colors"
+        (click)="scrollToSection('categorias')"
+        class="border-2 border-artisan-600 text-artisan-600 px-8 py-3 rounded-lg text-lg font-medium hover:bg-artisan-600 hover:text-white transition-colors cursor-pointer"
       >
-        Comenzar a Vender
-      </a>
-      <a
-        href="#productos"
-        class="border-2 border-artisan-600 text-artisan-600 px-8 py-3 rounded-lg text-lg font-medium hover:bg-artisan-600 hover:text-white transition-colors"
-      >
-        Explorar Productos
+        Ver Categorías
       </a>
     </div>
   </div>
 </section>
 
 <!-- Categories Section -->
-<section class="py-16 bg-white">
+<section id="categorias" class="py-16 bg-white">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <h3 class="text-3xl font-bold text-artisan-800 text-center mb-12">Explora por Categorías</h3>
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
@@ -38,6 +47,112 @@
         <h4 class="font-medium text-artisan-800">{{ category.name }}</h4>
       </div>
       }
+    </div>
+  </div>
+</section>
+
+<!-- Sobre Artify Section -->
+<section id="sobre-artify" class="py-20 bg-gradient-to-br from-artisan-100 to-artisan-200">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h3 class="text-4xl font-bold text-artisan-800 mb-6">Sobre Artify</h3>
+      <div class="w-24 h-1 bg-artisan-600 mx-auto rounded-full"></div>
+    </div>
+    
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <!-- Historia y Misión -->
+      <div class="space-y-8">
+        <div>
+          <h4 class="text-2xl font-semibold text-artisan-800 mb-4">Nuestra Historia</h4>
+          <p class="text-artisan-600 leading-relaxed mb-4">
+            Artify nació en 2025 de la pasión por preservar y valorar el arte artesanal tradicional. 
+            Surgió de la necesidad de crear un espacio digital donde los artesanos pudieran 
+            compartir sus creaciones únicas y los amantes del arte pudieran descubrir piezas 
+            auténticas, cada una con su propia historia y tradición.
+          </p>
+          <p class="text-artisan-600 leading-relaxed">
+            El nombre "Artify" combina "Arte" con "ify" (sufijo que significa "hacer"), 
+            representando nuestra misión de hacer que el arte artesanal sea accesible y 
+            valorado en la era digital.
+          </p>
+        </div>
+        
+        <div>
+          <h4 class="text-2xl font-semibold text-artisan-800 mb-4">Nuestra Misión</h4>
+          <p class="text-artisan-600 leading-relaxed">
+            Conectar a artesanos talentosos con amantes del arte auténtico, creando una 
+            comunidad global que valore la tradición, la creatividad y la calidad del 
+            trabajo artesanal. Queremos que cada pieza única encuentre su hogar perfecto.
+          </p>
+        </div>
+      </div>
+      
+      <!-- Valores y Estadísticas -->
+      <div class="space-y-8">
+        <div>
+          <h4 class="text-2xl font-semibold text-artisan-800 mb-6">Nuestros Valores</h4>
+          <div class="space-y-4">
+            <div class="flex items-start space-x-3">
+              <div class="w-8 h-8 bg-artisan-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                </svg>
+              </div>
+              <div>
+                <h5 class="font-semibold text-artisan-800 mb-1">Autenticidad</h5>
+                <p class="text-artisan-600 text-sm">Cada pieza es única, creada con pasión y tradición</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start space-x-3">
+              <div class="w-8 h-8 bg-artisan-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                </svg>
+              </div>
+              <div>
+                <h5 class="font-semibold text-artisan-800 mb-1">Comunidad</h5>
+                <p class="text-artisan-600 text-sm">Construimos puentes entre artesanos y compradores</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start space-x-3">
+              <div class="w-8 h-8 bg-artisan-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+              <div>
+                <h5 class="font-semibold text-artisan-800 mb-1">Calidad</h5>
+                <p class="text-artisan-600 text-sm">Seleccionamos cuidadosamente cada producto</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Estadísticas -->
+        <div class="bg-white rounded-lg p-6 shadow-lg">
+          <h5 class="text-lg font-semibold text-artisan-800 mb-4 text-center">Artify en Números</h5>
+          <div class="grid grid-cols-2 gap-4 text-center">
+            <div>
+              <div class="text-2xl font-bold text-artisan-600">500+</div>
+              <div class="text-sm text-artisan-500">Artesanos</div>
+            </div>
+            <div>
+              <div class="text-2xl font-bold text-artisan-600">2,500+</div>
+              <div class="text-sm text-artisan-500">Productos</div>
+            </div>
+            <div>
+              <div class="text-2xl font-bold text-artisan-600">10+</div>
+              <div class="text-sm text-artisan-500">Categorías</div>
+            </div>
+            <div>
+              <div class="text-2xl font-bold text-artisan-600">10+</div>
+              <div class="text-sm text-artisan-500">Provincias</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -105,6 +220,7 @@
 </section>
 
 <!-- CTA Section -->
+@if (!isLoggedIn) {
 <section class="py-16 bg-artisan-800 text-white">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
     <h3 class="text-3xl font-bold mb-4">¿Eres Artesano?</h3>
@@ -113,10 +229,12 @@
       trabajo hecho a mano.
     </p>
     <a
-      routerLink="/auth/register"
+      [routerLink]="['/auth/register']"
+      [queryParams]="{role: 'artesano'}"
       class="bg-white text-artisan-800 px-8 py-3 rounded-lg text-lg font-medium hover:bg-artisan-100 transition-colors"
     >
-      Comenzar Ahora
+      Regístrate como Artesano
     </a>
   </div>
 </section>
+}
