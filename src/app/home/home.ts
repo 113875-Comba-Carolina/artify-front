@@ -47,11 +47,17 @@ export class HomeComponent {
 
   categories = [
     { name: 'Cerámica', icon: '🏺', count: '+100' },
-    { name: 'Textiles', icon: '🧵', count: '+80' },
-    { name: 'Accesorios', icon: '✨', count: '+120' },
-    { name: 'Aromas', icon: '🕯️', count: '+60' },
-    { name: 'Pintura', icon: '🎨', count: '+90' },
-    { name: 'Cuero', icon: '👜', count: '+50' }
+    { name: 'Metales', icon: '⚒️', count: '+100' },
+    { name: 'Mates y accesorios', icon: '🧉', count: '+100' },
+    { name: 'Aromas y velas', icon: '🕯️', count: '+100' },
+    { name: 'Textiles', icon: '🧵', count: '+100' },
+    { name: 'Cuero', icon: '👜', count: '+100' },
+    { name: 'Madera', icon: '🪵', count: '+100' },
+    { name: 'Vidrio', icon: '🔮', count: '+100' },
+    { name: 'Joyería artesanal', icon: '💎', count: '+100' },
+    { name: 'Papel y cartón', icon: '📄', count: '+100' },
+    { name: 'Cestería y fibras', icon: '🧺', count: '+100' },
+    { name: 'Arte y pintura', icon: '🎨', count: '+100' }
   ];
 
   onVerDetalles(product: any) {
