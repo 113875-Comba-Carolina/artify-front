@@ -46,18 +46,18 @@ export class HomeComponent {
   ];
 
   categories = [
-    { name: 'Cerámica', icon: '🏺', count: '+100' },
-    { name: 'Metales', icon: '⚒️', count: '+100' },
-    { name: 'Mates y accesorios', icon: '🧉', count: '+100' },
-    { name: 'Aromas y velas', icon: '🕯️', count: '+100' },
-    { name: 'Textiles', icon: '🧵', count: '+100' },
-    { name: 'Cuero', icon: '👜', count: '+100' },
-    { name: 'Madera', icon: '🪵', count: '+100' },
-    { name: 'Vidrio', icon: '🔮', count: '+100' },
-    { name: 'Joyería artesanal', icon: '💎', count: '+100' },
-    { name: 'Papel y cartón', icon: '📄', count: '+100' },
-    { name: 'Cestería y fibras', icon: '🧺', count: '+100' },
-    { name: 'Arte y pintura', icon: '🎨', count: '+100' }
+    { name: 'Cerámica', icon: 'assets/icons/categoria-ceramica.png', count: '+100' },
+    { name: 'Metales', icon: 'assets/icons/metales.png', count: '+100' },
+    { name: 'Mates y accesorios', icon: 'assets/icons/mate.png', count: '+100' },
+    { name: 'Aromas y velas', icon: 'assets/icons/aromas-velas.png', count: '+100' },
+    { name: 'Textiles', icon: 'assets/icons/textiles.png', count: '+100' },
+    { name: 'Cuero', icon: 'assets/icons/cuero.png', count: '+100' },
+    { name: 'Madera', icon: 'assets/icons/madera.png', count: '+100' },
+    { name: 'Vidrio', icon: 'assets/icons/vidrio.png', count: '+100' },
+    { name: 'Joyería artesanal', icon: 'assets/icons/joyeria-artesanal.png', count: '+100' },
+    { name: 'Reciclables', icon: 'assets/icons/reciclables.png', count: '+100' },
+    { name: 'Cestería y fibras', icon: 'assets/icons/cesteria-fibras.png', count: '+100' },
+    { name: 'Arte y pintura', icon: 'assets/icons/arte-pintura.png', count: '+100' }
   ];
 
   onVerDetalles(product: any) {
