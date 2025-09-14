@@ -2,16 +2,17 @@
   <!-- Header -->
   <header class="bg-white shadow-lg border-b border-artisan-100 sticky top-0 z-50">
     <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-20">
+      <div class="flex items-center justify-between h-20 md:h-20 h-24">
         <!-- Logo -->
         <div class="flex items-center">
-          <a routerLink="/" class="flex items-center space-x-3 group">
-            <div class="w-16 h-16 transition-all duration-300 group-hover:scale-110 overflow-hidden">
-              <img src="/logo.png" alt="Artify Logo" class="w-full h-full object-contain">
+          <a routerLink="/" class="flex items-center space-x-3 group" (click)="closeMobileMenu()">
+            <!-- Logo más grande en móviles -->
+            <div class="w-24 h-24 md:w-16 md:h-16 transition-all duration-300 group-hover:scale-110 overflow-hidden">
+              <img src="assets/images/logo.png" alt="Artify Logo" class="w-full h-full object-contain">
             </div>
             <div>
-              <h1 class="text-2xl font-bold text-artisan-800 group-hover:text-artisan-600 transition-colors duration-300">Artify</h1>
-              <p class="text-xs text-artisan-500 -mt-1">Marketplace de Artesanías</p>
+              <h1 class="text-4xl md:text-2xl font-bold text-artisan-800 group-hover:text-artisan-600 transition-colors duration-300">Artify</h1>
+              <p class="text-base md:text-xs text-artisan-500 -mt-1">Marketplace de Artesanías</p>
             </div>
           </a>
         </div>
@@ -32,20 +33,23 @@
           </a>
         </div>
         
-        <!-- Auth Buttons / User Menu -->
-        <div class="flex items-center space-x-4">
+        <!-- Desktop Auth Buttons / User Menu -->
+        <div class="hidden md:flex items-center space-x-4">
           <!-- Guest User Buttons -->
-          <div *ngIf="!isLoggedIn" class="flex items-center space-x-4">
-            <a routerLink="/auth/login" class="text-artisan-600 hover:text-artisan-800 font-medium transition-colors duration-300 px-4 py-2 rounded-lg hover:bg-artisan-50">
-              Iniciar Sesión
-            </a>
-            <a routerLink="/auth/register" class="bg-gradient-to-r from-artisan-600 to-artisan-700 text-white px-6 py-2 rounded-lg font-medium hover:from-artisan-700 hover:to-artisan-800 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
-              Registrarse
-            </a>
-          </div>
+          @if (!isLoggedIn) {
+            <div class="flex items-center space-x-4">
+              <a routerLink="/auth/login" class="text-artisan-600 hover:text-artisan-800 font-medium transition-colors duration-300 px-4 py-2 rounded-lg hover:bg-artisan-50">
+                Iniciar Sesión
+              </a>
+              <a routerLink="/auth/register" class="bg-gradient-to-r from-artisan-600 to-artisan-700 text-white px-6 py-2 rounded-lg font-medium hover:from-artisan-700 hover:to-artisan-800 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                Registrarse
+              </a>
+            </div>
+          }
           
           <!-- Logged User Menu -->
-          <div *ngIf="isLoggedIn" class="flex items-center space-x-4">
+          @if (isLoggedIn) {
+            <div class="flex items-center space-x-4">
             <div class="flex items-center space-x-3">
               <div class="text-right">
                 <p class="text-sm font-medium text-artisan-800">{{ currentUser?.nombre }}</p>
@@ -63,10 +67,86 @@
                 Cerrar Sesión
               </button>
             </div>
-          </div>
+            </div>
+          }
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <div class="md:hidden">
+          <button 
+            (click)="toggleMobileMenu()" 
+            class="text-artisan-600 hover:text-artisan-800 focus:outline-none focus:text-artisan-800 transition-colors duration-300 p-2">
+            <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              @if (!isMobileMenuOpen) {
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+              }
+              @if (isMobileMenuOpen) {
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              }
+            </svg>
+          </button>
         </div>
       </div>
     </nav>
+
+    <!-- Mobile Menu -->
+    @if (isMobileMenuOpen) {
+      <div class="md:hidden bg-white border-t border-artisan-100 shadow-lg">
+      <div class="px-4 py-6 space-y-4">
+        <!-- Mobile Navigation Links -->
+        <div class="space-y-3">
+          <a routerLink="/" (click)="closeMobileMenu()" class="block text-artisan-600 hover:text-artisan-800 font-medium transition-colors duration-300 py-2">
+            Inicio
+          </a>
+          <a href="#categorias" (click)="closeMobileMenu()" class="block text-artisan-600 hover:text-artisan-800 font-medium transition-colors duration-300 py-2">
+            Categorías
+          </a>
+          <a href="#artesanos" (click)="closeMobileMenu()" class="block text-artisan-600 hover:text-artisan-800 font-medium transition-colors duration-300 py-2">
+            Artesanos
+          </a>
+          <a href="#sobre-nosotros" (click)="closeMobileMenu()" class="block text-artisan-600 hover:text-artisan-800 font-medium transition-colors duration-300 py-2">
+            Sobre Nosotros
+          </a>
+        </div>
+
+        <!-- Mobile Auth Section -->
+        <div class="border-t border-artisan-200 pt-4">
+          <!-- Guest User Buttons -->
+          @if (!isLoggedIn) {
+            <div class="space-y-3">
+              <a routerLink="/auth/login" (click)="closeMobileMenu()" class="block text-artisan-600 hover:text-artisan-800 font-medium transition-colors duration-300 py-2 px-4 rounded-lg hover:bg-artisan-50">
+                Iniciar Sesión
+              </a>
+              <a routerLink="/auth/register" (click)="closeMobileMenu()" class="block bg-gradient-to-r from-artisan-600 to-artisan-700 text-white text-center py-3 px-4 rounded-lg font-medium hover:from-artisan-700 hover:to-artisan-800 transition-all duration-300 shadow-lg">
+                Registrarse
+              </a>
+            </div>
+          }
+          
+          <!-- Logged User Menu -->
+          @if (isLoggedIn) {
+            <div class="space-y-3">
+            <div class="flex items-center space-x-3 py-2">
+              <div class="w-10 h-10 bg-gradient-to-br from-artisan-600 to-artisan-700 rounded-full flex items-center justify-center">
+                <span class="text-white text-sm font-medium">{{ currentUser?.nombre?.charAt(0) }}</span>
+              </div>
+              <div>
+                <p class="text-sm font-medium text-artisan-800">{{ currentUser?.nombre }}</p>
+                <p class="text-xs text-artisan-500">{{ currentUser?.rol }}</p>
+              </div>
+            </div>
+            <a href="#" (click)="closeMobileMenu()" class="block text-artisan-600 hover:text-artisan-800 font-medium transition-colors duration-300 py-2 px-4 rounded-lg hover:bg-artisan-50">
+              Mi Perfil
+            </a>
+            <button (click)="logout()" class="block w-full text-left text-red-600 hover:text-red-800 font-medium transition-colors duration-300 py-2 px-4 rounded-lg hover:bg-red-50">
+              Cerrar Sesión
+            </button>
+            </div>
+          }
+        </div>
+      </div>
+      </div>
+    }
   </header>
 
   <!-- Main Content -->
@@ -82,7 +162,7 @@
         <div class="md:col-span-1">
           <a routerLink="/" class="flex items-center space-x-3 mb-4 group">
             <div class="w-16 h-16 rounded-lg overflow-hidden group-hover:scale-105 transition-transform duration-300">
-              <img src="/logo.png" alt="Artify Logo" class="w-full h-full object-contain">
+              <img src="assets/images/logo.png" alt="Artify Logo" class="w-full h-full object-contain">
             </div>
             <div>
               <h3 class="text-xl font-bold text-artisan-800 group-hover:text-artisan-600 transition-colors duration-300">Artify</h3>

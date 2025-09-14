@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
+import { AuthService } from '../auth/services/auth';
 
 @Component({
   selector: 'app-home',
@@ -10,35 +11,37 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./home.scss']
 })
 export class HomeComponent {
-  // Placeholder data - will be replaced with real data later
+  constructor(private authService: AuthService, private router: Router) {}
+
+  // Productos destacados con imágenes locales
   featuredProducts = [
     {
       id: 1,
-      name: 'Cerámica Artesanal',
-      price: 45.99,
-      image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=300&fit=crop',
+      name: 'Taza de Cerámica',
+      price: 5000,
+      image: 'assets/images/taza-ceramica.jpeg',
       category: 'Cerámica'
     },
     {
       id: 2,
-      name: 'Textil Tradicional',
-      price: 32.50,
-      image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=300&h=300&fit=crop',
-      category: 'Textiles'
+      name: 'Mate de Calabaza',
+      price: 23000,
+      image: 'assets/images/mate-calabaza.jpg',
+      category: 'Mates'
     },
     {
       id: 3,
-      name: 'Joyería Hecha a Mano',
-      price: 78.00,
-      image: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=300&h=300&fit=crop',
-      category: 'Joyería'
+      name: 'Artesanía metalica',
+      price: 15000,
+      image: 'assets/images/metalicas.jpg',
+      category: 'Metales'
     },
     {
       id: 4,
-      name: 'Escultura en Madera',
-      price: 125.00,
-      image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=300&fit=crop',
-      category: 'Escultura'
+      name: 'Velas Aromatizantes',
+      price: 9000,
+      image: 'assets/images/velas-aromatizantes.jpeg',
+      category: 'Aromas'
     }
   ];
 
@@ -50,4 +53,16 @@ export class HomeComponent {
     { name: 'Pintura', icon: '🎨', count: '+90' },
     { name: 'Cuero', icon: '👜', count: '+50' }
   ];
+
+  onVerDetalles(product: any) {
+    if (this.authService.isLoggedIn()) {
+      // Usuario logueado - redirigir a página de detalles del producto
+      // Por ahora redirigimos a home, pero aquí iría la lógica para ver detalles
+      console.log('Ver detalles del producto:', product);
+      // this.router.navigate(['/producto', product.id]);
+    } else {
+      // Usuario no logueado - redirigir a login
+      this.router.navigate(['/auth/login']);
+    }
+  }
 }

@@ -14,6 +14,7 @@ export class AppComponent implements OnInit {
   title = 'Artify';
   isLoggedIn = false;
   currentUser: LoginResponse | null = null;
+  isMobileMenuOpen = false;
 
   constructor(private authService: AuthService) {}
 
@@ -30,7 +31,16 @@ export class AppComponent implements OnInit {
     this.authService.logout();
     this.isLoggedIn = false;
     this.currentUser = null;
+    this.closeMobileMenu();
     // Opcional: redirigir al home
     window.location.href = '/';
+  }
+
+  toggleMobileMenu() {
+    this.isMobileMenuOpen = !this.isMobileMenuOpen;
+  }
+
+  closeMobileMenu() {
+    this.isMobileMenuOpen = false;
   }
 }

@@ -25,6 +25,9 @@ export class RegisterComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    // Scroll hacia arriba cuando se carga el componente
+    window.scrollTo(0, 0);
+    
     this.registerForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
