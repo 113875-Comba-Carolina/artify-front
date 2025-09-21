@@ -80,13 +80,19 @@
           class="input-field"
           [class.error]="submitted && f['email'].errors"
         />
-        <div *ngIf="submitted && f['email'].errors" class="error-message">
-          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
-          </svg>
-          <span *ngIf="f['email'].errors?.['required']">El correo electrónico es requerido</span>
-          <span *ngIf="f['email'].errors?.['email']">Ingrese un correo electrónico válido</span>
-        </div>
+        @if (submitted && f['email'].errors) {
+          <div class="error-message">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+            </svg>
+            @if (f['email'].errors?.['required']) {
+              <span>El correo electrónico es requerido</span>
+            }
+            @if (f['email'].errors?.['email']) {
+              <span>Ingrese un correo electrónico válido</span>
+            }
+          </div>
+        }
       </div>
 
       <div>
@@ -101,13 +107,19 @@
           class="input-field"
           [class.error]="submitted && f['password'].errors"
         />
-        <div *ngIf="submitted && f['password'].errors" class="error-message">
-          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
-          </svg>
-          <span *ngIf="f['password'].errors?.['required']">La contraseña es requerida</span>
-          <span *ngIf="f['password'].errors?.['minlength']">La contraseña debe tener al menos 6 caracteres</span>
-        </div>
+        @if (submitted && f['password'].errors) {
+          <div class="error-message">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+            </svg>
+            @if (f['password'].errors?.['required']) {
+              <span>La contraseña es requerida</span>
+            }
+            @if (f['password'].errors?.['minlength']) {
+              <span>La contraseña debe tener al menos 6 caracteres</span>
+            }
+          </div>
+        }
       </div>
 
       <div>
@@ -122,13 +134,19 @@
           class="input-field"
           [class.error]="submitted && (f['confirmPassword'].errors || registerForm.errors?.['mismatch'])"
         />
-        <div *ngIf="submitted && (f['confirmPassword'].errors || registerForm.errors?.['mismatch'])" class="error-message">
-          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
-          </svg>
-          <span *ngIf="f['confirmPassword'].errors?.['required']">Confirme su contraseña</span>
-          <span *ngIf="registerForm.errors?.['mismatch']">Las contraseñas no coinciden</span>
-        </div>
+        @if (submitted && (f['confirmPassword'].errors || registerForm.errors?.['mismatch'])) {
+          <div class="error-message">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+            </svg>
+            @if (f['confirmPassword'].errors?.['required']) {
+              <span>Confirme su contraseña</span>
+            }
+            @if (registerForm.errors?.['mismatch']) {
+              <span>Las contraseñas no coinciden</span>
+            }
+          </div>
+        }
       </div>
     </div>
 
@@ -157,12 +175,16 @@
             class="input-field"
             [class.error]="submitted && f['nombreEmprendimiento'].errors"
           />
-          <div *ngIf="submitted && f['nombreEmprendimiento'].errors" class="error-message">
-            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
-            </svg>
-            <span *ngIf="f['nombreEmprendimiento'].errors?.['required']">El nombre del emprendimiento es requerido</span>
-          </div>
+          @if (submitted && f['nombreEmprendimiento'].errors) {
+            <div class="error-message">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+              </svg>
+              @if (f['nombreEmprendimiento'].errors?.['required']) {
+                <span>El nombre del emprendimiento es requerido</span>
+              }
+            </div>
+          }
         </div>
 
         <div>
@@ -177,12 +199,16 @@
             class="input-field"
             [class.error]="submitted && f['ubicacion'].errors"
           />
-          <div *ngIf="submitted && f['ubicacion'].errors" class="error-message">
-            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
-            </svg>
-            <span *ngIf="f['ubicacion'].errors?.['required']">La ubicación es requerida</span>
-          </div>
+          @if (submitted && f['ubicacion'].errors) {
+            <div class="error-message">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+              </svg>
+              @if (f['ubicacion'].errors?.['required']) {
+                <span>La ubicación es requerida</span>
+              }
+            </div>
+          }
         </div>
 
         <div>
@@ -198,13 +224,19 @@
             [class.error]="submitted && f['descripcion'].errors"
           ></textarea>
           <div class="flex justify-between mt-1">
-            <div *ngIf="submitted && f['descripcion'].errors" class="error-message">
-              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
-              </svg>
-              <span *ngIf="f['descripcion'].errors?.['required']">La descripción es requerida</span>
-              <span *ngIf="f['descripcion'].errors?.['maxlength']">La descripción no puede exceder los 1000 caracteres</span>
-            </div>
+            @if (submitted && f['descripcion'].errors) {
+              <div class="error-message">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                </svg>
+                @if (f['descripcion'].errors?.['required']) {
+                  <span>La descripción es requerida</span>
+                }
+                @if (f['descripcion'].errors?.['maxlength']) {
+                  <span>La descripción no puede exceder los 1000 caracteres</span>
+                }
+              </div>
+            }
             <div class="character-count">
               {{ f['descripcion'].value?.length || 0 }}/1000 caracteres
             </div>
