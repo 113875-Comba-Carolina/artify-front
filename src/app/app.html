@@ -5,7 +5,7 @@
       <div class="flex items-center justify-between h-20 md:h-20 h-24">
         <!-- Logo -->
         <div class="flex items-center">
-          <a (click)="scrollToTop()" class="flex items-center space-x-3 group cursor-pointer">
+          <a routerLink="/" class="flex items-center space-x-3 group" (click)="closeMobileMenu()">
             <!-- Logo más grande en móviles -->
             <div class="w-24 h-24 md:w-16 md:h-16 transition-all duration-300 group-hover:scale-110 overflow-hidden">
               <img src="assets/images/logo.png" alt="Artify Logo" class="w-full h-full object-contain">
@@ -19,17 +19,17 @@
         
         <!-- Navigation -->
         <div class="hidden md:flex items-center space-x-8">
-          <a (click)="scrollToTop()" class="nav-link text-artisan-600 hover:text-artisan-800 font-medium transition-colors duration-300 cursor-pointer">
+          <a routerLink="/" class="nav-link text-artisan-600 hover:text-artisan-800 font-medium transition-colors duration-300">
             Inicio
           </a>
-          <a (click)="scrollToSection('categorias')" class="nav-link text-artisan-600 hover:text-artisan-800 font-medium transition-colors duration-300 cursor-pointer">
+          <a href="#categorias" class="nav-link text-artisan-600 hover:text-artisan-800 font-medium transition-colors duration-300">
             Categorías
           </a>
-          <a (click)="scrollToSection('sobre-artify')" class="nav-link text-artisan-600 hover:text-artisan-800 font-medium transition-colors duration-300 cursor-pointer">
-            Sobre Artify
+          <a href="#artesanos" class="nav-link text-artisan-600 hover:text-artisan-800 font-medium transition-colors duration-300">
+            Artesanos
           </a>
-          <a (click)="scrollToSection('productos')" class="nav-link text-artisan-600 hover:text-artisan-800 font-medium transition-colors duration-300 cursor-pointer">
-            Productos Destacados
+          <a href="#sobre-nosotros" class="nav-link text-artisan-600 hover:text-artisan-800 font-medium transition-colors duration-300">
+            Sobre Nosotros
           </a>
         </div>
         
@@ -38,7 +38,7 @@
           <!-- Guest User Buttons -->
           @if (!isLoggedIn) {
             <div class="flex items-center space-x-4">
-              <a routerLink="/auth/login" class="text-artisan-600 hover:text-artisan-800 font-medium transition-all duration-300 px-4 py-2 rounded-lg hover:bg-artisan-50 shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+              <a routerLink="/auth/login" class="text-artisan-600 hover:text-artisan-800 font-medium transition-colors duration-300 px-4 py-2 rounded-lg hover:bg-artisan-50">
                 Iniciar Sesión
               </a>
               <a routerLink="/auth/register" class="bg-gradient-to-r from-artisan-600 to-artisan-700 text-white px-6 py-2 rounded-lg font-medium hover:from-artisan-700 hover:to-artisan-800 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
@@ -95,17 +95,17 @@
       <div class="px-4 py-6 space-y-4">
         <!-- Mobile Navigation Links -->
         <div class="space-y-3">
-          <a (click)="scrollToTop()" class="block text-artisan-600 hover:text-artisan-800 font-medium transition-colors duration-300 py-2 cursor-pointer">
+          <a routerLink="/" (click)="closeMobileMenu()" class="block text-artisan-600 hover:text-artisan-800 font-medium transition-colors duration-300 py-2">
             Inicio
           </a>
-          <a (click)="scrollToSection('categorias')" class="block text-artisan-600 hover:text-artisan-800 font-medium transition-colors duration-300 py-2 cursor-pointer">
+          <a href="#categorias" (click)="closeMobileMenu()" class="block text-artisan-600 hover:text-artisan-800 font-medium transition-colors duration-300 py-2">
             Categorías
           </a>
-          <a (click)="scrollToSection('sobre-artify')" class="block text-artisan-600 hover:text-artisan-800 font-medium transition-colors duration-300 py-2 cursor-pointer">
-            Sobre Artify
+          <a href="#artesanos" (click)="closeMobileMenu()" class="block text-artisan-600 hover:text-artisan-800 font-medium transition-colors duration-300 py-2">
+            Artesanos
           </a>
-          <a (click)="scrollToSection('productos')" class="block text-artisan-600 hover:text-artisan-800 font-medium transition-colors duration-300 py-2 cursor-pointer">
-            Productos Destacados
+          <a href="#sobre-nosotros" (click)="closeMobileMenu()" class="block text-artisan-600 hover:text-artisan-800 font-medium transition-colors duration-300 py-2">
+            Sobre Nosotros
           </a>
         </div>
 
@@ -114,10 +114,10 @@
           <!-- Guest User Buttons -->
           @if (!isLoggedIn) {
             <div class="space-y-3">
-              <a routerLink="/auth/login" (click)="closeMobileMenu()" class="block text-artisan-600 hover:text-artisan-800 font-medium transition-all duration-300 py-2 px-4 rounded-lg hover:bg-artisan-50 shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+              <a routerLink="/auth/login" (click)="closeMobileMenu()" class="block text-artisan-600 hover:text-artisan-800 font-medium transition-colors duration-300 py-2 px-4 rounded-lg hover:bg-artisan-50">
                 Iniciar Sesión
               </a>
-              <a routerLink="/auth/register" (click)="closeMobileMenu()" class="block bg-gradient-to-r from-artisan-600 to-artisan-700 text-white text-center py-3 px-4 rounded-lg font-medium hover:from-artisan-700 hover:to-artisan-800 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+              <a routerLink="/auth/register" (click)="closeMobileMenu()" class="block bg-gradient-to-r from-artisan-600 to-artisan-700 text-white text-center py-3 px-4 rounded-lg font-medium hover:from-artisan-700 hover:to-artisan-800 transition-all duration-300 shadow-lg">
                 Registrarse
               </a>
             </div>
@@ -160,7 +160,7 @@
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
         <!-- Columna 1 - Logo y descripción -->
         <div class="md:col-span-1">
-          <a (click)="scrollToTop()" class="flex items-center space-x-3 mb-4 group cursor-pointer">
+          <a routerLink="/" class="flex items-center space-x-3 mb-4 group">
             <div class="w-16 h-16 rounded-lg overflow-hidden group-hover:scale-105 transition-transform duration-300">
               <img src="assets/images/logo.png" alt="Artify Logo" class="w-full h-full object-contain">
             </div>
@@ -180,18 +180,18 @@
           <h4 class="text-lg font-semibold mb-4 text-artisan-800">Enlaces</h4>
           <ul class="space-y-3 text-sm">
             <li>
-              <a (click)="scrollToSection('categorias')" class="text-artisan-600 hover:text-artisan-800 transition-colors duration-300 cursor-pointer">
+              <a href="#sobre-nosotros" class="text-artisan-600 hover:text-artisan-800 transition-colors duration-300">
+                Sobre Nosotros
+              </a>
+            </li>
+            <li>
+              <a href="#categorias" class="text-artisan-600 hover:text-artisan-800 transition-colors duration-300">
                 Categorías
               </a>
             </li>
             <li>
-              <a (click)="scrollToSection('sobre-artify')" class="text-artisan-600 hover:text-artisan-800 transition-colors duration-300 cursor-pointer">
-                Sobre Artify
-              </a>
-            </li>
-            <li>
-              <a (click)="scrollToSection('productos')" class="text-artisan-600 hover:text-artisan-800 transition-colors duration-300 cursor-pointer">
-                Productos Destacados
+              <a href="#artesanos" class="text-artisan-600 hover:text-artisan-800 transition-colors duration-300">
+                Artesanos
               </a>
             </li>
             <li>
@@ -267,10 +267,21 @@
       
       <!-- Línea divisoria y copyright -->
       <div class="border-t border-artisan-800 mt-12 pt-8">
-        <div class="text-center">
+        <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           <p class="text-artisan-600 text-sm">
             &copy; 2025 Artify. Todos los derechos reservados.
           </p>
+          <div class="flex space-x-6 text-sm">
+            <a href="#" class="text-artisan-600 hover:text-artisan-800 transition-colors duration-300">
+              Términos de Uso
+            </a>
+            <a href="#" class="text-artisan-600 hover:text-artisan-800 transition-colors duration-300">
+              Política de Privacidad
+            </a>
+            <a href="#" class="text-artisan-600 hover:text-artisan-800 transition-colors duration-300">
+              Cookies
+            </a>
+          </div>
         </div>
       </div>
     </div>
