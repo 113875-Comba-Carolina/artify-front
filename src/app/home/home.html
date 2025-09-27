@@ -26,27 +26,8 @@
   </div>
 </section>
 
-<!-- Categories Section -->
-<section id="categorias" class="py-16 bg-white">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <h3 class="text-3xl font-bold text-artisan-800 text-center mb-12">Explora por Categorías</h3>
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-      @for (category of categories; track category.name) {
-      <div
-        class="bg-artisan-50 rounded-lg p-6 text-center hover:bg-artisan-100 transition-colors cursor-pointer"
-      >
-        <div class="flex justify-center mb-2">
-          <img [src]="category.icon" [alt]="category.name" class="w-12 h-12 object-contain">
-        </div>
-        <h4 class="font-medium text-artisan-800">{{ category.name }}</h4>
-      </div>
-      }
-    </div>
-  </div>
-</section>
-
 <!-- Sobre Artify Section -->
-<section id="sobre-artify" class="py-20 bg-gradient-to-br from-artisan-100 to-artisan-200">
+<section id="sobre-artify" class="py-20 bg-white">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-16">
       <h3 class="text-4xl font-bold text-artisan-800 mb-6">Sobre Artify</h3>
@@ -140,7 +121,7 @@
 </section>
 
 <!-- Why Choose Us Section -->
-<section class="py-16 bg-white">
+<section class="py-16 bg-gradient-to-br from-artisan-100 to-artisan-200">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <h3 class="text-3xl font-bold text-artisan-800 text-center mb-12">¿Por qué elegir Artify?</h3>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
@@ -165,6 +146,27 @@
         <h4 class="text-xl font-semibold text-artisan-800 mb-3">Calidad Garantizada</h4>
         <p class="text-artisan-600">Productos seleccionados cuidadosamente para garantizar la mejor calidad</p>
       </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Categories Section -->
+<section id="categorias" class="py-16 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h3 class="text-3xl font-bold text-artisan-800 text-center mb-12">Explora por Categorías</h3>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+      @for (category of categories; track category.name) {
+      <div
+        class="bg-artisan-50 rounded-lg p-6 text-center hover:bg-artisan-100 transition-colors cursor-pointer"
+        (click)="goToCategoria(category.key)"
+      >
+        <div class="flex justify-center mb-2">
+          <img [src]="category.icon" [alt]="category.name" class="w-12 h-12 object-contain">
+        </div>
+        <h4 class="font-medium text-artisan-800">{{ category.name }}</h4>
+      </div>
+      }
     </div>
   </div>
 </section>

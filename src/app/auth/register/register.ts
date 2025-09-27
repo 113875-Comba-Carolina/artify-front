@@ -17,6 +17,7 @@ export class RegisterComponent implements OnInit {
   loading = false;
   submitted = false;
   error = '';
+  redirectUrl = '/';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -29,12 +30,16 @@ export class RegisterComponent implements OnInit {
     // Scroll hacia arriba cuando se carga el componente
     window.scrollTo(0, 0);
     
-    // Leer parámetro de query para preseleccionar rol
+    // Leer parámetros de query
     const roleParam = this.route.snapshot.queryParams['role'];
+    const redirectParam = this.route.snapshot.queryParams['redirect'];
     const preselectRole = roleParam === 'artesano' ? 'ARTESANO' : '';
     
     // Actualizar isArtesano basado en el parámetro
     this.isArtesano = preselectRole === 'ARTESANO';
+    
+    // Guardar la URL de redirección para después del registro
+    this.redirectUrl = redirectParam || '/';
     
     this.registerForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -102,7 +107,10 @@ export class RegisterComponent implements OnInit {
     if (this.isArtesano) {
       this.authService.registerArtesano(formData).subscribe({
         next: () => {
-          this.router.navigate(['/auth/login']);
+          // Redirigir a login con la URL de redirección
+          this.router.navigate(['/auth/login'], { 
+            queryParams: { redirect: this.redirectUrl } 
+          });
         },
         error: (error: any) => {
           this.error = error.error?.message || 'Error al registrar usuario';
@@ -112,7 +120,10 @@ export class RegisterComponent implements OnInit {
     } else {
       this.authService.registerUsuario(formData).subscribe({
         next: () => {
-          this.router.navigate(['/auth/login']);
+          // Redirigir a login con la URL de redirección
+          this.router.navigate(['/auth/login'], { 
+            queryParams: { redirect: this.redirectUrl } 
+          });
         },
         error: (error: any) => {
           this.error = error.error?.message || 'Error al registrar usuario';

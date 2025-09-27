@@ -14,6 +14,15 @@ export interface Producto {
   esActivo?: boolean;
   fechaCreacion?: string;
   fechaActualizacion?: string;
+  artesano?: {
+    id: number;
+    nombre: string;
+    email: string;
+    nombreEmprendimiento: string;
+    descripcion: string;
+    ubicacion: string;
+  };
+  // Mantener compatibilidad con versiones anteriores
   artesanoNombre?: string;
   artesanoId?: number;
 }

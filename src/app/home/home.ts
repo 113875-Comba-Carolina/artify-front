@@ -56,18 +56,18 @@ export class HomeComponent {
   ];
 
   categories = [
-    { name: 'Cerámica', icon: 'assets/icons/categoria-ceramica.png', count: '+100' },
-    { name: 'Metales', icon: 'assets/icons/metales.png', count: '+100' },
-    { name: 'Mates y accesorios', icon: 'assets/icons/mate.png', count: '+100' },
-    { name: 'Aromas y velas', icon: 'assets/icons/aromas-velas.png', count: '+100' },
-    { name: 'Textiles', icon: 'assets/icons/textiles.png', count: '+100' },
-    { name: 'Cuero', icon: 'assets/icons/cuero.png', count: '+100' },
-    { name: 'Madera', icon: 'assets/icons/madera.png', count: '+100' },
-    { name: 'Vidrio', icon: 'assets/icons/vidrio.png', count: '+100' },
-    { name: 'Joyería artesanal', icon: 'assets/icons/joyeria-artesanal.png', count: '+100' },
-    { name: 'Cestería y fibras', icon: 'assets/icons/cesteria-fibras.png', count: '+100' },
-    { name: 'Arte y pintura', icon: 'assets/icons/arte-pintura.png', count: '+100' },
-    { name: 'Otros', icon: 'assets/icons/otros.png', count: '+100' }
+    { name: 'Cerámica', key: 'CERAMICA', icon: 'assets/icons/categoria-ceramica.png', count: '+100' },
+    { name: 'Metales', key: 'METALES', icon: 'assets/icons/metales.png', count: '+100' },
+    { name: 'Mates y accesorios', key: 'MATE', icon: 'assets/icons/mate.png', count: '+100' },
+    { name: 'Aromas y velas', key: 'AROMAS_VELAS', icon: 'assets/icons/aromas-velas.png', count: '+100' },
+    { name: 'Textiles', key: 'TEXTILES', icon: 'assets/icons/textiles.png', count: '+100' },
+    { name: 'Cuero', key: 'CUERO', icon: 'assets/icons/cuero.png', count: '+100' },
+    { name: 'Madera', key: 'MADERA', icon: 'assets/icons/madera.png', count: '+100' },
+    { name: 'Vidrio', key: 'VIDRIO', icon: 'assets/icons/vidrio.png', count: '+100' },
+    { name: 'Joyería artesanal', key: 'JOYERIA_ARTESANAL', icon: 'assets/icons/joyeria-artesanal.png', count: '+100' },
+    { name: 'Cestería y fibras', key: 'CESTERIA_FIBRAS', icon: 'assets/icons/cesteria-fibras.png', count: '+100' },
+    { name: 'Arte y pintura', key: 'ARTE_PINTURA', icon: 'assets/icons/arte-pintura.png', count: '+100' },
+    { name: 'Otros', key: 'OTROS', icon: 'assets/icons/otros.png', count: '+100' }
   ];
 
   onVerDetalles(product: any) {
@@ -88,6 +88,18 @@ export class HomeComponent {
       element.scrollIntoView({ 
         behavior: 'smooth',
         block: 'start'
+      });
+    }
+  }
+
+  goToCategoria(categoriaKey: string) {
+    if (this.authService.isLoggedIn()) {
+      this.router.navigate(['/categoria', categoriaKey]);
+    } else {
+      this.router.navigate(['/auth/register'], { 
+        queryParams: { 
+          redirect: `/categoria/${categoriaKey}` 
+        } 
       });
     }
   }
