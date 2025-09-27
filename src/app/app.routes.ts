@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home';
+import { ProductosComponent } from './productos/productos';
 
 export const routes: Routes = [
   {
@@ -9,5 +10,9 @@ export const routes: Routes = [
   {
     path: 'auth',
     loadChildren: () => import('./auth/auth-module').then(m => m.AuthModule)
+  },
+  {
+    path: 'productos',
+    component: ProductosComponent
   }
 ];
