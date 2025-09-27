@@ -16,18 +16,12 @@
         </a>
       } @else {
         <a
-          (click)="scrollToSection('productos')"
+          (click)="scrollToSection('categorias')"
           class="bg-artisan-600 text-white px-8 py-3 rounded-lg text-lg font-medium hover:bg-artisan-700 transition-colors cursor-pointer"
         >
-          Explorar Productos
+          Explorar Categorías
         </a>
       }
-      <a
-        (click)="scrollToSection('categorias')"
-        class="border-2 border-artisan-600 text-artisan-600 px-8 py-3 rounded-lg text-lg font-medium hover:bg-artisan-600 hover:text-white transition-colors cursor-pointer"
-      >
-        Ver Categorías
-      </a>
     </div>
   </div>
 </section>
@@ -145,38 +139,6 @@
   </div>
 </section>
 
-<!-- Featured Products Section -->
-<section id="productos" class="py-16 bg-artisan-50">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <h3 class="text-3xl font-bold text-artisan-800 text-center mb-12">Productos Destacados</h3>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-      @for (product of featuredProducts; track product.id) {
-      <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-        <img [src]="product.image" [alt]="product.name" class="w-full h-48 object-cover" />
-        <div class="p-4">
-          <div class="text-sm text-artisan-600 mb-1">{{ product.category }}</div>
-          <h4 class="font-medium text-artisan-800 mb-2">{{ product.name }}</h4>
-          <div class="flex justify-between items-center">
-            <span class="text-lg font-bold text-artisan-600">{{ product.price | currency }}</span>
-            <button
-              (click)="onVerDetalles(product)"
-              class="bg-artisan-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-artisan-700 transition-colors"
-            >
-              Ver Detalles
-            </button>
-          </div>
-        </div>
-      </div>
-      }
-    </div>
-    <div class="text-center mt-8">
-      <a href="#" class="text-artisan-600 hover:text-artisan-800 font-medium">
-        Ver todos los productos →
-      </a>
-    </div>
-  </div>
-</section>
-
 <!-- Why Choose Us Section -->
 <section class="py-16 bg-white">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -207,22 +169,127 @@
   </div>
 </section>
 
-<!-- CTA Section -->
-@if (!isLoggedIn) {
-<section class="py-16 bg-artisan-800 text-white">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-    <h3 class="text-3xl font-bold mb-4">¿Eres Artesano?</h3>
-    <p class="text-xl mb-8 max-w-2xl mx-auto">
-      Únete a nuestra comunidad y comparte tu arte con el mundo. Conecta con clientes que valoran el
-      trabajo hecho a mano.
-    </p>
-    <a
-      [routerLink]="['/auth/register']"
-      [queryParams]="{role: 'artesano'}"
-      class="bg-white text-artisan-800 px-8 py-3 rounded-lg text-lg font-medium hover:bg-artisan-100 transition-colors"
-    >
-      Regístrate como Artesano
-    </a>
+<!-- Para Artesanos Section -->
+<section id="para-artesanos" class="py-20 bg-gradient-to-br from-artisan-100 to-artisan-200">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl font-bold text-artisan-800 mb-6">¿Eres Artesano?</h2>
+      <div class="w-24 h-1 bg-artisan-600 mx-auto rounded-full"></div>
+      <p class="text-xl text-artisan-600 mt-6 max-w-3xl mx-auto">
+        Únete a Artify y conecta con clientes que valoran el trabajo hecho a mano. 
+        Convierte tu pasión artesanal en ingresos sostenibles.
+      </p>
+    </div>
+    
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+      <div class="space-y-8">
+        <div>
+          <h3 class="text-2xl font-semibold text-artisan-800 mb-4">Tu marketplace para productos únicos</h3>
+          <p class="text-artisan-600 leading-relaxed mb-4">
+            Artify es el lugar perfecto para que tus creaciones artesanales encuentren 
+            a los clientes que las valoran. Conectamos directamente a artesanos con 
+            compradores que buscan productos únicos y auténticos.
+          </p>
+          <ul class="space-y-3 text-artisan-600">
+            <li class="flex items-start space-x-3">
+              <div class="w-6 h-6 bg-artisan-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                <span class="text-white text-sm font-bold">1</span>
+              </div>
+              <span>Regístrate y completa tu perfil de artesano</span>
+            </li>
+            <li class="flex items-start space-x-3">
+              <div class="w-6 h-6 bg-artisan-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                <span class="text-white text-sm font-bold">2</span>
+              </div>
+              <span>Sube fotos de calidad de tus productos</span>
+            </li>
+            <li class="flex items-start space-x-3">
+              <div class="w-6 h-6 bg-artisan-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                <span class="text-white text-sm font-bold">3</span>
+              </div>
+              <span>Establece precios justos para tu trabajo</span>
+            </li>
+            <li class="flex items-start space-x-3">
+              <div class="w-6 h-6 bg-artisan-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                <span class="text-white text-sm font-bold">4</span>
+              </div>
+              <span>¡Comienza a vender y mejora tu economía!</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="bg-white rounded-lg p-8 shadow-lg">
+        <img 
+          src="assets/images/paseo-artesanos.jpeg" 
+          alt="Artesanos trabajando en sus talleres"
+          class="w-full h-64 object-cover rounded-lg mb-6"
+        >
+        <h4 class="text-xl font-semibold text-artisan-800 mb-3">Impulsa tu economía local</h4>
+        <p class="text-artisan-600 mb-4">
+          Forma parte de una plataforma que valora el trabajo artesanal y ayuda a 
+          los artesanos a generar ingresos sostenibles a través de sus creaciones únicas.
+        </p>
+        <div class="flex items-center space-x-2 text-artisan-600">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+          <span class="text-sm">Plataforma enfocada en productos únicos</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Beneficios para Artesanos -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+      <div class="text-center">
+        <div class="bg-artisan-600 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6">
+          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold text-artisan-800 mb-4">Fotografía de Calidad</h3>
+        <p class="text-artisan-600">
+          Te ayudamos a presentar tus productos de la mejor manera. 
+          Consejos para fotografía que haga que tus creaciones destaquen.
+        </p>
+      </div>
+      
+      <div class="text-center">
+        <div class="bg-artisan-600 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6">
+          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold text-artisan-800 mb-4">Precios Justos</h3>
+        <p class="text-artisan-600">
+          Establece precios que reflejen el valor de tu trabajo artesanal. 
+          Te ayudamos a valorar correctamente tus creaciones únicas.
+        </p>
+      </div>
+      
+      <div class="text-center">
+        <div class="bg-artisan-600 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6">
+          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold text-artisan-800 mb-4">Conexión Directa</h3>
+        <p class="text-artisan-600">
+          Conecta directamente con clientes que valoran el trabajo artesanal. 
+          Sin intermediarios, tú estableces el contacto y la relación.
+        </p>
+      </div>
+    </div>
+
+    <!-- CTA para Artesanos -->
+    <div class="text-center">
+      <a
+        routerLink="/auth/register"
+        [queryParams]="{role: 'artesano'}"
+        class="bg-artisan-600 text-white px-8 py-4 rounded-lg text-lg font-bold hover:bg-artisan-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+      >
+        Regístrate como Artesano - Es Gratis
+      </a>
+    </div>
   </div>
 </section>
-}
