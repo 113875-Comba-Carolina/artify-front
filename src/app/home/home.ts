@@ -65,9 +65,9 @@ export class HomeComponent {
     { name: 'Madera', icon: 'assets/icons/madera.png', count: '+100' },
     { name: 'Vidrio', icon: 'assets/icons/vidrio.png', count: '+100' },
     { name: 'Joyería artesanal', icon: 'assets/icons/joyeria-artesanal.png', count: '+100' },
-    { name: 'Reciclables', icon: 'assets/icons/reciclables.png', count: '+100' },
     { name: 'Cestería y fibras', icon: 'assets/icons/cesteria-fibras.png', count: '+100' },
-    { name: 'Arte y pintura', icon: 'assets/icons/arte-pintura.png', count: '+100' }
+    { name: 'Arte y pintura', icon: 'assets/icons/arte-pintura.png', count: '+100' },
+    { name: 'Otros', icon: 'assets/icons/otros.png', count: '+100' }
   ];
 
   onVerDetalles(product: any) {

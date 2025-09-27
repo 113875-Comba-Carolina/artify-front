@@ -1,0 +1,298 @@
+<div class="productos-container">
+  <!-- Header -->
+  <div class="productos-header">
+    <div class="header-content">
+      <h1 class="productos-title">Gestión de Productos</h1>
+      <p class="productos-subtitle">Administra tus productos artesanales</p>
+      
+      @if (estadisticas) {
+        <div class="estadisticas">
+          <div class="stat-item">
+            <span class="stat-number">{{ estadisticas.totalProductos }}</span>
+            <span class="stat-label">Total Productos</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">{{ estadisticas.productosActivos }}</span>
+            <span class="stat-label">Activos</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">{{ estadisticas.productosInactivos }}</span>
+            <span class="stat-label">Inactivos</span>
+          </div>
+        </div>
+      }
+    </div>
+    
+    <button class="btn-primary" (click)="showCreateForm()" [disabled]="isLoading">
+      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+      </svg>
+      Crear Producto
+    </button>
+  </div>
+
+  <!-- Buscador -->
+  <div class="search-section">
+    <div class="search-container">
+      <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+      </svg>
+      <input 
+        type="text" 
+        placeholder="Buscar productos por nombre..." 
+        [(ngModel)]="searchTerm"
+        (input)="onSearchChange()"
+        class="search-input"
+      >
+      <button 
+        *ngIf="searchTerm" 
+        (click)="clearSearch()" 
+        class="clear-search-btn"
+        title="Limpiar búsqueda"
+      >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mensajes -->
+  @if (error) {
+    <div class="alert alert-error">
+      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+      </svg>
+      {{ error }}
+    </div>
+  }
+
+  @if (success) {
+    <div class="alert alert-success">
+      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+      </svg>
+      {{ success }}
+    </div>
+  }
+
+  <!-- Lista de Productos -->
+  @if (isLoading) {
+    <div class="loading-container">
+      <div class="loading-spinner"></div>
+      <p>Cargando productos...</p>
+    </div>
+  } @else if (!hasProducts) {
+    <div class="empty-state">
+      <div class="empty-icon">
+        <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+        </svg>
+      </div>
+      <h3 class="empty-title">Aún no tienes productos cargados</h3>
+      <p class="empty-description">Comienza creando tu primer producto artesanal</p>
+      <button class="btn-primary" (click)="showCreateForm()">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+        </svg>
+        Crear mi primer producto
+      </button>
+    </div>
+  } @else {
+    <div class="productos-grid">
+      @for (producto of productosFiltrados; track producto.id) {
+        <div class="producto-card">
+          <div class="producto-image">
+            @if (producto.imagenUrl) {
+              <img [src]="producto.imagenUrl" [alt]="producto.nombre" class="producto-img">
+            } @else {
+              <div class="producto-placeholder">
+                <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+              </div>
+            }
+          </div>
+          
+          <div class="producto-content">
+            <div class="producto-header">
+              <h3 class="producto-nombre">{{ producto.nombre }}</h3>
+              <span class="producto-categoria">{{ getCategoriaNombre(producto.categoria) }}</span>
+            </div>
+            
+            <p class="producto-descripcion">{{ producto.descripcion }}</p>
+            
+            <div class="producto-details">
+              <div class="detail-item">
+                <span class="detail-label">Precio:</span>
+                <span class="detail-value">${{ producto.precio | number:'1.2-2' }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Stock:</span>
+                <span class="detail-value">{{ producto.stock }} unidades</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Estado:</span>
+                <span class="detail-value" [class]="producto.esActivo ? 'status-active' : 'status-inactive'">
+                  {{ producto.esActivo ? 'Activo' : 'Inactivo' }}
+                </span>
+              </div>
+            </div>
+            
+            <div class="producto-actions">
+              <button class="btn-secondary" (click)="showEditForm(producto)" [disabled]="isLoading">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                </svg>
+                Editar
+              </button>
+              <button class="btn-danger" (click)="deleteProduct(producto)" [disabled]="isLoading">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                </svg>
+                Eliminar
+              </button>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+
+  <!-- Modal de Formulario -->
+  @if (showForm) {
+    <div class="modal-overlay" (click)="cancelForm()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+          <h2 class="modal-title">
+            {{ editingProduct ? 'Editar Producto' : 'Crear Producto' }}
+          </h2>
+          <button class="modal-close" (click)="cancelForm()">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+        
+        <form (ngSubmit)="onSubmit()" class="producto-form">
+          <div class="form-group">
+            <label for="nombre" class="form-label">Nombre del Producto *</label>
+            <input 
+              type="text" 
+              id="nombre" 
+              [(ngModel)]="productoForm.nombre" 
+              (ngModelChange)="onFieldChange('nombre')"
+              name="nombre"
+              [class]="'form-input' + (hasFieldError('nombre') ? ' form-input-error' : '')"
+              placeholder="Ej: Vaso de Cerámica Artesanal"
+              required
+            >
+            @if (hasFieldError('nombre')) {
+              <div class="form-error">{{ getFieldError('nombre') }}</div>
+            }
+          </div>
+          
+          <div class="form-group">
+            <label for="descripcion" class="form-label">Descripción *</label>
+            <textarea 
+              id="descripcion" 
+              [(ngModel)]="productoForm.descripcion" 
+              (ngModelChange)="onFieldChange('descripcion')"
+              name="descripcion"
+              [class]="'form-textarea' + (hasFieldError('descripcion') ? ' form-input-error' : '')"
+              placeholder="Describe tu producto..."
+              rows="3"
+              required
+            ></textarea>
+            @if (hasFieldError('descripcion')) {
+              <div class="form-error">{{ getFieldError('descripcion') }}</div>
+            }
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="precio" class="form-label">Precio *</label>
+              <input 
+                type="number" 
+                id="precio" 
+                [(ngModel)]="productoForm.precio" 
+                (ngModelChange)="onFieldChange('precio')"
+                name="precio"
+                [class]="'form-input' + (hasFieldError('precio') ? ' form-input-error' : '')"
+                placeholder="0.00"
+                step="0.01"
+                min="0"
+                required
+              >
+              @if (hasFieldError('precio')) {
+                <div class="form-error">{{ getFieldError('precio') }}</div>
+              }
+            </div>
+            
+            <div class="form-group">
+              <label for="stock" class="form-label">Stock *</label>
+              <input 
+                type="number" 
+                id="stock" 
+                [(ngModel)]="productoForm.stock" 
+                (ngModelChange)="onFieldChange('stock')"
+                name="stock"
+                [class]="'form-input' + (hasFieldError('stock') ? ' form-input-error' : '')"
+                placeholder="0"
+                min="0"
+                required
+              >
+              @if (hasFieldError('stock')) {
+                <div class="form-error">{{ getFieldError('stock') }}</div>
+              }
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="categoria" class="form-label">Categoría *</label>
+            <select 
+              id="categoria" 
+              [(ngModel)]="productoForm.categoria" 
+              (ngModelChange)="onFieldChange('categoria')"
+              name="categoria"
+              [class]="'form-select' + (hasFieldError('categoria') ? ' form-input-error' : '')"
+              required
+            >
+              <option value="">Selecciona una categoría</option>
+              @for (categoria of categorias; track categoria) {
+                <option [value]="categoria">{{ getCategoriaNombre(categoria) }}</option>
+              }
+            </select>
+            @if (hasFieldError('categoria')) {
+              <div class="form-error">{{ getFieldError('categoria') }}</div>
+            }
+          </div>
+          
+          <div class="form-group">
+            <label for="imagenUrl" class="form-label">URL de Imagen</label>
+            <input 
+              type="url" 
+              id="imagenUrl" 
+              [(ngModel)]="productoForm.imagenUrl" 
+              name="imagenUrl"
+              class="form-input" 
+              placeholder="https://ejemplo.com/imagen.jpg"
+            >
+          </div>
+          
+          <div class="form-actions">
+            <button type="button" class="btn-secondary" (click)="cancelForm()" [disabled]="isLoading">
+              Cancelar
+            </button>
+            <button type="submit" class="btn-primary" [disabled]="isLoading">
+              @if (isLoading) {
+                <div class="loading-spinner-small"></div>
+              }
+              {{ editingProduct ? 'Actualizar' : 'Crear' }} Producto
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  }
+</div>

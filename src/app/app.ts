@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet, RouterLink } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 import { AuthService, LoginResponse } from './auth/services/auth';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, RouterLink],
+  imports: [CommonModule, RouterOutlet, RouterLink, HttpClientModule],
   templateUrl: './app.html',
   styleUrls: ['./app.scss']
 })

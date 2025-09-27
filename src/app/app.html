@@ -49,6 +49,14 @@
               </div>
             </div>
             <div class="flex items-center space-x-2">
+              @if (currentUser?.rol === 'ARTESANO') {
+                <a routerLink="/productos" class="bg-gradient-to-r from-artisan-600 to-artisan-700 text-white px-4 py-2 rounded-lg font-medium hover:from-artisan-700 hover:to-artisan-800 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 text-sm">
+                  <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+                  </svg>
+                  Mis Productos
+                </a>
+              }
               <a href="#" class="text-artisan-600 hover:text-artisan-800 font-medium transition-colors duration-300 px-3 py-2 rounded-lg hover:bg-artisan-50 text-sm">
                 Mi Perfil
               </a>
@@ -112,6 +120,14 @@
                 <p class="text-xs text-artisan-500">{{ currentUser?.rol }}</p>
               </div>
             </div>
+            @if (currentUser?.rol === 'ARTESANO') {
+              <a routerLink="/productos" (click)="closeMobileMenu()" class="block bg-gradient-to-r from-artisan-600 to-artisan-700 text-white text-center py-3 px-4 rounded-lg font-medium hover:from-artisan-700 hover:to-artisan-800 transition-all duration-300 shadow-lg">
+                <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+                </svg>
+                Mis Productos
+              </a>
+            }
             <a href="#" (click)="closeMobileMenu()" class="block text-artisan-600 hover:text-artisan-800 font-medium transition-colors duration-300 py-2 px-4 rounded-lg hover:bg-artisan-50">
               Mi Perfil
             </a>
