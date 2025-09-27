@@ -43,4 +43,36 @@ export class AppComponent implements OnInit {
   closeMobileMenu() {
     this.isMobileMenuOpen = false;
   }
+
+  scrollToSection(sectionId: string) {
+    // Si estamos en la página home, hacer scroll directamente
+    if (window.location.pathname === '/') {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ 
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    } else {
+      // Si estamos en otra página, redirigir al home y luego hacer scroll
+      // El scroll se manejará después de la navegación
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      }, 100);
+    }
+  }
+
+  scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }
 }
