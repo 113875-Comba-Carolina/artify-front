@@ -26,14 +26,14 @@ export class AuthService {
 
     return this.http.get<LoginResponse>(`${this.apiUrl}/perfil`, { headers }).pipe(
       tap(response => {
-        localStorage.setItem('user', JSON.stringify(response));
+        localStorage.setItem('currentUser', JSON.stringify(response));
         localStorage.setItem('auth', btoa(email + ':' + password));
       })
     );
   }
 
   logout(): void {
-    localStorage.removeItem('user');
+    localStorage.removeItem('currentUser');
     localStorage.removeItem('auth');
   }
 
@@ -42,7 +42,7 @@ export class AuthService {
   }
 
   getCurrentUser(): LoginResponse | null {
-    const user = localStorage.getItem('user');
+    const user = localStorage.getItem('currentUser');
     return user ? JSON.parse(user) : null;
   }
 
