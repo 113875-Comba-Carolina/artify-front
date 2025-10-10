@@ -17,7 +17,6 @@ import { AlertService } from '../services/alert.service';
 export class ProductoDetalleComponent implements OnInit {
   producto: Producto | null = null;
   isLoading = false;
-  error = '';
   cantidad = 1;
   maxCantidad = 1;
   isArtesanoDelProducto = false;
@@ -41,12 +40,10 @@ export class ProductoDetalleComponent implements OnInit {
   loadProducto() {
     const id = this.route.snapshot.paramMap.get('id');
     if (!id) {
-      this.error = 'ID de producto no válido';
       return;
     }
 
     this.isLoading = true;
-    this.error = '';
 
     this.productoService.obtenerProductoPorId(+id).subscribe({
       next: (producto) => {
@@ -61,16 +58,9 @@ export class ProductoDetalleComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error cargando producto:', error);
-        this.error = 'Error al cargar el producto';
         this.isLoading = false;
       }
     });
-  }
-
-  onComprar() {
-    if (!this.producto) return;
-    console.log('Comprar producto:', this.producto.nombre, 'Cantidad:', this.cantidad);
-    // TODO: Implementar funcionalidad de compra
   }
 
   onAgregarAlCarrito() {

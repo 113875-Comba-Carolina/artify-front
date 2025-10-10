@@ -21,7 +21,6 @@ export class ExplorarProductosComponent implements OnInit {
   categoriaSeleccionada: string = '';
   terminoBusqueda: string = '';
   isLoading = false;
-  error = '';
   page = 0;
   size = 20;
   hasMore = true;
@@ -62,7 +61,6 @@ export class ExplorarProductosComponent implements OnInit {
 
   loadProductos() {
     this.isLoading = true;
-    this.error = '';
     this.page = 0;
     this.hasMore = true;
 
@@ -74,7 +72,6 @@ export class ExplorarProductosComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error cargando productos:', error);
-        this.error = 'Error al cargar los productos';
         this.isLoading = false;
       }
     });
@@ -115,12 +112,6 @@ export class ExplorarProductosComponent implements OnInit {
     this.terminoBusqueda = '';
     this.categoriaSeleccionada = '';
     this.productosFiltrados = [...this.productos];
-  }
-
-  onComprar(event: Event, producto: Producto) {
-    event.stopPropagation();
-    console.log('Comprar producto:', producto.nombre);
-    // TODO: Implementar funcionalidad de compra
   }
 
   onAgregarAlCarrito(event: Event, producto: Producto) {
@@ -166,9 +157,9 @@ export class ExplorarProductosComponent implements OnInit {
   getEstadoProducto(producto: Producto): string {
     if (producto.estado) {
       switch (producto.estado) {
-        case 'ACTIVO_CON_STOCK': return 'Activo';
+        case 'ACTIVO': return 'Activo';
         case 'INACTIVO': return 'Inactivo';
-        case 'ACTIVO_SIN_STOCK': return 'Sin Stock';
+        case 'SIN_STOCK': return 'Sin Stock';
         default: return 'Desconocido';
       }
     }
@@ -181,9 +172,9 @@ export class ExplorarProductosComponent implements OnInit {
   getEstadoClass(producto: Producto): string {
     if (producto.estado) {
       switch (producto.estado) {
-        case 'ACTIVO_CON_STOCK': return 'status-active';
+        case 'ACTIVO': return 'status-active';
         case 'INACTIVO': return 'status-inactive';
-        case 'ACTIVO_SIN_STOCK': return 'status-no-stock';
+        case 'SIN_STOCK': return 'status-no-stock';
         default: return 'status-unknown';
       }
     }
