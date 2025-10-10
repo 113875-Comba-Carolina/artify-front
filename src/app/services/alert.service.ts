@@ -116,6 +116,22 @@ export class AlertService {
     Swal.close();
   }
 
+  // Confirmación genérica
+  async confirm(title: string, text: string = ''): Promise<boolean> {
+    const result = await Swal.fire({
+      title: title,
+      text: text,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3b82f6',
+      cancelButtonColor: '#6b7280',
+      confirmButtonText: 'Confirmar',
+      cancelButtonText: 'Cancelar',
+      reverseButtons: true
+    });
+    return result.isConfirmed;
+  }
+
   // Confirmación personalizada
   async confirmCustom(
     title: string, 

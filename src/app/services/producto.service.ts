@@ -12,7 +12,7 @@ export interface Producto {
   stock: number;
   imagenUrl?: string;
   esActivo?: boolean;
-  estado?: 'ACTIVO_CON_STOCK' | 'ACTIVO_SIN_STOCK' | 'INACTIVO';
+  estado?: 'ACTIVO' | 'INACTIVO' | 'SIN_STOCK';
   disponibleParaCompra?: boolean;
   fechaCreacion?: string;
   fechaActualizacion?: string;

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 export interface LoginResponse {
@@ -15,8 +15,17 @@ export interface LoginResponse {
 })
 export class AuthService {
   private apiUrl = 'http://localhost:8080/api/auth';
+  private userSubject = new BehaviorSubject<LoginResponse | null>(null);
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { 
+    // Inicializar con el usuario actual del localStorage
+    this.userSubject.next(this.getCurrentUser());
+  }
+
+  // Observable para que otros componentes puedan suscribirse a cambios del usuario
+  get user$(): Observable<LoginResponse | null> {
+    return this.userSubject.asObservable();
+  }
 
   login(email: string, password: string): Observable<LoginResponse> {
     const headers = new HttpHeaders().set(
@@ -28,6 +37,7 @@ export class AuthService {
       tap(response => {
         localStorage.setItem('currentUser', JSON.stringify(response));
         localStorage.setItem('auth', btoa(email + ':' + password));
+        this.userSubject.next(response);
       })
     );
   }
@@ -35,6 +45,7 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('currentUser');
     localStorage.removeItem('auth');
+    this.userSubject.next(null);
   }
 
   isLoggedIn(): boolean {
@@ -44,6 +55,11 @@ export class AuthService {
   getCurrentUser(): LoginResponse | null {
     const user = localStorage.getItem('currentUser');
     return user ? JSON.parse(user) : null;
+  }
+
+  updateUser(userData: any): void {
+    localStorage.setItem('currentUser', JSON.stringify(userData));
+    this.userSubject.next(userData);
   }
 
   registerArtesano(formData: any): Observable<any> {

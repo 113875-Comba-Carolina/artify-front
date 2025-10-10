@@ -19,7 +19,6 @@ export class ProductosCategoriaComponent implements OnInit {
   categoria: string = '';
   categoriaNombre: string = '';
   isLoading = false;
-  error = '';
   searchTerm = '';
   productosFiltrados: Producto[] = [];
 
@@ -71,7 +70,6 @@ export class ProductosCategoriaComponent implements OnInit {
 
   loadProductos() {
     this.isLoading = true;
-    this.error = '';
     
     this.productoService.obtenerProductosPorCategoria(this.categoria, 0, 100).subscribe({
       next: (response) => {
@@ -85,7 +83,6 @@ export class ProductosCategoriaComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error cargando productos:', error);
-        this.error = 'Error al cargar los productos de esta categoría';
         this.isLoading = false;
       }
     });
@@ -141,13 +138,6 @@ export class ProductosCategoriaComponent implements OnInit {
       style: 'currency',
       currency: 'ARS'
     }).format(precio);
-  }
-
-  // Métodos placeholder para los botones (sin funcionalidad aún)
-  onComprar(event: Event, producto: Producto) {
-    event.stopPropagation(); // Evitar que se active el click de la card
-    console.log('Comprar producto:', producto.nombre);
-    // TODO: Implementar funcionalidad de compra
   }
 
   onAgregarAlCarrito(event: Event, producto: Producto) {
