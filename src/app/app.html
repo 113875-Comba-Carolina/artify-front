@@ -40,10 +40,10 @@
           @if (isLoggedIn) {
             <div class="flex items-center space-x-4">
             <!-- Carrito -->
-            <button (click)="goToCarrito()" class="carrito-button" [title]="'Carrito (' + carritoService.getCantidadTotal() + ')'">
+            <button (click)="goToCarrito()" class="carrito-button" [title]="'Carrito (' + carritoService.getCarrito().length + ' productos)'">
               <img src="assets/icons/carrito-de-compras.png" alt="Carrito" class="w-6 h-6">
-              @if (carritoService.getCantidadTotal() > 0) {
-                <span class="carrito-badge">{{ carritoService.getCantidadTotal() }}</span>
+              @if (carritoService.getCarrito().length > 0) {
+                <span class="carrito-badge">{{ carritoService.getCarrito().length }}</span>
               }
             </button>
             

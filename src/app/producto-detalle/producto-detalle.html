@@ -88,7 +88,7 @@
             </div>
 
             <!-- Cantidad -->
-            @if (producto.esActivo && producto.stock > 0) {
+            @if (producto.esActivo && producto.stock > 0 && !isArtesanoDelProducto) {
               <div class="cantidad-section">
                 <label class="cantidad-label">Cantidad:</label>
                 <div class="cantidad-controls">
@@ -120,23 +120,34 @@
             }
 
             <!-- Botones de acción -->
-            <div class="producto-actions">
-              <button 
-                class="buy-button"
-                [disabled]="!producto.esActivo || producto.stock === 0"
-                (click)="onComprar()"
-              >
-                Comprar ahora
-              </button>
-              
-              <button 
-                class="cart-button"
-                [disabled]="!producto.esActivo || producto.stock === 0"
-                (click)="onAgregarAlCarrito()"
-              >
-                Agregar al carrito
-              </button>
-            </div>
+            @if (!isArtesanoDelProducto) {
+              <div class="producto-actions">
+                <button 
+                  class="buy-button"
+                  [disabled]="!producto.esActivo || producto.stock === 0"
+                  (click)="onComprar()"
+                >
+                  Comprar ahora
+                </button>
+                
+                <button 
+                  class="cart-button"
+                  [disabled]="!producto.esActivo || producto.stock === 0"
+                  (click)="onAgregarAlCarrito()"
+                >
+                  Agregar al carrito
+                </button>
+              </div>
+            } @else {
+              <div class="artesano-message">
+                <div class="message-content">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                  <p>Este es tu producto. Puedes editarlo desde tu panel de gestión.</p>
+                </div>
+              </div>
+            }
           </div>
         </div>
       </div>

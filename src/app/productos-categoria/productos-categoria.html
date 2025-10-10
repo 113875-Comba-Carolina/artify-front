@@ -116,7 +116,7 @@
                   </svg>
                 </div>
               }
-              @if (!producto.esActivo) {
+              @if (!canPurchase(producto)) {
                 <div class="producto-status inactive">
                   <span>No disponible</span>
                 </div>
@@ -177,7 +177,7 @@
               <div class="action-buttons">
                 <button 
                   class="buy-button"
-                  [disabled]="!producto.esActivo || producto.stock === 0"
+                  [disabled]="!canPurchase(producto)"
                   (click)="onComprar($event, producto)"
                   title="Comprar producto"
                 >
@@ -186,7 +186,7 @@
                 
                 <button 
                   class="cart-button"
-                  [disabled]="!producto.esActivo || producto.stock === 0"
+                  [disabled]="!canPurchase(producto)"
                   (click)="onAgregarAlCarrito($event, producto)"
                   title="Agregar al carrito"
                 >

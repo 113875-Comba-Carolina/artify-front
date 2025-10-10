@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ProductoService, Producto } from '../services/producto.service';
 import { AuthService } from '../auth/services/auth';
 import { CarritoService } from '../services/carrito.service';
+import { AlertService } from '../services/alert.service';
 
 @Component({
   selector: 'app-productos-categoria',
@@ -43,7 +44,8 @@ export class ProductosCategoriaComponent implements OnInit {
     private router: Router,
     private productoService: ProductoService,
     private authService: AuthService,
-    private carritoService: CarritoService
+    private carritoService: CarritoService,
+    private alertService: AlertService
   ) {}
 
   ngOnInit() {
@@ -156,8 +158,28 @@ export class ProductosCategoriaComponent implements OnInit {
       return;
     }
 
+    // Verificar si el producto está disponible para compra
+    if (!this.canPurchase(producto)) {
+      this.alertService.warning('Producto no disponible', 'Este producto no está disponible para compra (sin stock o inactivo)');
+      return;
+    }
+
     this.carritoService.agregarAlCarrito(producto, 1);
+    this.alertService.success('Agregado al carrito', `${producto.nombre} ha sido agregado al carrito`);
     console.log('Producto agregado al carrito:', producto.nombre);
+  }
+
+  canPurchase(producto: Producto): boolean {
+    // Si hay un campo disponibleParaCompra explícito, usarlo
+    if (producto.disponibleParaCompra !== undefined) {
+      return producto.disponibleParaCompra;
+    }
+    
+    // Fallback: verificar esActivo y stock
+    const esActivo = producto.esActivo ?? true; // Por defecto activo si no se especifica
+    const stock = producto.stock ?? 0;
+    
+    return esActivo && stock > 0;
   }
 
   onVerDetalles(producto: Producto) {

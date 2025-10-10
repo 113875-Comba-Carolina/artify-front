@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ProductoService, Producto } from '../services/producto.service';
 import { AuthService } from '../auth/services/auth';
 import { CarritoService } from '../services/carrito.service';
+import { AlertService } from '../services/alert.service';
 
 @Component({
   selector: 'app-producto-detalle',
@@ -19,13 +20,15 @@ export class ProductoDetalleComponent implements OnInit {
   error = '';
   cantidad = 1;
   maxCantidad = 1;
+  isArtesanoDelProducto = false;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private productoService: ProductoService,
     private authService: AuthService,
-    private carritoService: CarritoService
+    private carritoService: CarritoService,
+    private alertService: AlertService
   ) {}
 
   ngOnInit() {
@@ -50,6 +53,10 @@ export class ProductoDetalleComponent implements OnInit {
         this.producto = producto;
         this.maxCantidad = producto.stock || 1;
         this.cantidad = Math.min(1, this.maxCantidad);
+        
+        // Verificar si el usuario actual es el artesano del producto
+        this.checkIfArtesanoDelProducto(producto);
+        
         this.isLoading = false;
       },
       error: (error) => {
@@ -75,6 +82,7 @@ export class ProductoDetalleComponent implements OnInit {
     }
 
     this.carritoService.agregarAlCarrito(this.producto, this.cantidad);
+    this.alertService.success('Agregado al carrito', `${this.producto.nombre} (${this.cantidad} unidad${this.cantidad > 1 ? 'es' : ''}) ha sido agregado al carrito`);
     console.log('Producto agregado al carrito:', this.producto.nombre, 'Cantidad:', this.cantidad);
   }
 
@@ -92,6 +100,16 @@ export class ProductoDetalleComponent implements OnInit {
   onDecrementarCantidad() {
     if (this.cantidad > 1) {
       this.cantidad--;
+    }
+  }
+
+  checkIfArtesanoDelProducto(producto: Producto) {
+    const currentUser = this.authService.getCurrentUser();
+    if (currentUser && producto.artesano) {
+      // Verificar si el usuario actual es el artesano del producto
+      this.isArtesanoDelProducto = currentUser.id === producto.artesano.id;
+    } else {
+      this.isArtesanoDelProducto = false;
     }
   }
 
