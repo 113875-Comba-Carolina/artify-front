@@ -59,13 +59,11 @@ export class ProductosComponent implements OnInit {
   ngOnInit() {
     // Verificar que el usuario esté autenticado y sea artesano
     if (!this.authService.isLoggedIn()) {
-      this.error = 'Debes iniciar sesión para acceder a esta página.';
       return;
     }
     
     const user = this.authService.getCurrentUser();
     if (user?.rol !== 'ARTESANO') {
-      this.error = 'Solo los artesanos pueden acceder a la gestión de productos.';
       return;
     }
     
@@ -83,7 +81,6 @@ export class ProductosComponent implements OnInit {
 
   loadProductos() {
     this.isLoading = true;
-    this.error = '';
     
     // Cargar solo productos activos
     this.productoService.obtenerMisProductosActivos().subscribe({
@@ -94,11 +91,6 @@ export class ProductosComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error cargando productos activos:', error);
-        if (error.status === 401) {
-          this.error = 'No tienes permisos para acceder a esta página. Por favor, inicia sesión como artesano.';
-        } else {
-          this.error = 'Error al cargar los productos activos';
-        }
         this.isLoading = false;
       }
     });
@@ -167,14 +159,12 @@ export class ProductosComponent implements OnInit {
     this.editingProduct = null;
     this.selectedImage = null;
     this.useImageUpload = true;
-    this.error = '';
     this.success = '';
     this.formErrors = {};
     this.isFormSubmitted = false;
   }
 
   onSubmit() {
-    this.error = '';
     this.success = '';
     this.isFormSubmitted = true;
 
@@ -301,7 +291,6 @@ export class ProductosComponent implements OnInit {
         },
         error: (error) => {
           console.error('Error creando producto con imagen:', error);
-          this.error = 'Error al crear el producto con imagen';
           this.isLoading = false;
         }
       });
@@ -318,7 +307,6 @@ export class ProductosComponent implements OnInit {
         },
         error: (error) => {
           console.error('Error creando producto:', error);
-          this.error = 'Error al crear el producto';
           this.isLoading = false;
         }
       });
@@ -354,7 +342,6 @@ export class ProductosComponent implements OnInit {
         },
         error: (error) => {
           console.error('Error actualizando producto con imagen:', error);
-          this.error = 'Error al actualizar el producto con imagen';
           this.isLoading = false;
         }
       });
@@ -382,7 +369,6 @@ export class ProductosComponent implements OnInit {
         },
         error: (error) => {
           console.error('Error actualizando producto:', error);
-          this.error = 'Error al actualizar el producto';
           this.isLoading = false;
         }
       });
@@ -497,7 +483,6 @@ export class ProductosComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error cargando productos inactivos:', error);
-        this.error = 'Error al cargar los productos inactivos';
         this.isLoading = false;
       }
     });

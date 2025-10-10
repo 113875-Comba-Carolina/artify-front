@@ -59,23 +59,9 @@
 }
 
 <!-- Error State -->
-@if (error) {
-  <div class="error-container">
-    <div class="error-content">
-      <svg class="error-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-      </svg>
-      <h3 class="error-title">Error al cargar productos</h3>
-      <p class="error-message">{{ error }}</p>
-      <button (click)="loadProductos()" class="retry-button">
-        Intentar de nuevo
-      </button>
-    </div>
-  </div>
-}
 
 <!-- Empty State -->
-@if (!isLoading && !error && productosFiltrados.length === 0) {
+@if (!isLoading && productosFiltrados.length === 0) {
   <div class="empty-container">
     <div class="empty-content">
       <svg class="empty-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -99,7 +85,7 @@
 }
 
 <!-- Productos Grid -->
-@if (!isLoading && !error && productosFiltrados.length > 0) {
+@if (!isLoading && productosFiltrados.length > 0) {
   <div class="productos-container">
     <div class="container">
       <div class="productos-grid">

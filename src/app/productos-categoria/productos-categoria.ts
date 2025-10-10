@@ -19,7 +19,6 @@ export class ProductosCategoriaComponent implements OnInit {
   categoria: string = '';
   categoriaNombre: string = '';
   isLoading = false;
-  error = '';
   searchTerm = '';
   productosFiltrados: Producto[] = [];
 
@@ -71,7 +70,6 @@ export class ProductosCategoriaComponent implements OnInit {
 
   loadProductos() {
     this.isLoading = true;
-    this.error = '';
     
     this.productoService.obtenerProductosPorCategoria(this.categoria, 0, 100).subscribe({
       next: (response) => {
@@ -85,7 +83,6 @@ export class ProductosCategoriaComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error cargando productos:', error);
-        this.error = 'Error al cargar los productos de esta categoría';
         this.isLoading = false;
       }
     });

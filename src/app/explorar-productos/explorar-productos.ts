@@ -21,7 +21,6 @@ export class ExplorarProductosComponent implements OnInit {
   categoriaSeleccionada: string = '';
   terminoBusqueda: string = '';
   isLoading = false;
-  error = '';
   page = 0;
   size = 20;
   hasMore = true;
@@ -62,7 +61,6 @@ export class ExplorarProductosComponent implements OnInit {
 
   loadProductos() {
     this.isLoading = true;
-    this.error = '';
     this.page = 0;
     this.hasMore = true;
 
@@ -74,7 +72,6 @@ export class ExplorarProductosComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error cargando productos:', error);
-        this.error = 'Error al cargar los productos';
         this.isLoading = false;
       }
     });

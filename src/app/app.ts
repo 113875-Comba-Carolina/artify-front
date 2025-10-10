@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet, RouterLink, Router } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService, LoginResponse } from './auth/services/auth';
 import { CarritoService } from './services/carrito.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -12,12 +13,13 @@ import { CarritoService } from './services/carrito.service';
   templateUrl: './app.html',
   styleUrls: ['./app.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   title = 'Artify';
   isLoggedIn = false;
   currentUser: LoginResponse | null = null;
   isMobileMenuOpen = false;
   isUserMenuOpen = false;
+  private userSubscription?: Subscription;
 
   constructor(
     private authService: AuthService,
@@ -27,6 +29,17 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.checkAuthStatus();
+    // Suscribirse a cambios del usuario
+    this.userSubscription = this.authService.user$.subscribe(user => {
+      this.currentUser = user;
+      this.isLoggedIn = !!user;
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
   }
 
   checkAuthStatus() {
@@ -61,6 +74,11 @@ export class AppComponent implements OnInit {
 
   goToCarrito() {
     this.router.navigate(['/carrito']);
+  }
+
+  goToPerfil() {
+    this.router.navigate(['/perfil']);
+    this.closeUserMenu();
   }
 
   scrollToSection(sectionId: string) {
