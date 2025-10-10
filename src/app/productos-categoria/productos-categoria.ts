@@ -143,13 +143,6 @@ export class ProductosCategoriaComponent implements OnInit {
     }).format(precio);
   }
 
-  // Métodos placeholder para los botones (sin funcionalidad aún)
-  onComprar(event: Event, producto: Producto) {
-    event.stopPropagation(); // Evitar que se active el click de la card
-    console.log('Comprar producto:', producto.nombre);
-    // TODO: Implementar funcionalidad de compra
-  }
-
   onAgregarAlCarrito(event: Event, producto: Producto) {
     event.stopPropagation(); // Evitar que se active el click de la card
     

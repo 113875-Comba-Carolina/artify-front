@@ -615,9 +615,9 @@ export class ProductosComponent implements OnInit {
   getEstadoProducto(producto: Producto): string {
     if (producto.estado) {
       switch (producto.estado) {
-        case 'ACTIVO_CON_STOCK': return 'Activo';
+        case 'ACTIVO': return 'Activo';
         case 'INACTIVO': return 'Inactivo';
-        case 'ACTIVO_SIN_STOCK': return 'Sin Stock';
+        case 'SIN_STOCK': return 'Sin Stock';
         default: return 'Desconocido';
       }
     }
@@ -631,9 +631,9 @@ export class ProductosComponent implements OnInit {
   getEstadoClass(producto: Producto): string {
     if (producto.estado) {
       switch (producto.estado) {
-        case 'ACTIVO_CON_STOCK': return 'status-active';
+        case 'ACTIVO': return 'status-active';
         case 'INACTIVO': return 'status-inactive';
-        case 'ACTIVO_SIN_STOCK': return 'status-no-stock';
+        case 'SIN_STOCK': return 'status-no-stock';
         default: return 'status-unknown';
       }
     }

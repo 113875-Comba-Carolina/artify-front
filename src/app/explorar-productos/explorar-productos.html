@@ -149,15 +149,6 @@
                 
                 <div class="producto-actions" (click)="$event.stopPropagation()">
                   <button 
-                    class="buy-button"
-                    [disabled]="!canPurchase(producto)"
-                    (click)="onComprar($event, producto)"
-                    title="Comprar producto"
-                  >
-                    Comprar
-                  </button>
-                  
-                  <button 
                     class="cart-button"
                     [disabled]="!canPurchase(producto)"
                     (click)="onAgregarAlCarrito($event, producto)"

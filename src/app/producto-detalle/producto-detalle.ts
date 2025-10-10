@@ -67,12 +67,6 @@ export class ProductoDetalleComponent implements OnInit {
     });
   }
 
-  onComprar() {
-    if (!this.producto) return;
-    console.log('Comprar producto:', this.producto.nombre, 'Cantidad:', this.cantidad);
-    // TODO: Implementar funcionalidad de compra
-  }
-
   onAgregarAlCarrito() {
     if (!this.producto) return;
     

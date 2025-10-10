@@ -123,14 +123,6 @@
             @if (!isArtesanoDelProducto) {
               <div class="producto-actions">
                 <button 
-                  class="buy-button"
-                  [disabled]="!producto.esActivo || producto.stock === 0"
-                  (click)="onComprar()"
-                >
-                  Comprar ahora
-                </button>
-                
-                <button 
                   class="cart-button"
                   [disabled]="!producto.esActivo || producto.stock === 0"
                   (click)="onAgregarAlCarrito()"
