@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet, RouterLink } from '@angular/router';
+import { RouterOutlet, RouterLink, Router } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService, LoginResponse } from './auth/services/auth';
+import { CarritoService } from './services/carrito.service';
 
 @Component({
   selector: 'app-root',
@@ -16,8 +17,13 @@ export class AppComponent implements OnInit {
   isLoggedIn = false;
   currentUser: LoginResponse | null = null;
   isMobileMenuOpen = false;
+  isUserMenuOpen = false;
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    public carritoService: CarritoService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.checkAuthStatus();
@@ -43,6 +49,18 @@ export class AppComponent implements OnInit {
 
   closeMobileMenu() {
     this.isMobileMenuOpen = false;
+  }
+
+  toggleUserMenu() {
+    this.isUserMenuOpen = !this.isUserMenuOpen;
+  }
+
+  closeUserMenu() {
+    this.isUserMenuOpen = false;
+  }
+
+  goToCarrito() {
+    this.router.navigate(['/carrito']);
   }
 
   scrollToSection(sectionId: string) {

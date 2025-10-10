@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../services/auth';
 
 @Component({
@@ -19,7 +19,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -32,6 +33,10 @@ export class LoginComponent implements OnInit {
     window.scrollTo(0, 0);
   }
 
+  getRedirectUrl(): string {
+    return this.route.snapshot.queryParams['redirect'] || '/';
+  }
+
   onSubmit() {
     if (this.loginForm.valid) {
       this.loading = true;
@@ -42,8 +47,9 @@ export class LoginComponent implements OnInit {
       this.authService.login(email, password).subscribe({
         next: (response) => {
           this.loading = false;
-          // Redirigir al home y recargar para actualizar el header
-          this.router.navigate(['/']).then(() => {
+          // Redirigir a la URL de redirección o al home
+          const redirectUrl = this.getRedirectUrl();
+          this.router.navigate([redirectUrl]).then(() => {
             window.location.reload();
           });
         },

@@ -39,30 +39,55 @@
           <!-- Logged User Menu -->
           @if (isLoggedIn) {
             <div class="flex items-center space-x-4">
-            <div class="flex items-center space-x-3">
-              <div class="text-right">
-                <p class="text-sm font-medium text-artisan-800">{{ currentUser?.nombre }}</p>
-                <p class="text-xs text-artisan-500">{{ currentUser?.rol }}</p>
-              </div>
-              <div class="w-8 h-8 bg-gradient-to-br from-artisan-600 to-artisan-700 rounded-full flex items-center justify-center">
-                <span class="text-white text-sm font-medium">{{ currentUser?.nombre?.charAt(0) }}</span>
-              </div>
-            </div>
-            <div class="flex items-center space-x-2">
-              @if (currentUser?.rol === 'ARTESANO') {
-                <a routerLink="/productos" class="bg-gradient-to-r from-artisan-600 to-artisan-700 text-white px-4 py-2 rounded-lg font-medium hover:from-artisan-700 hover:to-artisan-800 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 text-sm">
-                  <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
-                  </svg>
-                  Mis Productos
-                </a>
+            <!-- Carrito -->
+            <button (click)="goToCarrito()" class="carrito-button" [title]="'Carrito (' + carritoService.getCarrito().length + ' productos)'">
+              <img src="assets/icons/carrito-de-compras.png" alt="Carrito" class="w-6 h-6">
+              @if (carritoService.getCarrito().length > 0) {
+                <span class="carrito-badge">{{ carritoService.getCarrito().length }}</span>
               }
-              <a href="#" class="text-artisan-600 hover:text-artisan-800 font-medium transition-colors duration-300 px-3 py-2 rounded-lg hover:bg-artisan-50 text-sm">
-                Mi Perfil
-              </a>
-              <button (click)="logout()" class="text-red-600 hover:text-red-800 font-medium transition-colors duration-300 px-3 py-2 rounded-lg hover:bg-red-50 text-sm">
-                Cerrar Sesión
+            </button>
+            
+            <!-- User Menu -->
+            <div class="relative">
+              <button (click)="toggleUserMenu()" class="flex items-center space-x-3 hover:bg-artisan-50 rounded-lg p-2 transition-colors duration-200">
+                <div class="text-right">
+                  <p class="text-sm font-medium text-artisan-800">{{ currentUser?.nombre }}</p>
+                  <p class="text-xs text-artisan-500">{{ currentUser?.rol }}</p>
+                </div>
+                <div class="w-8 h-8 bg-gradient-to-br from-artisan-600 to-artisan-700 rounded-full flex items-center justify-center">
+                  <span class="text-white text-sm font-medium">{{ currentUser?.nombre?.charAt(0) }}</span>
+                </div>
+                <svg class="w-4 h-4 text-artisan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
               </button>
+              
+              <!-- Dropdown Menu -->
+              @if (isUserMenuOpen) {
+                <div class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-artisan-200 py-2 z-50">
+                  @if (currentUser?.rol === 'ARTESANO') {
+                    <a routerLink="/productos" (click)="closeUserMenu()" class="flex items-center px-4 py-2 text-sm text-artisan-700 hover:bg-artisan-50 transition-colors duration-200">
+                      <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+                      </svg>
+                      Mis Productos
+                    </a>
+                  }
+                  <a href="#" (click)="closeUserMenu()" class="flex items-center px-4 py-2 text-sm text-artisan-700 hover:bg-artisan-50 transition-colors duration-200">
+                    <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                    </svg>
+                    Mi Perfil
+                  </a>
+                  <div class="border-t border-artisan-200 my-1"></div>
+                  <button (click)="logout(); closeUserMenu()" class="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors duration-200">
+                    <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                    </svg>
+                    Cerrar Sesión
+                  </button>
+                </div>
+              }
             </div>
             </div>
           }
@@ -111,6 +136,16 @@
           <!-- Logged User Menu -->
           @if (isLoggedIn) {
             <div class="space-y-3">
+            <!-- Carrito Móvil -->
+            <button (click)="goToCarrito(); closeMobileMenu()" class="carrito-button-mobile" [title]="'Carrito (' + carritoService.getCantidadTotal() + ')'">
+              <img src="assets/icons/carrito-de-compras.png" alt="Carrito" class="w-5 h-5">
+              <span>Mi Carrito</span>
+              @if (carritoService.getCantidadTotal() > 0) {
+                <span class="carrito-badge-mobile">{{ carritoService.getCantidadTotal() }}</span>
+              }
+            </button>
+            
+            <!-- User Info -->
             <div class="flex items-center space-x-3 py-2">
               <div class="w-10 h-10 bg-gradient-to-br from-artisan-600 to-artisan-700 rounded-full flex items-center justify-center">
                 <span class="text-white text-sm font-medium">{{ currentUser?.nombre?.charAt(0) }}</span>
@@ -120,20 +155,31 @@
                 <p class="text-xs text-artisan-500">{{ currentUser?.rol }}</p>
               </div>
             </div>
-            @if (currentUser?.rol === 'ARTESANO') {
-              <a routerLink="/productos" (click)="closeMobileMenu()" class="block bg-gradient-to-r from-artisan-600 to-artisan-700 text-white text-center py-3 px-4 rounded-lg font-medium hover:from-artisan-700 hover:to-artisan-800 transition-all duration-300 shadow-lg">
-                <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+            
+            <!-- Mobile User Menu -->
+            <div class="space-y-2">
+              @if (currentUser?.rol === 'ARTESANO') {
+                <a routerLink="/productos" (click)="closeMobileMenu()" class="flex items-center w-full px-4 py-3 text-artisan-700 hover:bg-artisan-50 rounded-lg transition-colors duration-200">
+                  <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+                  </svg>
+                  Mis Productos
+                </a>
+              }
+              <a href="#" (click)="closeMobileMenu()" class="flex items-center w-full px-4 py-3 text-artisan-700 hover:bg-artisan-50 rounded-lg transition-colors duration-200">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                 </svg>
-                Mis Productos
+                Mi Perfil
               </a>
-            }
-            <a href="#" (click)="closeMobileMenu()" class="block text-artisan-600 hover:text-artisan-800 font-medium transition-colors duration-300 py-2 px-4 rounded-lg hover:bg-artisan-50">
-              Mi Perfil
-            </a>
-            <button (click)="logout()" class="block w-full text-left text-red-600 hover:text-red-800 font-medium transition-colors duration-300 py-2 px-4 rounded-lg hover:bg-red-50">
-              Cerrar Sesión
-            </button>
+              <div class="border-t border-artisan-200 my-2"></div>
+              <button (click)="logout(); closeMobileMenu()" class="flex items-center w-full px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg transition-colors duration-200">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                </svg>
+                Cerrar Sesión
+              </button>
+            </div>
             </div>
           }
         </div>
