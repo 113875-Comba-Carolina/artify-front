@@ -1,0 +1,144 @@
+<!-- Header -->
+<div class="carrito-header">
+  <div class="container">
+    <div class="header-content">
+      <button (click)="continuarComprando()" class="back-button">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+        Continuar comprando
+      </button>
+      <h1 class="carrito-title">Mi Carrito</h1>
+      <div class="carrito-stats">
+        <span class="items-count">{{ carritoItems.length }} {{ carritoItems.length === 1 ? 'producto' : 'productos' }}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Carrito Content -->
+<div class="carrito-container">
+  <div class="container">
+    @if (carritoItems.length === 0) {
+      <!-- Empty State -->
+      <div class="empty-container">
+      <div class="empty-content">
+        <img src="assets/icons/carrito-de-compras.png" alt="Carrito vacío" class="empty-icon">
+        <h3 class="empty-title">Tu carrito está vacío</h3>
+        <p class="empty-message">Agrega algunos productos para comenzar tu compra</p>
+        <button (click)="continuarComprando()" class="continue-shopping-button">
+          Continuar comprando
+        </button>
+      </div>
+      </div>
+    } @else {
+      <div class="carrito-content">
+        <!-- Items del carrito -->
+        <div class="carrito-items">
+          @for (item of carritoItems; track item.producto.id) {
+            <div class="carrito-item">
+              <!-- Imagen del producto -->
+              <div class="item-image">
+                @if (item.producto.imagenUrl) {
+                  <img [src]="item.producto.imagenUrl" [alt]="item.producto.nombre" class="producto-img">
+                } @else {
+                  <div class="producto-placeholder">
+                    <svg class="w-12 h-12 text-artisan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L12 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                  </div>
+                }
+              </div>
+
+              <!-- Botón de eliminar -->
+              <button (click)="eliminarItem(item.producto.id)" class="remove-button" title="Eliminar del carrito">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+              </button>
+
+              <!-- Información del producto -->
+              <div class="item-info">
+                <div class="item-header">
+                  <h3 class="item-nombre">{{ item.producto.nombre }}</h3>
+                </div>
+                
+                <div class="item-categoria">
+                  <img [src]="getCategoriaIcon(item.producto.categoria)" [alt]="getCategoriaNombre(item.producto.categoria)" class="categoria-icon">
+                  <span class="categoria-nombre">{{ getCategoriaNombre(item.producto.categoria) }}</span>
+                </div>
+
+                <div class="item-precio">
+                  <span class="precio-unitario">{{ formatPrice(item.producto.precio) }}</span>
+                  <span class="precio-total">{{ formatPrice(item.subtotal) }}</span>
+                </div>
+              </div>
+
+              <!-- Controles de cantidad -->
+              <div class="item-controls">
+                <div class="cantidad-controls">
+                  <button 
+                    (click)="actualizarCantidad(item.producto.id, item.cantidad - 1)"
+                    class="cantidad-btn"
+                    [disabled]="item.cantidad <= 1"
+                  >
+                    -
+                  </button>
+                  <input 
+                    type="number" 
+                    [value]="item.cantidad"
+                    (change)="actualizarCantidad(item.producto.id, +$event.target.value)"
+                    min="1"
+                    class="cantidad-input"
+                  >
+                  <button 
+                    (click)="actualizarCantidad(item.producto.id, item.cantidad + 1)"
+                    class="cantidad-btn"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+
+        <!-- Resumen del carrito -->
+        <div class="carrito-summary">
+          <div class="summary-card">
+            <h3 class="summary-title">Resumen del pedido</h3>
+            
+            <div class="summary-details">
+              <div class="summary-row">
+                <span class="summary-label">Subtotal ({{ carritoItems.length }} {{ carritoItems.length === 1 ? 'producto' : 'productos' }})</span>
+                <span class="summary-value">{{ formatPrice(totalCarrito) }}</span>
+              </div>
+              
+              <div class="summary-row">
+                <span class="summary-label">Envío</span>
+                <span class="summary-value">Gratis</span>
+              </div>
+              
+              <div class="summary-divider"></div>
+              
+              <div class="summary-row total">
+                <span class="summary-label">Total</span>
+                <span class="summary-value">{{ formatPrice(totalCarrito) }}</span>
+              </div>
+            </div>
+
+            <div class="summary-actions">
+              <button (click)="procederAlPago()" class="checkout-button">
+                Proceder al pago
+              </button>
+              
+              <button (click)="limpiarCarrito()" class="clear-button">
+                Limpiar carrito
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>

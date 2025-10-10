@@ -1,0 +1,197 @@
+<!-- Header -->
+<div class="explorar-header">
+  <div class="container">
+    <div class="header-content">
+      <div class="header-text">
+        <h1 class="header-title">Explorar Productos</h1>
+        <p class="header-subtitle">Descubre piezas únicas de artesanos talentosos</p>
+      </div>
+      <button (click)="goToHome()" class="back-button">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+        Volver al Inicio
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Filtros -->
+<div class="filtros-section">
+  <div class="container">
+    <div class="filtros-content">
+      <!-- Buscador -->
+      <div class="search-container">
+        <div class="search-input-wrapper">
+          <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+          <input 
+            type="text" 
+            [(ngModel)]="terminoBusqueda"
+            (ngModelChange)="onBuscar()"
+            placeholder="Buscar productos por nombre, descripción o artesano..."
+            class="search-input"
+          >
+        </div>
+      </div>
+
+      <!-- Filtro por categoría -->
+      <div class="filter-container">
+        <select 
+          [(ngModel)]="categoriaSeleccionada"
+          (ngModelChange)="onCategoriaChange()"
+          class="category-select"
+        >
+          <option value="">Todas las categorías</option>
+          @for (categoria of categorias; track categoria) {
+            <option [value]="categoria">{{ getCategoriaNombre(categoria) }}</option>
+          }
+        </select>
+      </div>
+
+      <!-- Botón limpiar filtros -->
+      <button (click)="limpiarFiltros()" class="clear-filters-btn">
+        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+        Limpiar Filtros
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Loading State -->
+@if (isLoading) {
+  <div class="loading-container">
+    <div class="loading-spinner"></div>
+    <p class="loading-text">Cargando productos...</p>
+  </div>
+}
+
+<!-- Error State -->
+@if (error) {
+  <div class="error-container">
+    <div class="error-content">
+      <svg class="error-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+      </svg>
+      <h3 class="error-title">Error al cargar productos</h3>
+      <p class="error-message">{{ error }}</p>
+      <button (click)="loadProductos()" class="retry-button">
+        Intentar de nuevo
+      </button>
+    </div>
+  </div>
+}
+
+<!-- Productos Grid -->
+@if (!isLoading && !error) {
+  @if (productosFiltrados.length > 0) {
+    <div class="productos-section">
+      <div class="container">
+        <div class="results-info">
+          <p class="results-count">{{ productosFiltrados.length }} producto{{ productosFiltrados.length !== 1 ? 's' : '' }} encontrado{{ productosFiltrados.length !== 1 ? 's' : '' }}</p>
+        </div>
+        
+        <div class="productos-grid">
+          @for (producto of productosFiltrados; track producto.id) {
+            <div class="producto-card" (click)="verDetallesProducto(producto)">
+              <div class="producto-image">
+                @if (producto.imagenUrl) {
+                  <img [src]="producto.imagenUrl" [alt]="producto.nombre" class="producto-img">
+                } @else {
+                  <div class="producto-placeholder">
+                    <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                  </div>
+                }
+                
+                <!-- Estado del producto -->
+                @if (!canPurchase(producto)) {
+                  <div class="producto-status inactive">
+                    <span>No disponible</span>
+                  </div>
+                }
+              </div>
+              
+              <div class="producto-content">
+                <div class="producto-header">
+                  <h3 class="producto-nombre">{{ producto.nombre }}</h3>
+                  <span class="producto-categoria">{{ getCategoriaNombre(producto.categoria) }}</span>
+                </div>
+                
+                <p class="producto-descripcion">{{ producto.descripcion }}</p>
+                
+                <div class="producto-details">
+                  <div class="detail-item">
+                    <span class="detail-label">Precio:</span>
+                    <span class="detail-value">{{ formatPrice(producto.precio) }}</span>
+                  </div>
+                  <div class="detail-item">
+                    <span class="detail-label">Stock:</span>
+                    <span class="detail-value">{{ producto.stock }} unidades</span>
+                  </div>
+                  <div class="detail-item">
+                    <span class="detail-label">Estado:</span>
+                    <span class="detail-value" [class]="getEstadoClass(producto)">
+                      {{ getEstadoProducto(producto) }}
+                    </span>
+                  </div>
+                  @if (producto.artesano) {
+                    <div class="detail-item">
+                      <span class="detail-label">Artesano:</span>
+                      <span class="detail-value">{{ producto.artesano.nombre }}</span>
+                    </div>
+                  }
+                </div>
+                
+                <div class="producto-actions" (click)="$event.stopPropagation()">
+                  <button 
+                    class="buy-button"
+                    [disabled]="!canPurchase(producto)"
+                    (click)="onComprar($event, producto)"
+                    title="Comprar producto"
+                  >
+                    Comprar
+                  </button>
+                  
+                  <button 
+                    class="cart-button"
+                    [disabled]="!canPurchase(producto)"
+                    (click)="onAgregarAlCarrito($event, producto)"
+                    title="Agregar al carrito"
+                  >
+                    Agregar al Carrito
+                  </button>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  } @else {
+    <div class="empty-state">
+      <div class="empty-icon">
+        <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+      </div>
+      <h3 class="empty-title">No se encontraron productos</h3>
+      <p class="empty-description">
+        @if (terminoBusqueda || categoriaSeleccionada) {
+          Intenta ajustar tus filtros de búsqueda o explorar otras categorías.
+        } @else {
+          Aún no hay productos disponibles. ¡Vuelve pronto!
+        }
+      </p>
+      @if (terminoBusqueda || categoriaSeleccionada) {
+        <button (click)="limpiarFiltros()" class="btn-primary">
+          Limpiar Filtros
+        </button>
+      }
+    </div>
+  }
+}

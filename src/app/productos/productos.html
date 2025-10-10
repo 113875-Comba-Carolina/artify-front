@@ -7,15 +7,15 @@
       
       @if (estadisticas) {
         <div class="estadisticas">
-          <div class="stat-item">
+          <div class="stat-item total-only">
             <span class="stat-number">{{ estadisticas.totalProductos }}</span>
             <span class="stat-label">Total Productos</span>
           </div>
-          <div class="stat-item">
+          <div class="stat-item" (click)="mostrarProductosActivos()" [class.active]="vistaActual === 'activos'">
             <span class="stat-number">{{ estadisticas.productosActivos }}</span>
             <span class="stat-label">Activos</span>
           </div>
-          <div class="stat-item">
+          <div class="stat-item" (click)="mostrarProductosInactivos()" [class.active]="vistaActual === 'inactivos'">
             <span class="stat-number">{{ estadisticas.productosInactivos }}</span>
             <span class="stat-label">Inactivos</span>
           </div>
@@ -23,12 +23,14 @@
       }
     </div>
     
-    <button class="btn-primary" (click)="showCreateForm()" [disabled]="isLoading">
-      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-      </svg>
-      Crear Producto
-    </button>
+    <div class="header-actions">
+      <button class="btn-primary" (click)="showCreateForm()" [disabled]="isLoading">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+        </svg>
+        Crear Producto
+      </button>
+    </div>
   </div>
 
   <!-- Buscador -->
@@ -82,26 +84,22 @@
       <div class="loading-spinner"></div>
       <p>Cargando productos...</p>
     </div>
-  } @else if (!hasProducts) {
-    <div class="empty-state">
-      <div class="empty-icon">
-        <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
-        </svg>
+  } @else if (vistaActual === 'inactivos') {
+    <!-- Vista de Productos Inactivos -->
+    @if (productosInactivosFiltrados.length === 0) {
+      <div class="empty-state">
+        <div class="empty-icon">
+          <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+        </div>
+        <h3 class="empty-title">No tienes productos inactivos</h3>
+        <p class="empty-description">Los productos desactivados aparecerán aquí</p>
       </div>
-      <h3 class="empty-title">Aún no tienes productos cargados</h3>
-      <p class="empty-description">Comienza creando tu primer producto artesanal</p>
-      <button class="btn-primary" (click)="showCreateForm()">
-        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-        </svg>
-        Crear mi primer producto
-      </button>
-    </div>
-  } @else {
-    <div class="productos-grid">
-      @for (producto of productosFiltrados; track producto.id) {
-        <div class="producto-card">
+    } @else {
+      <div class="productos-grid">
+        @for (producto of productosInactivosFiltrados; track producto.id) {
+        <div class="producto-card" (click)="verDetallesProducto(producto)">
           <div class="producto-image">
             @if (producto.imagenUrl) {
               <img [src]="producto.imagenUrl" [alt]="producto.nombre" class="producto-img">
@@ -139,18 +137,104 @@
               </div>
             </div>
             
-            <div class="producto-actions">
+            <div class="producto-actions" (click)="$event.stopPropagation()">
+              <!-- Acciones para productos inactivos -->
+              <button class="btn-success" (click)="activarProducto(producto)" [disabled]="isLoading">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                Activar
+              </button>
               <button class="btn-secondary" (click)="showEditForm(producto)" [disabled]="isLoading">
                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                 </svg>
                 Editar
               </button>
-              <button class="btn-danger" (click)="deleteProduct(producto)" [disabled]="isLoading">
+              <button class="btn-danger" (click)="eliminarProductoDefinitivamente(producto)" [disabled]="isLoading">
                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                 </svg>
                 Eliminar
+              </button>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+    }
+  } @else if (vistaActual === 'activos' && !hasProducts) {
+    <div class="empty-state">
+      <div class="empty-icon">
+        <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+        </svg>
+      </div>
+      <h3 class="empty-title">Aún no tienes productos cargados</h3>
+      <p class="empty-description">Comienza creando tu primer producto artesanal</p>
+      <button class="btn-primary" (click)="showCreateForm()">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+        </svg>
+        Crear mi primer producto
+      </button>
+    </div>
+  } @else if (vistaActual === 'activos') {
+    <!-- Vista de Productos Activos -->
+    <div class="productos-grid">
+      @for (producto of productosFiltrados; track producto.id) {
+        <div class="producto-card" (click)="verDetallesProducto(producto)">
+          <div class="producto-image">
+            @if (producto.imagenUrl) {
+              <img [src]="producto.imagenUrl" [alt]="producto.nombre" class="producto-img">
+            } @else {
+              <div class="producto-placeholder">
+                <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+              </div>
+            }
+          </div>
+          
+          <div class="producto-content">
+            <div class="producto-header">
+              <h3 class="producto-nombre">{{ producto.nombre }}</h3>
+              <span class="producto-categoria">{{ getCategoriaNombre(producto.categoria) }}</span>
+            </div>
+            
+            <p class="producto-descripcion">{{ producto.descripcion }}</p>
+            
+            <div class="producto-details">
+              <div class="detail-item">
+                <span class="detail-label">Precio:</span>
+                <span class="detail-value">${{ producto.precio | number:'1.2-2' }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Stock:</span>
+                <span class="detail-value">{{ producto.stock }} unidades</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Estado:</span>
+                <span class="detail-value" [class]="getEstadoClass(producto)">
+                  {{ getEstadoProducto(producto) }}
+                </span>
+              </div>
+            </div>
+            
+            <div class="producto-actions" (click)="$event.stopPropagation()">
+              <button class="btn-secondary" (click)="showEditForm(producto)" [disabled]="isLoading">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                </svg>
+                Editar
+              </button>
+              <button class="btn-danger" (click)="desactivarProducto(producto)" [disabled]="isLoading">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="m15 9-6 6"></path>
+                  <path d="m9 9 6 6"></path>
+                </svg>
+                Desactivar
               </button>
             </div>
           </div>
@@ -269,15 +353,54 @@
           </div>
           
           <div class="form-group">
-            <label for="imagenUrl" class="form-label">URL de Imagen</label>
-            <input 
-              type="url" 
-              id="imagenUrl" 
-              [(ngModel)]="productoForm.imagenUrl" 
-              name="imagenUrl"
-              class="form-input" 
-              placeholder="https://ejemplo.com/imagen.jpg"
-            >
+            <label class="form-label">Imagen del Producto</label>
+            
+            <!-- Toggle entre subida de archivo y URL -->
+            <div class="image-mode-toggle">
+              <button 
+                type="button" 
+                class="toggle-btn"
+                [class.active]="useImageUpload"
+                (click)="toggleImageMode()"
+              >
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                </svg>
+                Subir Archivo
+              </button>
+              <button 
+                type="button" 
+                class="toggle-btn"
+                [class.active]="!useImageUpload"
+                (click)="toggleImageMode()"
+              >
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+                </svg>
+                URL de Imagen
+              </button>
+            </div>
+
+            <!-- Componente de subida de archivos -->
+            @if (useImageUpload) {
+              <app-file-upload
+                accept="image/*"
+                [maxSize]="32 * 1024 * 1024"
+                (fileSelected)="onImageSelected($event)"
+                (fileRemoved)="onImageRemoved()"
+                [disabled]="isLoading"
+              ></app-file-upload>
+            } @else {
+              <!-- Campo de URL tradicional -->
+              <input 
+                type="url" 
+                id="imagenUrl" 
+                [(ngModel)]="productoForm.imagenUrl" 
+                name="imagenUrl"
+                class="form-input" 
+                placeholder="https://ejemplo.com/imagen.jpg"
+              >
+            }
           </div>
           
           <div class="form-actions">
