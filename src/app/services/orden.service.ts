@@ -35,10 +35,10 @@ export class OrdenService {
   private authHeaders: HttpHeaders;
 
   constructor(private http: HttpClient) {
-    const credentials = btoa(`${environment.basicAuth.username}:${environment.basicAuth.password}`);
+    // Los headers se configurarán dinámicamente en cada llamada
     this.authHeaders = new HttpHeaders({
-      'Authorization': `Basic ${credentials}`,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'ngrok-skip-browser-warning': 'true' // Saltar la página de advertencia de ngrok
     });
   }
 
@@ -46,8 +46,20 @@ export class OrdenService {
    * Obtiene todas las órdenes del usuario actual
    */
   obtenerMisOrdenes(): Observable<OrdenResponse[]> {
+    // Obtener credenciales del usuario autenticado
+    const auth = localStorage.getItem('auth');
+    if (!auth) {
+      throw new Error('No hay credenciales de autenticación');
+    }
+    
+    const headers = new HttpHeaders({
+      'Authorization': `Basic ${auth}`,
+      'Content-Type': 'application/json',
+      'ngrok-skip-browser-warning': 'true'
+    });
+    
     return this.http.get<OrdenResponse[]>(this.baseUrl, {
-      headers: this.authHeaders
+      headers: headers
     });
   }
 
@@ -55,8 +67,20 @@ export class OrdenService {
    * Obtiene una orden específica por ID
    */
   obtenerOrdenPorId(ordenId: number): Observable<OrdenResponse> {
+    // Obtener credenciales del usuario autenticado
+    const auth = localStorage.getItem('auth');
+    if (!auth) {
+      throw new Error('No hay credenciales de autenticación');
+    }
+    
+    const headers = new HttpHeaders({
+      'Authorization': `Basic ${auth}`,
+      'Content-Type': 'application/json',
+      'ngrok-skip-browser-warning': 'true'
+    });
+    
     return this.http.get<OrdenResponse>(`${this.baseUrl}/${ordenId}`, {
-      headers: this.authHeaders
+      headers: headers
     });
   }
 
@@ -64,8 +88,20 @@ export class OrdenService {
    * Obtiene una orden por ID de Mercado Pago
    */
   obtenerOrdenPorMercadoPagoId(mercadoPagoId: string): Observable<OrdenResponse> {
+    // Obtener credenciales del usuario autenticado
+    const auth = localStorage.getItem('auth');
+    if (!auth) {
+      throw new Error('No hay credenciales de autenticación');
+    }
+    
+    const headers = new HttpHeaders({
+      'Authorization': `Basic ${auth}`,
+      'Content-Type': 'application/json',
+      'ngrok-skip-browser-warning': 'true'
+    });
+    
     return this.http.get<OrdenResponse>(`${this.baseUrl}/mercado-pago/${mercadoPagoId}`, {
-      headers: this.authHeaders
+      headers: headers
     });
   }
 }

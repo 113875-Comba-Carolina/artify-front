@@ -62,22 +62,34 @@ export class ProductoService {
 
   // Obtener todos los productos (público)
   obtenerProductos(page: number = 0, size: number = 10): Observable<ProductoResponse> {
-    return this.http.get<ProductoResponse>(`${this.apiUrl}/api/productos?page=${page}&size=${size}`);
+    const headers = new HttpHeaders({
+      'ngrok-skip-browser-warning': 'true' // Saltar la página de advertencia de ngrok
+    });
+    return this.http.get<ProductoResponse>(`${this.apiUrl}/api/productos?page=${page}&size=${size}`, { headers });
   }
 
   // Obtener producto por ID (público)
   obtenerProductoPorId(id: number): Observable<Producto> {
-    return this.http.get<Producto>(`${this.apiUrl}/api/productos/${id}`);
+    const headers = new HttpHeaders({
+      'ngrok-skip-browser-warning': 'true' // Saltar la página de advertencia de ngrok
+    });
+    return this.http.get<Producto>(`${this.apiUrl}/api/productos/${id}`, { headers });
   }
 
   // Buscar productos por nombre (público)
   buscarProductos(nombre: string, page: number = 0, size: number = 10): Observable<ProductoResponse> {
-    return this.http.get<ProductoResponse>(`${this.apiUrl}/api/productos/buscar?nombre=${nombre}&page=${page}&size=${size}`);
+    const headers = new HttpHeaders({
+      'ngrok-skip-browser-warning': 'true' // Saltar la página de advertencia de ngrok
+    });
+    return this.http.get<ProductoResponse>(`${this.apiUrl}/api/productos/buscar?nombre=${nombre}&page=${page}&size=${size}`, { headers });
   }
 
   // Obtener productos por categoría (público)
   obtenerProductosPorCategoria(categoria: string, page: number = 0, size: number = 10): Observable<ProductoResponse> {
-    return this.http.get<ProductoResponse>(`${this.apiUrl}/api/productos/categoria/${categoria}?page=${page}&size=${size}`);
+    const headers = new HttpHeaders({
+      'ngrok-skip-browser-warning': 'true' // Saltar la página de advertencia de ngrok
+    });
+    return this.http.get<ProductoResponse>(`${this.apiUrl}/api/productos/categoria/${categoria}?page=${page}&size=${size}`, { headers });
   }
 
 
@@ -193,7 +205,8 @@ export class ProductoService {
     }
     return new HttpHeaders({
       'Authorization': `Basic ${auth}`,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'ngrok-skip-browser-warning': 'true' // Saltar la página de advertencia de ngrok
     });
   }
 
@@ -204,7 +217,8 @@ export class ProductoService {
       throw new Error('No hay credenciales de autenticación');
     }
     return new HttpHeaders({
-      'Authorization': `Basic ${auth}`
+      'Authorization': `Basic ${auth}`,
+      'ngrok-skip-browser-warning': 'true' // Saltar la página de advertencia de ngrok
       // No establecer Content-Type para multipart, el navegador lo hace automáticamente
     });
   }

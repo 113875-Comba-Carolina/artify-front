@@ -88,7 +88,8 @@ export class PerfilService {
     }
     return new HttpHeaders({
       'Authorization': `Basic ${auth}`,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'ngrok-skip-browser-warning': 'true' // Saltar la página de advertencia de ngrok
     });
   }
 }

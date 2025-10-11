@@ -37,11 +37,10 @@ export class MercadoPagoService {
   private authHeaders: HttpHeaders;
 
   constructor(private http: HttpClient) {
-    // Configurar headers de autenticación básica usando environment
-    const credentials = btoa(`${environment.basicAuth.username}:${environment.basicAuth.password}`);
+    // Los headers se configurarán dinámicamente en cada llamada
     this.authHeaders = new HttpHeaders({
-      'Authorization': `Basic ${credentials}`,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'ngrok-skip-browser-warning': 'true' // Saltar la página de advertencia de ngrok
     });
   }
 
@@ -49,8 +48,20 @@ export class MercadoPagoService {
    * Crea una preferencia de pago en Mercado Pago
    */
   crearPreferencia(request: CreatePreferenceRequest): Observable<PreferenceResponse> {
+    // Obtener credenciales del usuario autenticado
+    const auth = localStorage.getItem('auth');
+    if (!auth) {
+      throw new Error('No hay credenciales de autenticación');
+    }
+    
+    const headers = new HttpHeaders({
+      'Authorization': `Basic ${auth}`,
+      'Content-Type': 'application/json',
+      'ngrok-skip-browser-warning': 'true'
+    });
+    
     return this.http.post<PreferenceResponse>(`${this.baseUrl}/preference`, request, {
-      headers: this.authHeaders
+      headers: headers
     });
   }
 
@@ -58,8 +69,19 @@ export class MercadoPagoService {
    * Obtiene la clave pública de Mercado Pago
    */
   obtenerClavePublica(): Observable<string> {
+    // Obtener credenciales del usuario autenticado
+    const auth = localStorage.getItem('auth');
+    if (!auth) {
+      throw new Error('No hay credenciales de autenticación');
+    }
+    
+    const headers = new HttpHeaders({
+      'Authorization': `Basic ${auth}`,
+      'ngrok-skip-browser-warning': 'true'
+    });
+    
     return this.http.get<string>(`${this.baseUrl}/public-key`, {
-      headers: this.authHeaders
+      headers: headers
     });
   }
 
