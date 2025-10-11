@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
   }
 
   getRedirectUrl(): string {
-    return this.route.snapshot.queryParams['redirect'] || '/';
+    return this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
   onSubmit() {

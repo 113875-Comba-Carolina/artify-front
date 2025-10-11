@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { OrdenService, OrdenResponse } from '../services/orden.service';
+import { AuthService } from '../auth/services/auth';
 
 @Component({
   selector: 'app-mis-ordenes',
@@ -17,10 +18,22 @@ export class MisOrdenesComponent implements OnInit {
 
   constructor(
     private ordenService: OrdenService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
+    // Verificar si el usuario está autenticado
+    if (!this.authService.isLoggedIn()) {
+      console.log('Usuario no autenticado, redirigiendo al login...');
+      // Redirigir al login y guardar la URL de destino
+      this.router.navigate(['/auth/login'], { 
+        queryParams: { returnUrl: '/mis-ordenes' } 
+      });
+      return;
+    }
+    
+    console.log('Usuario autenticado, cargando órdenes...');
     this.cargarOrdenes();
   }
 
