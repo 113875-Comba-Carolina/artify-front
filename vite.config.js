@@ -7,7 +7,8 @@ export default defineConfig({
     allowedHosts: [
       'localhost',
       '127.0.0.1',
-      'alberta-postsymphysial-buddy.ngrok-free.dev'
+      'alberta-postsymphysial-buddy.ngrok-free.dev',
+      'treasurable-almeda-unsimply.ngrok-free.dev'
     ],
     host: true
   }
