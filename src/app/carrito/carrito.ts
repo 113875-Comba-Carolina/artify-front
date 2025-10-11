@@ -87,12 +87,15 @@ export class CarritoComponent implements OnInit {
       const items = this.mercadoPagoService.convertirItemsCarrito(this.carritoItems);
       
       // Crear preferencia de pago
+      // URL de ngrok para redirección de Mercado Pago
+      const ngrokUrl = 'https://alberta-postsymphysial-buddy.ngrok-free.dev';
+      
       const preferencia = await this.mercadoPagoService.crearPreferencia({
         items: items,
         externalReference: `ORDER-${Date.now()}`,
-        successUrl: `${window.location.origin}/pago-exitoso`,
-        failureUrl: `${window.location.origin}/pago-fallido`,
-        pendingUrl: `${window.location.origin}/pago-pendiente`,
+        successUrl: `${ngrokUrl}/mis-ordenes`,
+        failureUrl: `${ngrokUrl}/pago-fallido`,
+        pendingUrl: `${ngrokUrl}/pago-pendiente`,
         autoReturn: true
       }).toPromise();
 

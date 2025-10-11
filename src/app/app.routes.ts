@@ -9,6 +9,7 @@ import { PerfilComponent } from './perfil/perfil';
 import { PagoExitosoComponent } from './pago-exitoso/pago-exitoso';
 import { PagoFallidoComponent } from './pago-fallido/pago-fallido';
 import { PagoPendienteComponent } from './pago-pendiente/pago-pendiente';
+import { MisOrdenesComponent } from './mis-ordenes/mis-ordenes';
 
 export const routes: Routes = [
   {
@@ -54,5 +55,9 @@ export const routes: Routes = [
   {
     path: 'pago-pendiente',
     component: PagoPendienteComponent
+  },
+  {
+    path: 'mis-ordenes',
+    component: MisOrdenesComponent
   }
 ];
