@@ -35,6 +35,9 @@ export class CarritoComponent implements OnInit {
       return;
     }
 
+    // Verificar si se regresó de una compra exitosa
+    this.verificarCompraExitosa();
+
     this.cargarCarrito();
   }
 
@@ -71,7 +74,42 @@ export class CarritoComponent implements OnInit {
   }
 
   continuarComprando() {
-    this.router.navigate(['/']);
+    this.router.navigate(['/explorar-productos']);
+  }
+
+  verificarCompraExitosa() {
+    // Verificar si se regresó de una compra exitosa
+    const urlParams = new URLSearchParams(window.location.search);
+    const status = urlParams.get('status');
+    const paymentId = urlParams.get('payment_id');
+    
+    // Si hay parámetros de pago exitoso, limpiar el carrito
+    if (status === 'approved' && paymentId) {
+      console.log('Compra exitosa detectada, limpiando carrito...');
+      this.carritoService.limpiarCarrito();
+      
+      // Mostrar mensaje de confirmación
+      alert('¡Compra realizada exitosamente! El carrito ha sido vaciado.');
+      
+      // Limpiar los parámetros de la URL para evitar limpiezas repetidas
+      const url = new URL(window.location.href);
+      url.searchParams.delete('status');
+      url.searchParams.delete('payment_id');
+      url.searchParams.delete('external_reference');
+      window.history.replaceState({}, '', url.toString());
+    }
+    
+    // Verificar si se regresó de mis-órdenes (posible compra exitosa)
+    const referrer = document.referrer;
+    if (referrer && referrer.includes('/mis-ordenes')) {
+      // Verificar si hay items en el carrito que podrían ser de una compra reciente
+      const carritoActual = this.carritoService.getCarrito();
+      if (carritoActual.length > 0) {
+        console.log('Regresando de mis-órdenes con carrito no vacío, limpiando...');
+        this.carritoService.limpiarCarrito();
+        alert('¡Compra realizada exitosamente! El carrito ha sido vaciado.');
+      }
+    }
   }
 
   async procederAlPago() {
@@ -98,7 +136,7 @@ export class CarritoComponent implements OnInit {
         externalReference: `ORDER-${Date.now()}`,
         notificationUrl: 'https://alberta-postsymphysial-buddy.ngrok-free.dev/api/payments/webhook',
         successUrl: `${ngrokUrl}/mis-ordenes`,
-        failureUrl: `${ngrokUrl}/pago-fallido`,
+        failureUrl: `${ngrokUrl}/carrito`,
         pendingUrl: `${ngrokUrl}/pago-pendiente`,
         autoReturn: true
       }).toPromise();

@@ -22,9 +22,6 @@
       <div class="empty-icon">🛒</div>
       <h2>No tienes compras aún</h2>
       <p>Explora nuestros productos artesanales y realiza tu primera compra</p>
-      <button (click)="continuarComprando()" class="primary-button">
-        Explorar Productos
-      </button>
     </div>
   } @else {
     <div class="ordenes-list">
@@ -73,23 +70,10 @@
               <span class="total-label">Total:</span>
               <span class="total-amount">{{ formatPrice(orden.total) }}</span>
             </div>
-            <div class="orden-actions">
-              <button 
-                (click)="verDetalleOrden(orden.id)" 
-                class="secondary-button"
-              >
-                Ver Detalle
-              </button>
-            </div>
           </div>
         </div>
       }
     </div>
 
-    <div class="actions">
-      <button (click)="continuarComprando()" class="primary-button">
-        Continuar Comprando
-      </button>
-    </div>
   }
 </div>

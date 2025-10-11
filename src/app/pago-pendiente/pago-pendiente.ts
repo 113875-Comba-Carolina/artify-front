@@ -36,6 +36,6 @@ export class PagoPendienteComponent implements OnInit {
   }
 
   verProductos() {
-    this.router.navigate(['/explorar-productos']);
+    this.router.navigate(['/carrito']);
   }
 }

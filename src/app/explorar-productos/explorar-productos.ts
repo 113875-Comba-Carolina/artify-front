@@ -143,46 +143,23 @@ export class ExplorarProductosComponent implements OnInit {
       return producto.disponibleParaCompra;
     }
     
-    // Fallback: verificar esActivo y stock
+    // Verificar si el producto está activo y tiene stock
     const esActivo = producto.esActivo ?? true; // Por defecto activo si no se especifica
     const stock = producto.stock ?? 0;
     
     return esActivo && stock > 0;
   }
 
+  isOutOfStock(producto: Producto): boolean {
+    // Verificar específicamente si está sin stock
+    const stock = producto.stock ?? 0;
+    return stock <= 0;
+  }
+
   getCategoriaNombre(categoria: string): string {
     return this.categoriaNombres[categoria] || categoria;
   }
 
-  getEstadoProducto(producto: Producto): string {
-    if (producto.estado) {
-      switch (producto.estado) {
-        case 'ACTIVO': return 'Activo';
-        case 'INACTIVO': return 'Inactivo';
-        case 'SIN_STOCK': return 'Sin Stock';
-        default: return 'Desconocido';
-      }
-    }
-    // Fallback for compatibility
-    if (!producto.esActivo) return 'Inactivo';
-    if (producto.stock === 0) return 'Sin Stock';
-    return 'Activo';
-  }
-
-  getEstadoClass(producto: Producto): string {
-    if (producto.estado) {
-      switch (producto.estado) {
-        case 'ACTIVO': return 'status-active';
-        case 'INACTIVO': return 'status-inactive';
-        case 'SIN_STOCK': return 'status-no-stock';
-        default: return 'status-unknown';
-      }
-    }
-    // Fallback for compatibility
-    if (!producto.esActivo) return 'status-inactive';
-    if (producto.stock === 0) return 'status-no-stock';
-    return 'status-active';
-  }
 
   formatPrice(precio: number): string {
     return new Intl.NumberFormat('es-AR', {

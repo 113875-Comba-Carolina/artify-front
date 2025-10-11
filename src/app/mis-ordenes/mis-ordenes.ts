@@ -51,13 +51,7 @@ export class MisOrdenesComponent implements OnInit {
     }
   }
 
-  verDetalleOrden(ordenId: number) {
-    this.router.navigate(['/orden', ordenId]);
-  }
 
-  continuarComprando() {
-    this.router.navigate(['/']);
-  }
 
   getEstadoColor(estado: string): string {
     const colores: { [key: string]: string } = {
