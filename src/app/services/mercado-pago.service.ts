@@ -15,6 +15,7 @@ export interface MercadoPagoItem {
 export interface CreatePreferenceRequest {
   items: MercadoPagoItem[];
   externalReference?: string;
+  notificationUrl?: string;
   successUrl?: string;
   failureUrl?: string;
   pendingUrl?: string;

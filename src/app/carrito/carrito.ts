@@ -90,12 +90,13 @@ export class CarritoComponent implements OnInit {
       const items = this.mercadoPagoService.convertirItemsCarrito(this.carritoItems);
       
       // Crear preferencia de pago
-      // URL de ngrok para redirección de Mercado Pago
+      // URL de ngrok para redirección de Mercado Pago (frontend)
       const ngrokUrl = 'https://treasurable-almeda-unsimply.ngrok-free.dev';
       
       const preferencia = await this.mercadoPagoService.crearPreferencia({
         items: items,
         externalReference: `ORDER-${Date.now()}`,
+        notificationUrl: 'https://alberta-postsymphysial-buddy.ngrok-free.dev/api/payments/webhook',
         successUrl: `${ngrokUrl}/mis-ordenes`,
         failureUrl: `${ngrokUrl}/pago-fallido`,
         pendingUrl: `${ngrokUrl}/pago-pendiente`,
