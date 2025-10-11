@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CarritoService, CarritoItem } from '../services/carrito.service';
 import { AuthService } from '../auth/services/auth';
+import { MercadoPagoService } from '../services/mercado-pago.service';
 
 @Component({
   selector: 'app-carrito',
@@ -20,7 +21,8 @@ export class CarritoComponent implements OnInit {
   constructor(
     private carritoService: CarritoService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private mercadoPagoService: MercadoPagoService
   ) {}
 
   ngOnInit() {
@@ -72,9 +74,40 @@ export class CarritoComponent implements OnInit {
     this.router.navigate(['/']);
   }
 
-  procederAlPago() {
-    console.log('Proceder al pago:', this.carritoItems);
-    // TODO: Implementar funcionalidad de pago
+  async procederAlPago() {
+    if (this.carritoItems.length === 0) {
+      alert('Tu carrito está vacío');
+      return;
+    }
+
+    this.isLoading = true;
+
+    try {
+      // Convertir items del carrito a formato de Mercado Pago
+      const items = this.mercadoPagoService.convertirItemsCarrito(this.carritoItems);
+      
+      // Crear preferencia de pago
+      const preferencia = await this.mercadoPagoService.crearPreferencia({
+        items: items,
+        externalReference: `ORDER-${Date.now()}`,
+        successUrl: `${window.location.origin}/pago-exitoso`,
+        failureUrl: `${window.location.origin}/pago-fallido`,
+        pendingUrl: `${window.location.origin}/pago-pendiente`,
+        autoReturn: true
+      }).toPromise();
+
+      if (preferencia && preferencia.success) {
+        // Redirigir a Mercado Pago
+        this.mercadoPagoService.redirigirAPago(preferencia.initPoint);
+      } else {
+        alert('Error al crear la preferencia de pago: ' + (preferencia?.message || 'Error desconocido'));
+        this.isLoading = false;
+      }
+    } catch (error) {
+      console.error('Error al procesar el pago:', error);
+      alert('Error al procesar el pago. Por favor, intenta nuevamente.');
+      this.isLoading = false;
+    }
   }
 
   formatPrice(precio: number): string {

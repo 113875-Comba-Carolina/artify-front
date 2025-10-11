@@ -1,0 +1,109 @@
+<!-- Header -->
+<div class="failure-header">
+  <div class="container">
+    <div class="header-content">
+      <h1 class="failure-title">Pago Rechazado</h1>
+      <p class="failure-subtitle">No pudimos procesar tu pago en este momento</p>
+    </div>
+  </div>
+</div>
+
+<!-- Content -->
+<div class="failure-container">
+  <div class="container">
+    <div class="failure-content">
+      <!-- Icono de error -->
+      <div class="failure-icon">
+        <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </div>
+
+      <!-- Información del pago -->
+      <div class="payment-info">
+        <h2 class="info-title">Detalles del Pago</h2>
+        
+        <div class="info-card">
+          <div class="info-row">
+            <span class="info-label">Estado:</span>
+            <span class="info-value failure">Rechazado</span>
+          </div>
+          
+          @if (paymentId) {
+            <div class="info-row">
+              <span class="info-label">ID de Transacción:</span>
+              <span class="info-value">{{ paymentId }}</span>
+            </div>
+          }
+          
+          @if (externalReference) {
+            <div class="info-row">
+              <span class="info-label">Referencia:</span>
+              <span class="info-value">{{ externalReference }}</span>
+            </div>
+          }
+          
+          <div class="info-row">
+            <span class="info-label">Fecha:</span>
+            <span class="info-value">{{ fechaPago }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Posibles causas -->
+      <div class="causes-section">
+        <h3 class="causes-title">Posibles Causas</h3>
+        <div class="causes-list">
+          <div class="cause-item">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span>Fondos insuficientes en la cuenta</span>
+          </div>
+          <div class="cause-item">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span>Datos de la tarjeta incorrectos</span>
+          </div>
+          <div class="cause-item">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span>Tarjeta vencida o bloqueada</span>
+          </div>
+          <div class="cause-item">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span>Límite de compra excedido</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mensaje de ayuda -->
+      <div class="help-message">
+        <h3 class="help-title">¿Qué puedes hacer?</h3>
+        <p class="help-text">
+          Puedes intentar nuevamente con otro método de pago o verificar los datos de tu tarjeta.
+          También puedes contactar con tu banco para obtener más información.
+        </p>
+      </div>
+
+      <!-- Acciones -->
+      <div class="failure-actions">
+        <button (click)="intentarNuevamente()" class="primary-button">
+          Intentar Nuevamente
+        </button>
+        
+        <button (click)="volverAlInicio()" class="secondary-button">
+          Volver al Inicio
+        </button>
+        
+        <button (click)="verProductos()" class="tertiary-button">
+          Ver Productos
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

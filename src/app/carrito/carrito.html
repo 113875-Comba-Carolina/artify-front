@@ -128,11 +128,24 @@
             </div>
 
             <div class="summary-actions">
-              <button (click)="procederAlPago()" class="checkout-button">
-                Proceder al pago
+              <button 
+                (click)="procederAlPago()" 
+                class="checkout-button"
+                [disabled]="isLoading"
+              >
+                @if (isLoading) {
+                  <span class="loading-spinner"></span>
+                  Procesando...
+                } @else {
+                  Proceder al pago
+                }
               </button>
               
-              <button (click)="limpiarCarrito()" class="clear-button">
+              <button 
+                (click)="limpiarCarrito()" 
+                class="clear-button"
+                [disabled]="isLoading"
+              >
                 Limpiar carrito
               </button>
             </div>

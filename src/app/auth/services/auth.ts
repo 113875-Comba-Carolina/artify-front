@@ -14,7 +14,7 @@ export interface LoginResponse {
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8080/api/auth';
+  private apiUrl = 'http://localhost:8080';
   private userSubject = new BehaviorSubject<LoginResponse | null>(null);
 
   constructor(private http: HttpClient) { 
@@ -33,7 +33,7 @@ export class AuthService {
       'Basic ' + btoa(email + ':' + password)
     );
 
-    return this.http.get<LoginResponse>(`${this.apiUrl}/perfil`, { headers }).pipe(
+    return this.http.get<LoginResponse>(`${this.apiUrl}/api/perfil`, { headers }).pipe(
       tap(response => {
         localStorage.setItem('currentUser', JSON.stringify(response));
         localStorage.setItem('auth', btoa(email + ':' + password));
@@ -63,10 +63,10 @@ export class AuthService {
   }
 
   registerArtesano(formData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/registro/artesano`, formData);
+    return this.http.post(`${this.apiUrl}/api/registro/artesano`, formData);
   }
 
   registerUsuario(formData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/registro/usuario`, formData);
+    return this.http.post(`${this.apiUrl}/api/registro/usuario`, formData);
   }
 }

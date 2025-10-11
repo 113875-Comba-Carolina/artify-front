@@ -56,35 +56,35 @@ export interface Estadisticas {
   providedIn: 'root'
 })
 export class ProductoService {
-  private apiUrl = environment.apiUrl || 'http://localhost:8080/api';
+  private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 
   // Obtener todos los productos (público)
   obtenerProductos(page: number = 0, size: number = 10): Observable<ProductoResponse> {
-    return this.http.get<ProductoResponse>(`${this.apiUrl}/productos?page=${page}&size=${size}`);
+    return this.http.get<ProductoResponse>(`${this.apiUrl}/api/productos?page=${page}&size=${size}`);
   }
 
   // Obtener producto por ID (público)
   obtenerProductoPorId(id: number): Observable<Producto> {
-    return this.http.get<Producto>(`${this.apiUrl}/productos/${id}`);
+    return this.http.get<Producto>(`${this.apiUrl}/api/productos/${id}`);
   }
 
   // Buscar productos por nombre (público)
   buscarProductos(nombre: string, page: number = 0, size: number = 10): Observable<ProductoResponse> {
-    return this.http.get<ProductoResponse>(`${this.apiUrl}/productos/buscar?nombre=${nombre}&page=${page}&size=${size}`);
+    return this.http.get<ProductoResponse>(`${this.apiUrl}/api/productos/buscar?nombre=${nombre}&page=${page}&size=${size}`);
   }
 
   // Obtener productos por categoría (público)
   obtenerProductosPorCategoria(categoria: string, page: number = 0, size: number = 10): Observable<ProductoResponse> {
-    return this.http.get<ProductoResponse>(`${this.apiUrl}/productos/categoria/${categoria}?page=${page}&size=${size}`);
+    return this.http.get<ProductoResponse>(`${this.apiUrl}/api/productos/categoria/${categoria}?page=${page}&size=${size}`);
   }
 
 
   // Crear producto (requiere autenticación)
   crearProducto(producto: ProductoRequest): Observable<Producto> {
     const headers = this.getAuthHeaders();
-    return this.http.post<Producto>(`${this.apiUrl}/productos`, producto, { headers });
+    return this.http.post<Producto>(`${this.apiUrl}/api/productos`, producto, { headers });
   }
 
   // Crear producto con imagen (requiere autenticación)
@@ -106,13 +106,13 @@ export class ProductoService {
     }
 
     const headers = this.getAuthHeadersForMultipart();
-    return this.http.post<Producto>(`${this.apiUrl}/productos/con-imagen`, formData, { headers });
+    return this.http.post<Producto>(`${this.apiUrl}/api/productos/con-imagen`, formData, { headers });
   }
 
   // Actualizar producto (requiere autenticación)
   actualizarProducto(id: number, producto: ProductoRequest): Observable<Producto> {
     const headers = this.getAuthHeaders();
-    return this.http.put<Producto>(`${this.apiUrl}/productos/${id}`, producto, { headers });
+    return this.http.put<Producto>(`${this.apiUrl}/api/productos/${id}`, producto, { headers });
   }
 
   // Actualizar producto con imagen (requiere autenticación)
@@ -134,55 +134,55 @@ export class ProductoService {
     }
 
     const headers = this.getAuthHeadersForMultipart();
-    return this.http.put<Producto>(`${this.apiUrl}/productos/${id}/con-imagen`, formData, { headers });
+    return this.http.put<Producto>(`${this.apiUrl}/api/productos/${id}/con-imagen`, formData, { headers });
   }
 
   // Eliminar producto (requiere autenticación)
   eliminarProducto(id: number): Observable<void> {
     const headers = this.getAuthHeaders();
-    return this.http.delete<void>(`${this.apiUrl}/productos/${id}`, { headers });
+    return this.http.delete<void>(`${this.apiUrl}/api/productos/${id}`, { headers });
   }
 
   // Obtener productos del artesano autenticado
   obtenerMisProductos(page: number = 0, size: number = 10): Observable<ProductoResponse> {
     const headers = this.getAuthHeaders();
-    return this.http.get<ProductoResponse>(`${this.apiUrl}/productos/mis-productos?page=${page}&size=${size}`, { headers });
+    return this.http.get<ProductoResponse>(`${this.apiUrl}/api/productos/mis-productos?page=${page}&size=${size}`, { headers });
   }
 
   // Obtener productos activos del artesano autenticado
   obtenerMisProductosActivos(page: number = 0, size: number = 10): Observable<ProductoResponse> {
     const headers = this.getAuthHeaders();
-    return this.http.get<ProductoResponse>(`${this.apiUrl}/productos/mis-productos-activos?page=${page}&size=${size}`, { headers });
+    return this.http.get<ProductoResponse>(`${this.apiUrl}/api/productos/mis-productos-activos?page=${page}&size=${size}`, { headers });
   }
 
   // Obtener estadísticas del artesano
   obtenerMisEstadisticas(): Observable<Estadisticas> {
     const headers = this.getAuthHeaders();
-    return this.http.get<Estadisticas>(`${this.apiUrl}/productos/mis-estadisticas`, { headers });
+    return this.http.get<Estadisticas>(`${this.apiUrl}/api/productos/mis-estadisticas`, { headers });
   }
 
   // Obtener productos inactivos del artesano
   obtenerMisProductosInactivos(page: number = 0, size: number = 10): Observable<ProductoResponse> {
     const headers = this.getAuthHeaders();
-    return this.http.get<ProductoResponse>(`${this.apiUrl}/productos/inactivos?page=${page}&size=${size}`, { headers });
+    return this.http.get<ProductoResponse>(`${this.apiUrl}/api/productos/inactivos?page=${page}&size=${size}`, { headers });
   }
 
   // Desactivar producto
   desactivarProducto(id: number): Observable<Producto> {
     const headers = this.getAuthHeaders();
-    return this.http.put<Producto>(`${this.apiUrl}/productos/${id}/desactivar`, {}, { headers });
+    return this.http.put<Producto>(`${this.apiUrl}/api/productos/${id}/desactivar`, {}, { headers });
   }
 
   // Activar producto
   activarProducto(id: number): Observable<Producto> {
     const headers = this.getAuthHeaders();
-    return this.http.put<Producto>(`${this.apiUrl}/productos/${id}/activar`, {}, { headers });
+    return this.http.put<Producto>(`${this.apiUrl}/api/productos/${id}/activar`, {}, { headers });
   }
 
   // Eliminar producto definitivamente
   eliminarProductoDefinitivamente(id: number): Observable<void> {
     const headers = this.getAuthHeaders();
-    return this.http.delete<void>(`${this.apiUrl}/productos/${id}/definitivo`, { headers });
+    return this.http.delete<void>(`${this.apiUrl}/api/productos/${id}/definitivo`, { headers });
   }
 
   // Método privado para obtener headers de autenticación
