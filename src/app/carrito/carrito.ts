@@ -83,11 +83,8 @@ export class CarritoComponent implements OnInit {
     this.isLoading = true;
 
     try {
-      // Debug: Verificar usuario actual
+      // Verificar usuario actual
       const currentUser = this.authService.getCurrentUser();
-      console.log('=== DEBUG: Usuario actual en frontend ===');
-      console.log('Usuario:', currentUser);
-      console.log('Auth token:', localStorage.getItem('auth'));
       
       // Convertir items del carrito a formato de Mercado Pago
       const items = this.mercadoPagoService.convertirItemsCarrito(this.carritoItems);
