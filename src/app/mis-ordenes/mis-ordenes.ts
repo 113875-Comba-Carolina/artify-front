@@ -93,4 +93,8 @@ export class MisOrdenesComponent implements OnInit {
       minute: '2-digit'
     });
   }
+
+  verDetalleProducto(productoId: number): void {
+    this.router.navigate(['/producto', productoId]);
+  }
 }

@@ -9,6 +9,7 @@ interface Venta {
   ordenId: number;
   productoId: number;
   productoNombre: string;
+  imagenUrl?: string;
   cantidad: number;
   precioUnitario: number;
   subtotal: number;
