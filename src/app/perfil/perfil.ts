@@ -213,6 +213,10 @@ export class PerfilComponent implements OnInit {
         this.alertService.success('¡Felicidades!', 'Te has convertido en artesano exitosamente. Ahora puedes crear y gestionar productos.');
         // Actualizar el usuario en el localStorage
         this.authService.updateUser(artesano);
+        // Refrescar la página para actualizar todos los datos del perfil
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000); // Esperar 2 segundos para que el usuario vea el mensaje de éxito
       },
       error: (error) => {
         console.error('Error convirtiendo a artesano:', error);

@@ -16,14 +16,19 @@ import { AlertService } from '../services/alert.service';
 })
 export class ExplorarProductosComponent implements OnInit {
   productos: Producto[] = [];
-  productosFiltrados: Producto[] = [];
   categorias: string[] = [];
   categoriaSeleccionada: string = '';
   terminoBusqueda: string = '';
   isLoading = false;
   page = 0;
-  size = 20;
+  size = 15;
   hasMore = true;
+  totalPages = 0;
+  totalElements = 0;
+  hasActiveFilters = false;
+  
+  // Hacer Math disponible en el template
+  Math = Math;
 
   // Mapeo de categorías para mostrar nombres amigables
   categoriaNombres: { [key: string]: string } = {
@@ -59,59 +64,113 @@ export class ExplorarProductosComponent implements OnInit {
     this.categorias = Object.keys(this.categoriaNombres);
   }
 
-  loadProductos() {
+  loadProductos(page: number = 0) {
     this.isLoading = true;
-    this.page = 0;
-    this.hasMore = true;
+    this.page = page;
 
-    this.productoService.obtenerProductos(this.page, this.size).subscribe({
+    // Si hay filtros activos, usar búsqueda avanzada
+    if (this.hasActiveFilters) {
+      this.buscarProductosConFiltros(page);
+    } else {
+      // Cargar todos los productos
+      this.productoService.obtenerProductos(this.page, this.size).subscribe({
+        next: (response) => {
+          this.productos = response.content || response as any;
+          this.totalPages = response.totalPages || 0;
+          this.totalElements = response.totalElements || 0;
+          this.hasMore = this.page < this.totalPages - 1;
+          this.isLoading = false;
+        },
+        error: (error) => {
+          console.error('Error cargando productos:', error);
+          this.isLoading = false;
+        }
+      });
+    }
+  }
+
+  buscarProductosConFiltros(page: number = 0) {
+    this.isLoading = true;
+    this.page = page;
+
+    const nombre = this.terminoBusqueda.trim() || undefined;
+    const categoria = this.categoriaSeleccionada || undefined;
+
+    this.productoService.buscarProductosAvanzada(nombre, categoria, undefined, undefined, page, this.size).subscribe({
       next: (response) => {
         this.productos = response.content || response as any;
-        this.productosFiltrados = [...this.productos];
+        this.totalPages = response.totalPages || 0;
+        this.totalElements = response.totalElements || 0;
+        this.hasMore = this.page < this.totalPages - 1;
         this.isLoading = false;
       },
       error: (error) => {
-        console.error('Error cargando productos:', error);
+        console.error('Error buscando productos:', error);
         this.isLoading = false;
       }
     });
   }
 
   onBuscar() {
-    this.filtrarProductos();
+    this.aplicarFiltros();
   }
 
   onCategoriaChange() {
-    this.filtrarProductos();
+    this.aplicarFiltros();
   }
 
-  filtrarProductos() {
-    let productosFiltrados = [...this.productos];
+  aplicarFiltros() {
+    // Verificar si hay filtros activos
+    this.hasActiveFilters = !!(this.terminoBusqueda.trim() || this.categoriaSeleccionada);
+    
+    // Ir a la primera página cuando se aplican filtros
+    this.loadProductos(0);
+  }
 
-    // Filtrar por término de búsqueda
-    if (this.terminoBusqueda.trim()) {
-      const termino = this.terminoBusqueda.toLowerCase().trim();
-      productosFiltrados = productosFiltrados.filter(producto =>
-        producto.nombre.toLowerCase().includes(termino) ||
-        producto.descripcion.toLowerCase().includes(termino) ||
-        (producto.artesano?.nombre && producto.artesano.nombre.toLowerCase().includes(termino))
-      );
+  // Métodos de paginación
+  irAPagina(pagina: number) {
+    if (pagina >= 0 && pagina < this.totalPages) {
+      this.loadProductos(pagina);
     }
+  }
 
-    // Filtrar por categoría
-    if (this.categoriaSeleccionada) {
-      productosFiltrados = productosFiltrados.filter(producto =>
-        producto.categoria === this.categoriaSeleccionada
-      );
+  paginaAnterior() {
+    if (this.page > 0) {
+      this.irAPagina(this.page - 1);
     }
+  }
 
-    this.productosFiltrados = productosFiltrados;
+  paginaSiguiente() {
+    if (this.page < this.totalPages - 1) {
+      this.irAPagina(this.page + 1);
+    }
+  }
+
+  primeraPagina() {
+    this.irAPagina(0);
+  }
+
+  ultimaPagina() {
+    this.irAPagina(this.totalPages - 1);
+  }
+
+  // Generar array de números de página para mostrar
+  getPaginasVisibles(): number[] {
+    const paginas: number[] = [];
+    const inicio = Math.max(0, this.page - 2);
+    const fin = Math.min(this.totalPages - 1, this.page + 2);
+    
+    for (let i = inicio; i <= fin; i++) {
+      paginas.push(i);
+    }
+    return paginas;
   }
 
   limpiarFiltros() {
     this.terminoBusqueda = '';
     this.categoriaSeleccionada = '';
-    this.productosFiltrados = [...this.productos];
+    this.hasActiveFilters = false;
+    this.loadProductos(0); // Recargar desde la primera página
   }
 
   onAgregarAlCarrito(event: Event, producto: Producto) {
