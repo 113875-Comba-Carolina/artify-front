@@ -398,8 +398,8 @@ $artisan-900: #43302b;
 
 .clear-button {
   background: white;
-  color: #dc2626;
-  border: 2px solid #dc2626;
+  color: $artisan-600;
+  border: 2px solid $artisan-600;
   padding: 0.75rem 1.5rem;
   border-radius: 0.5rem;
   font-weight: 500;
@@ -407,8 +407,9 @@ $artisan-900: #43302b;
   transition: all 0.3s ease;
 
   &:hover {
-    background: #dc2626;
-    color: white;
+    background: $artisan-50;
+    border-color: $artisan-700;
+    color: $artisan-700;
   }
 }
 
