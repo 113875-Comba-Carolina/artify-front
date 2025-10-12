@@ -78,6 +78,14 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
+          "options": {
+            "allowedHosts": [
+              "localhost",
+              "127.0.0.1",
+              "alberta-postsymphysial-buddy.ngrok-free.dev",
+              "treasurable-almeda-unsimply.ngrok-free.dev"
+            ]
+          },
           "configurations": {
             "production": {
               "buildTarget": "artify-frontend:build:production"

@@ -94,9 +94,9 @@
                 }
                 
                 <!-- Estado del producto -->
-                @if (!canPurchase(producto)) {
+                @if (isOutOfStock(producto)) {
                   <div class="producto-status inactive">
-                    <span>No disponible</span>
+                    <span>Sin stock</span>
                   </div>
                 }
               </div>
@@ -117,12 +117,6 @@
                   <div class="detail-item">
                     <span class="detail-label">Stock:</span>
                     <span class="detail-value">{{ producto.stock }} unidades</span>
-                  </div>
-                  <div class="detail-item">
-                    <span class="detail-label">Estado:</span>
-                    <span class="detail-value" [class]="getEstadoClass(producto)">
-                      {{ getEstadoProducto(producto) }}
-                    </span>
                   </div>
                   @if (producto.artesano) {
                     <div class="detail-item">

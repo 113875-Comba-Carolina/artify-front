@@ -1,0 +1,270 @@
+// Variables
+$artisan-50: #fdf8f6;
+$artisan-100: #f2e8e5;
+$artisan-200: #eaddd7;
+$artisan-300: #e0cec7;
+$artisan-400: #d2bab0;
+$artisan-500: #bfa094;
+$artisan-600: #a18072;
+$artisan-700: #977669;
+$artisan-800: #846358;
+$artisan-900: #43302b;
+
+$warning-500: #f59e0b;
+$warning-100: #fef3c7;
+
+// Container
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+// Header
+.pending-header {
+  background: linear-gradient(135deg, $warning-500 0%, $artisan-600 100%);
+  color: white;
+  padding: 3rem 0;
+  text-align: center;
+}
+
+.header-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.pending-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.pending-subtitle {
+  font-size: 1.25rem;
+  margin: 0;
+  opacity: 0.9;
+}
+
+// Content
+.pending-container {
+  padding: 3rem 0;
+  background: $artisan-50;
+  min-height: 60vh;
+}
+
+.pending-content {
+  background: white;
+  border-radius: 1rem;
+  padding: 3rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+// Pending icon
+.pending-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  background: $warning-100;
+  color: $warning-500;
+  border-radius: 50%;
+  margin-bottom: 2rem;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+// Payment info
+.payment-info {
+  margin-bottom: 2rem;
+}
+
+.info-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: $artisan-800;
+  margin-bottom: 1.5rem;
+}
+
+.info-card {
+  background: $artisan-50;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  text-align: left;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid $artisan-200;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.info-label {
+  font-weight: 600;
+  color: $artisan-700;
+}
+
+.info-value {
+  color: $artisan-800;
+  font-family: 'Courier New', monospace;
+}
+
+.info-value.pending {
+  color: $warning-500;
+  font-weight: 600;
+}
+
+// Status info
+.status-info {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: $warning-100;
+  border-radius: 0.75rem;
+  border-left: 4px solid $warning-500;
+}
+
+.status-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: $artisan-800;
+  margin-bottom: 0.75rem;
+}
+
+.status-text {
+  color: $artisan-700;
+  line-height: 1.6;
+  margin: 0;
+}
+
+// Payment methods
+.payment-methods {
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.methods-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: $artisan-800;
+  margin-bottom: 1rem;
+}
+
+.methods-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.method-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: $artisan-100;
+  border-radius: 0.5rem;
+  color: $artisan-700;
+  font-weight: 500;
+}
+
+// Tracking message
+.tracking-message {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: $artisan-100;
+  border-radius: 0.75rem;
+  border-left: 4px solid $artisan-500;
+}
+
+.tracking-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: $artisan-800;
+  margin-bottom: 0.75rem;
+}
+
+.tracking-text {
+  color: $artisan-700;
+  line-height: 1.6;
+  margin: 0;
+}
+
+// Actions
+.pending-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.primary-button {
+  background: $warning-500;
+  color: white;
+  border: none;
+  padding: 0.875rem 2rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: darken($warning-500, 10%);
+    transform: translateY(-1px);
+  }
+}
+
+.secondary-button {
+  background: white;
+  color: $artisan-700;
+  border: 2px solid $artisan-300;
+  padding: 0.875rem 2rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: $artisan-50;
+    border-color: $artisan-400;
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .pending-title {
+    font-size: 2rem;
+  }
+
+  .pending-content {
+    padding: 2rem;
+  }
+
+  .pending-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .primary-button,
+  .secondary-button {
+    width: 100%;
+    max-width: 300px;
+  }
+}

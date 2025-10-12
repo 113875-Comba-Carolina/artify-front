@@ -6,6 +6,11 @@ import { ProductoDetalleComponent } from './producto-detalle/producto-detalle';
 import { CarritoComponent } from './carrito/carrito';
 import { ExplorarProductosComponent } from './explorar-productos/explorar-productos';
 import { PerfilComponent } from './perfil/perfil';
+import { PagoExitosoComponent } from './pago-exitoso/pago-exitoso';
+import { PagoFallidoComponent } from './pago-fallido/pago-fallido';
+import { PagoPendienteComponent } from './pago-pendiente/pago-pendiente';
+import { MisOrdenesComponent } from './mis-ordenes/mis-ordenes';
+import { MisVentasComponent } from './mis-ventas/mis-ventas';
 
 export const routes: Routes = [
   {
@@ -39,5 +44,25 @@ export const routes: Routes = [
   {
     path: 'perfil',
     component: PerfilComponent
+  },
+  {
+    path: 'pago-exitoso',
+    component: PagoExitosoComponent
+  },
+  {
+    path: 'pago-fallido',
+    component: PagoFallidoComponent
+  },
+  {
+    path: 'pago-pendiente',
+    component: PagoPendienteComponent
+  },
+  {
+    path: 'mis-ordenes',
+    component: MisOrdenesComponent
+  },
+  {
+    path: 'mis-ventas',
+    component: MisVentasComponent
   }
 ];

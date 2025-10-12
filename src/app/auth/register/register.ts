@@ -46,6 +46,7 @@ export class RegisterComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required],
       nombre: ['', [Validators.required, Validators.minLength(2)]],
+      telefono: ['', [Validators.maxLength(20)]],
       rol: [preselectRole, Validators.required],
       // Campos adicionales para artesanos
       nombreEmprendimiento: [''],

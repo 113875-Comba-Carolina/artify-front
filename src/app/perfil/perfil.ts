@@ -94,7 +94,8 @@ export class PerfilComponent implements OnInit {
         nombre: this.perfil.nombre,
         descripcion: this.esArtesano() ? (this.perfil as Artesano).descripcion : '',
         nombreEmprendimiento: this.esArtesano() ? (this.perfil as Artesano).nombreEmprendimiento : '',
-        ubicacion: this.esArtesano() ? (this.perfil as Artesano).ubicacion : ''
+        ubicacion: this.esArtesano() ? (this.perfil as Artesano).ubicacion : '',
+        telefono: this.perfil.telefono || ''
       };
     }
   }
