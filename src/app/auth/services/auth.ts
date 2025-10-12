@@ -2,19 +2,21 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 export interface LoginResponse {
   id: number;
   nombre: string;
   email: string;
   rol: string;
+  telefono?: string;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8080/api/auth';
+  private apiUrl = environment.apiUrl;
   private userSubject = new BehaviorSubject<LoginResponse | null>(null);
 
   constructor(private http: HttpClient) { 
@@ -28,12 +30,12 @@ export class AuthService {
   }
 
   login(email: string, password: string): Observable<LoginResponse> {
-    const headers = new HttpHeaders().set(
-      'Authorization',
-      'Basic ' + btoa(email + ':' + password)
-    );
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa(email + ':' + password),
+      'ngrok-skip-browser-warning': 'true' // Saltar la página de advertencia de ngrok
+    });
 
-    return this.http.get<LoginResponse>(`${this.apiUrl}/perfil`, { headers }).pipe(
+    return this.http.get<LoginResponse>(`${this.apiUrl}/api/perfil`, { headers }).pipe(
       tap(response => {
         localStorage.setItem('currentUser', JSON.stringify(response));
         localStorage.setItem('auth', btoa(email + ':' + password));
@@ -63,10 +65,16 @@ export class AuthService {
   }
 
   registerArtesano(formData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/registro/artesano`, formData);
+    const headers = new HttpHeaders({
+      'ngrok-skip-browser-warning': 'true' // Saltar la página de advertencia de ngrok
+    });
+    return this.http.post(`${this.apiUrl}/api/registro/artesano`, formData, { headers });
   }
 
   registerUsuario(formData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/registro/usuario`, formData);
+    const headers = new HttpHeaders({
+      'ngrok-skip-browser-warning': 'true' // Saltar la página de advertencia de ngrok
+    });
+    return this.http.post(`${this.apiUrl}/api/registro/usuario`, formData, { headers });
   }
 }

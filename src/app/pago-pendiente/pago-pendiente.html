@@ -1,0 +1,107 @@
+<!-- Header -->
+<div class="pending-header">
+  <div class="container">
+    <div class="header-content">
+      <h1 class="pending-title">Pago Pendiente</h1>
+      <p class="pending-subtitle">Tu pago está siendo procesado</p>
+    </div>
+  </div>
+</div>
+
+<!-- Content -->
+<div class="pending-container">
+  <div class="container">
+    <div class="pending-content">
+      <!-- Icono de pendiente -->
+      <div class="pending-icon">
+        <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+      </div>
+
+      <!-- Información del pago -->
+      <div class="payment-info">
+        <h2 class="info-title">Detalles del Pago</h2>
+        
+        <div class="info-card">
+          <div class="info-row">
+            <span class="info-label">Estado:</span>
+            <span class="info-value pending">Pendiente</span>
+          </div>
+          
+          @if (paymentId) {
+            <div class="info-row">
+              <span class="info-label">ID de Transacción:</span>
+              <span class="info-value">{{ paymentId }}</span>
+            </div>
+          }
+          
+          @if (externalReference) {
+            <div class="info-row">
+              <span class="info-label">Referencia:</span>
+              <span class="info-value">{{ externalReference }}</span>
+            </div>
+          }
+          
+          <div class="info-row">
+            <span class="info-label">Fecha:</span>
+            <span class="info-value">{{ fechaPago }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Información sobre el estado -->
+      <div class="status-info">
+        <h3 class="status-title">¿Qué significa esto?</h3>
+        <p class="status-text">
+          Tu pago está en proceso de verificación. Esto puede tomar unos minutos dependiendo del método de pago utilizado.
+        </p>
+      </div>
+
+      <!-- Métodos de pago pendientes -->
+      <div class="payment-methods">
+        <h3 class="methods-title">Métodos de Pago Pendientes</h3>
+        <div class="methods-list">
+          <div class="method-item">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+            </svg>
+            <span>Transferencia bancaria</span>
+          </div>
+          <div class="method-item">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
+            </svg>
+            <span>Pago en efectivo (Rapipago, Pago Fácil)</span>
+          </div>
+          <div class="method-item">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+            <span>Boleto bancario</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mensaje de seguimiento -->
+      <div class="tracking-message">
+        <h3 class="tracking-title">Seguimiento del Pago</h3>
+        <p class="tracking-text">
+          No necesitas hacer nada más. Te notificaremos por email cuando el pago sea confirmado.
+          También puedes verificar el estado en tu cuenta de Mercado Pago.
+        </p>
+      </div>
+
+      <!-- Acciones -->
+      <div class="pending-actions">
+        <button (click)="volverAlInicio()" class="primary-button">
+          Volver al Inicio
+        </button>
+        
+        <button (click)="verProductos()" class="secondary-button">
+          Volver al Carrito
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,341 @@
+.mis-ordenes-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  min-height: 80vh;
+
+  .header {
+    text-align: center;
+    margin-bottom: 3rem;
+
+    h1 {
+      font-size: 2.5rem;
+      color: #2c3e50;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      color: #7f8c8d;
+      font-size: 1.1rem;
+    }
+  }
+
+  .loading-container {
+    text-align: center;
+    padding: 4rem 0;
+
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #3498db;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1rem;
+    }
+
+    p {
+      color: #7f8c8d;
+      font-size: 1.1rem;
+    }
+  }
+
+  .error-container {
+    text-align: center;
+    padding: 4rem 0;
+
+    .error-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      color: #e74c3c;
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+
+    .retry-button {
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: #c0392b;
+      }
+    }
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 4rem 0;
+
+    .empty-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+    }
+
+    h2 {
+      color: #2c3e50;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      color: #7f8c8d;
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+
+    .primary-button {
+      background-color: #3498db;
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: #2980b9;
+      }
+    }
+  }
+
+  .ordenes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .orden-card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .orden-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem;
+      background: #f8f9fa;
+      border-bottom: 1px solid #e9ecef;
+
+      .orden-info {
+        h3 {
+          margin: 0;
+          color: #2c3e50;
+          font-size: 1.3rem;
+        }
+
+        .fecha {
+          margin: 0.5rem 0 0;
+          color: #7f8c8d;
+          font-size: 0.9rem;
+        }
+      }
+
+      .orden-status {
+        .status-badge {
+          padding: 0.5rem 1rem;
+          border-radius: 20px;
+          color: white;
+          font-weight: bold;
+          font-size: 0.9rem;
+        }
+      }
+    }
+
+    .orden-items {
+      padding: 1.5rem;
+
+      .item-row {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem 0;
+        border-bottom: 1px solid #f1f3f4;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        .item-image {
+          width: 60px;
+          height: 60px;
+          flex-shrink: 0;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+          }
+
+          .no-image {
+            width: 100%;
+            height: 100%;
+            background: #f8f9fa;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+          }
+        }
+
+        .item-details {
+          flex: 1;
+
+          h4 {
+            margin: 0 0 0.25rem;
+            color: #2c3e50;
+            font-size: 1.1rem;
+          }
+
+          .categoria {
+            margin: 0 0 0.25rem;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            text-transform: capitalize;
+          }
+
+          .cantidad {
+            margin: 0;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+          }
+        }
+
+        .item-price {
+          text-align: right;
+
+          .precio-unitario {
+            margin: 0 0 0.25rem;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+          }
+
+          .subtotal {
+            margin: 0;
+            color: #2c3e50;
+            font-weight: bold;
+            font-size: 1.1rem;
+          }
+        }
+      }
+    }
+
+    .orden-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem;
+      background: #f8f9fa;
+      border-top: 1px solid #e9ecef;
+
+      .total {
+        .total-label {
+          color: #7f8c8d;
+          font-size: 1.1rem;
+          margin-right: 0.5rem;
+        }
+
+        .total-amount {
+          color: #2c3e50;
+          font-weight: bold;
+          font-size: 1.3rem;
+        }
+      }
+
+      .orden-actions {
+        .secondary-button {
+          background-color: transparent;
+          color: #3498db;
+          border: 2px solid #3498db;
+          padding: 0.5rem 1rem;
+          border-radius: 5px;
+          cursor: pointer;
+          font-size: 0.9rem;
+          transition: all 0.3s;
+
+          &:hover {
+            background-color: #3498db;
+            color: white;
+          }
+        }
+      }
+    }
+  }
+
+  .actions {
+    text-align: center;
+    margin-top: 3rem;
+
+    .primary-button {
+      background-color: #3498db;
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: #2980b9;
+      }
+    }
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .mis-ordenes-container {
+    padding: 1rem;
+
+    .orden-card {
+      .orden-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+
+      .orden-items {
+        .item-row {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.5rem;
+
+          .item-price {
+            text-align: left;
+            width: 100%;
+          }
+        }
+      }
+
+      .orden-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+    }
+  }
+}

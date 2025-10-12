@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CarritoService, CarritoItem } from '../services/carrito.service';
 import { AuthService } from '../auth/services/auth';
+import { MercadoPagoService } from '../services/mercado-pago.service';
 
 @Component({
   selector: 'app-carrito',
@@ -20,7 +21,8 @@ export class CarritoComponent implements OnInit {
   constructor(
     private carritoService: CarritoService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private mercadoPagoService: MercadoPagoService
   ) {}
 
   ngOnInit() {
@@ -32,6 +34,9 @@ export class CarritoComponent implements OnInit {
       this.router.navigate(['/auth/login']);
       return;
     }
+
+    // Verificar si se regresó de una compra exitosa
+    this.verificarCompraExitosa();
 
     this.cargarCarrito();
   }
@@ -69,12 +74,85 @@ export class CarritoComponent implements OnInit {
   }
 
   continuarComprando() {
-    this.router.navigate(['/']);
+    this.router.navigate(['/explorar-productos']);
   }
 
-  procederAlPago() {
-    console.log('Proceder al pago:', this.carritoItems);
-    // TODO: Implementar funcionalidad de pago
+  verificarCompraExitosa() {
+    // Verificar si se regresó de una compra exitosa
+    const urlParams = new URLSearchParams(window.location.search);
+    const status = urlParams.get('status');
+    const paymentId = urlParams.get('payment_id');
+    
+    // Si hay parámetros de pago exitoso, limpiar el carrito
+    if (status === 'approved' && paymentId) {
+      console.log('Compra exitosa detectada, limpiando carrito...');
+      this.carritoService.limpiarCarrito();
+      
+      // Mostrar mensaje de confirmación
+      alert('¡Compra realizada exitosamente! El carrito ha sido vaciado.');
+      
+      // Limpiar los parámetros de la URL para evitar limpiezas repetidas
+      const url = new URL(window.location.href);
+      url.searchParams.delete('status');
+      url.searchParams.delete('payment_id');
+      url.searchParams.delete('external_reference');
+      window.history.replaceState({}, '', url.toString());
+    }
+    
+    // Verificar si se regresó de mis-órdenes (posible compra exitosa)
+    const referrer = document.referrer;
+    if (referrer && referrer.includes('/mis-ordenes')) {
+      // Verificar si hay items en el carrito que podrían ser de una compra reciente
+      const carritoActual = this.carritoService.getCarrito();
+      if (carritoActual.length > 0) {
+        console.log('Regresando de mis-órdenes con carrito no vacío, limpiando...');
+        this.carritoService.limpiarCarrito();
+        alert('¡Compra realizada exitosamente! El carrito ha sido vaciado.');
+      }
+    }
+  }
+
+  async procederAlPago() {
+    if (this.carritoItems.length === 0) {
+      alert('Tu carrito está vacío');
+      return;
+    }
+
+    this.isLoading = true;
+
+    try {
+      // Verificar usuario actual
+      const currentUser = this.authService.getCurrentUser();
+      
+      // Convertir items del carrito a formato de Mercado Pago
+      const items = this.mercadoPagoService.convertirItemsCarrito(this.carritoItems);
+      
+      // Crear preferencia de pago
+      // URL de ngrok para redirección de Mercado Pago (frontend)
+      const ngrokUrl = 'https://treasurable-almeda-unsimply.ngrok-free.dev';
+      
+      const preferencia = await this.mercadoPagoService.crearPreferencia({
+        items: items,
+        externalReference: `ORDER-${Date.now()}`,
+        notificationUrl: 'https://alberta-postsymphysial-buddy.ngrok-free.dev/api/payments/webhook',
+        successUrl: `${ngrokUrl}/mis-ordenes`,
+        failureUrl: `${ngrokUrl}/carrito`,
+        pendingUrl: `${ngrokUrl}/pago-pendiente`,
+        autoReturn: true
+      }).toPromise();
+
+      if (preferencia && preferencia.success) {
+        // Redirigir a Mercado Pago
+        this.mercadoPagoService.redirigirAPago(preferencia.initPoint);
+      } else {
+        alert('Error al crear la preferencia de pago: ' + (preferencia?.message || 'Error desconocido'));
+        this.isLoading = false;
+      }
+    } catch (error) {
+      console.error('Error al procesar el pago:', error);
+      alert('Error al procesar el pago. Por favor, intenta nuevamente.');
+      this.isLoading = false;
+    }
   }
 
   formatPrice(precio: number): string {

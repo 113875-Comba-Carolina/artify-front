@@ -1,0 +1,142 @@
+<!-- Header -->
+<div class="mis-ventas-header">
+  <div class="container">
+    <div class="header-content">
+      <div class="header-text">
+        <h1 class="header-title">Mis Ventas</h1>
+        <p class="header-subtitle">Gestiona y monitorea todas tus ventas</p>
+      </div>
+      <button (click)="goToHome()" class="back-button">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+        Volver al Inicio
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Estadísticas -->
+<div class="stats-section">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+          </svg>
+        </div>
+        <div class="stat-content">
+          <h3 class="stat-value">{{ estadisticas.totalVentas || 0 }}</h3>
+          <p class="stat-label">Total de Ventas</p>
+        </div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+          </svg>
+        </div>
+        <div class="stat-content">
+          <h3 class="stat-value">{{ formatPrice(estadisticas.totalIngresos || 0) }}</h3>
+          <p class="stat-label">Ingresos Totales</p>
+        </div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+          </svg>
+        </div>
+        <div class="stat-content">
+          <h3 class="stat-value">{{ estadisticas.totalProductosVendidos || 0 }}</h3>
+          <p class="stat-label">Productos Vendidos</p>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+<!-- Loading State -->
+@if (isLoading) {
+  <div class="loading-container">
+    <div class="loading-spinner"></div>
+    <p class="loading-text">Cargando ventas...</p>
+  </div>
+}
+
+<!-- Error State -->
+@if (error) {
+  <div class="error-container">
+    <div class="error-icon">⚠️</div>
+    <h3 class="error-title">Error al cargar ventas</h3>
+    <p class="error-description">{{ error }}</p>
+    <button (click)="cargarVentas()" class="retry-button">
+      Intentar de nuevo
+    </button>
+  </div>
+}
+
+
+<!-- Ventas List -->
+@if (!isLoading && !error) {
+  @if (ventas.length === 0) {
+    <div class="empty-state">
+      <div class="empty-icon">📊</div>
+      <h2>No tienes ventas aún</h2>
+      <p>Cuando vendas tus productos, aparecerán aquí</p>
+    </div>
+  } @else {
+    <div class="ventas-section">
+      <div class="container">
+        <div class="results-info">
+          <p class="results-count">{{ ventas.length }} venta{{ ventas.length !== 1 ? 's' : '' }} encontrada{{ ventas.length !== 1 ? 's' : '' }}</p>
+        </div>
+        
+        <div class="ventas-list">
+          @for (venta of ventas; track venta.ordenId + '-' + venta.productoId) {
+            <div class="venta-card">
+              <div class="venta-header">
+                <div class="venta-info">
+                  <h3 class="producto-nombre">{{ venta.productoNombre }}</h3>
+                  <p class="comprador-info">
+                    <span class="comprador-nombre">{{ venta.compradorNombre }}</span>
+                    <span class="comprador-email">{{ venta.compradorEmail }}</span>
+                  </p>
+                </div>
+                <div class="venta-status">
+                  <span class="status-badge" [class]="getStatusClass(venta.estadoOrden)">
+                    {{ getStatusText(venta.estadoOrden) }}
+                  </span>
+                </div>
+              </div>
+              
+              <div class="venta-details">
+                <div class="detail-row">
+                  <span class="detail-label">Cantidad:</span>
+                  <span class="detail-value">{{ venta.cantidad }} unidad{{ venta.cantidad !== 1 ? 'es' : '' }}</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Precio unitario:</span>
+                  <span class="detail-value">{{ formatPrice(venta.precioUnitario) }}</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Subtotal:</span>
+                  <span class="detail-value total">{{ formatPrice(venta.subtotal) }}</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Fecha:</span>
+                  <span class="detail-value">{{ formatDate(venta.fechaCreacion) }}</span>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  }
+}

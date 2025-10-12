@@ -8,6 +8,7 @@ export interface Usuario {
   nombre: string;
   email: string;
   rol: 'USUARIO' | 'ARTESANO';
+  telefono?: string;
   fechaCreacion: string;
   fechaActualizacion: string;
 }
@@ -19,6 +20,7 @@ export interface Artesano {
   nombreEmprendimiento: string;
   descripcion: string;
   ubicacion: string;
+  telefono?: string;
   rol: 'ARTESANO';
   fechaCreacion: string;
   fechaActualizacion: string;
@@ -29,6 +31,7 @@ export interface PerfilUpdateRequest {
   descripcion?: string;
   nombreEmprendimiento?: string;
   ubicacion?: string;
+  telefono?: string;
 }
 
 export interface PasswordUpdateRequest {
@@ -53,25 +56,25 @@ export class PerfilService {
   // Obtener perfil del usuario actual
   obtenerPerfil(): Observable<Usuario | Artesano> {
     const headers = this.getAuthHeaders();
-    return this.http.get<Usuario | Artesano>(`${this.apiUrl}/perfil`, { headers });
+    return this.http.get<Usuario | Artesano>(`${this.apiUrl}/api/perfil`, { headers });
   }
 
   // Actualizar perfil básico
   actualizarPerfil(perfilData: PerfilUpdateRequest): Observable<Usuario | Artesano> {
     const headers = this.getAuthHeaders();
-    return this.http.put<Usuario | Artesano>(`${this.apiUrl}/perfil`, perfilData, { headers });
+    return this.http.put<Usuario | Artesano>(`${this.apiUrl}/api/perfil`, perfilData, { headers });
   }
 
   // Cambiar contraseña
   cambiarPassword(passwordData: PasswordUpdateRequest): Observable<any> {
     const headers = this.getAuthHeaders();
-    return this.http.put(`${this.apiUrl}/perfil/cambiar-password`, passwordData, { headers });
+    return this.http.put(`${this.apiUrl}/api/perfil/cambiar-password`, passwordData, { headers });
   }
 
   // Convertir usuario a artesano
   convertirArtesano(artesanoData: ConvertirArtesanoRequest): Observable<Artesano> {
     const headers = this.getAuthHeaders();
-    return this.http.post<Artesano>(`${this.apiUrl}/perfil/convertir-artesano`, artesanoData, { headers });
+    return this.http.post<Artesano>(`${this.apiUrl}/api/perfil/convertir-artesano`, artesanoData, { headers });
   }
 
   // Verificar si el usuario puede convertirse en artesano
@@ -88,7 +91,8 @@ export class PerfilService {
     }
     return new HttpHeaders({
       'Authorization': `Basic ${auth}`,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'ngrok-skip-browser-warning': 'true' // Saltar la página de advertencia de ngrok
     });
   }
 }

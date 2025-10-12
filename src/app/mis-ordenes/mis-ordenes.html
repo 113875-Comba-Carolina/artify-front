@@ -1,0 +1,79 @@
+<div class="mis-ordenes-container">
+  <div class="header">
+    <h1>Mis Compras</h1>
+    <p>Aquí puedes ver todas tus compras realizadas</p>
+  </div>
+
+  @if (isLoading) {
+    <div class="loading-container">
+      <div class="loading-spinner"></div>
+      <p>Cargando tus órdenes...</p>
+    </div>
+  } @else if (error) {
+    <div class="error-container">
+      <div class="error-icon">⚠️</div>
+      <p>{{ error }}</p>
+      <button (click)="cargarOrdenes()" class="retry-button">
+        Reintentar
+      </button>
+    </div>
+  } @else if (ordenes.length === 0) {
+    <div class="empty-state">
+      <div class="empty-icon">🛒</div>
+      <h2>No tienes compras aún</h2>
+      <p>Explora nuestros productos artesanales y realiza tu primera compra</p>
+    </div>
+  } @else {
+    <div class="ordenes-list">
+      @for (orden of ordenes; track orden.id) {
+        <div class="orden-card">
+          <div class="orden-header">
+            <div class="orden-info">
+              <h3>Orden #{{ orden.id }}</h3>
+              <p class="fecha">{{ formatDate(orden.fechaCreacion) }}</p>
+            </div>
+            <div class="orden-status">
+              <span 
+                class="status-badge" 
+                [style.background-color]="getEstadoColor(orden.estado)"
+              >
+                {{ getEstadoTexto(orden.estado) }}
+              </span>
+            </div>
+          </div>
+
+          <div class="orden-items">
+            @for (item of orden.items; track item.id) {
+              <div class="item-row">
+                <div class="item-image">
+                  @if (item.imagenUrl) {
+                    <img [src]="item.imagenUrl" [alt]="item.nombreProducto">
+                  } @else {
+                    <div class="no-image">📦</div>
+                  }
+                </div>
+                <div class="item-details">
+                  <h4>{{ item.nombreProducto }}</h4>
+                  <p class="categoria">{{ item.categoria }}</p>
+                  <p class="cantidad">Cantidad: {{ item.cantidad }}</p>
+                </div>
+                <div class="item-price">
+                  <p class="precio-unitario">{{ formatPrice(item.precioUnitario) }}</p>
+                  <p class="subtotal">{{ formatPrice(item.subtotal) }}</p>
+                </div>
+              </div>
+            }
+          </div>
+
+          <div class="orden-footer">
+            <div class="total">
+              <span class="total-label">Total:</span>
+              <span class="total-amount">{{ formatPrice(orden.total) }}</span>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+
+  }
+</div>
