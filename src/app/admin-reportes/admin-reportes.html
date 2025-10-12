@@ -1,0 +1,223 @@
+<!-- Header -->
+<div class="admin-header">
+  <div class="container">
+    <div class="header-content">
+      <div class="header-text">
+        <h1 class="header-title">Reportes Administrativos</h1>
+        <p class="header-subtitle">Estadísticas y análisis de la plataforma</p>
+      </div>
+      <button (click)="goToHome()" class="back-button">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+        Volver al Inicio
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Loading State -->
+@if (isLoading) {
+  <div class="loading-container">
+    <div class="loading-spinner"></div>
+    <p class="loading-text">Cargando reportes...</p>
+  </div>
+}
+
+<!-- Error State -->
+@if (error) {
+  <div class="error-container">
+    <div class="error-icon">⚠️</div>
+    <h3 class="error-title">Error al cargar reportes</h3>
+    <p class="error-description">{{ error }}</p>
+    <button (click)="cargarReportes()" class="retry-button">
+      Intentar de nuevo
+    </button>
+  </div>
+}
+
+<!-- Reportes Content -->
+@if (!isLoading && !error && reportes) {
+  <div class="reportes-container">
+    <div class="container">
+      
+      <!-- Estadísticas Generales -->
+      <div class="stats-section">
+        <h2 class="section-title">Resumen General</h2>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+              </svg>
+            </div>
+            <div class="stat-content">
+              <h3 class="stat-value">{{ reportes.totalUsuarios || 0 }}</h3>
+              <p class="stat-label">Total Usuarios</p>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                </svg>
+            </div>
+            <div class="stat-content">
+              <h3 class="stat-value">{{ reportes.totalArtesanos || 0 }}</h3>
+              <p class="stat-label">Artesanos Registrados</p>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+              </svg>
+            </div>
+            <div class="stat-content">
+              <h3 class="stat-value">{{ reportes.totalProductos || 0 }}</h3>
+              <p class="stat-label">Productos Activos</p>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+              </svg>
+            </div>
+            <div class="stat-content">
+              <h3 class="stat-value">{{ reportes.totalOrdenes || 0 }}</h3>
+              <p class="stat-label">Órdenes Totales</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Top Artesanos -->
+      <div class="top-artesanos-section">
+        <h2 class="section-title">Top Artesanos por Ventas</h2>
+        <div class="top-artesanos-list">
+          @for (artesano of reportes.topArtesanos; track artesano.id) {
+            <div class="artesano-card">
+              <div class="artesano-info">
+                <h4 class="artesano-nombre">{{ artesano.nombre }}</h4>
+                <p class="artesano-email">{{ artesano.email }}</p>
+                <p class="artesano-emprendimiento">{{ artesano.nombreEmprendimiento }}</p>
+              </div>
+              <div class="artesano-stats">
+                <div class="stat-item">
+                  <span class="stat-label">Ventas:</span>
+                  <span class="stat-value">{{ artesano.totalVentas }}</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-label">Ingresos:</span>
+                  <span class="stat-value">{{ formatPrice(artesano.ingresos) }}</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-label">Productos:</span>
+                  <span class="stat-value">{{ artesano.totalProductos }}</span>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Productos Más Vendidos -->
+      <div class="top-productos-section">
+        <h2 class="section-title">Productos Más Vendidos</h2>
+        <div class="top-productos-list">
+          @for (producto of reportes.topProductos; track producto.id) {
+            <div class="producto-card">
+              <div class="producto-image">
+                @if (producto.imagenUrl) {
+                  <img [src]="producto.imagenUrl" [alt]="producto.nombre" class="producto-img">
+                } @else {
+                  <div class="no-image">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                  </div>
+                }
+              </div>
+              <div class="producto-info">
+                <h4 class="producto-nombre">{{ producto.nombre }}</h4>
+                <p class="producto-categoria">{{ producto.categoria }}</p>
+                <p class="producto-artesano">Por: {{ producto.artesanoNombre }}</p>
+              </div>
+              <div class="producto-stats">
+                <div class="stat-item">
+                  <span class="stat-label">Vendidos:</span>
+                  <span class="stat-value">{{ producto.cantidadVendida }}</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-label">Ingresos:</span>
+                  <span class="stat-value">{{ formatPrice(producto.ingresos) }}</span>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Estadísticas por Categoría -->
+      <div class="categorias-section">
+        <h2 class="section-title">Ventas por Categoría</h2>
+        <div class="categorias-grid">
+          @for (categoria of reportes.ventasPorCategoria; track categoria.categoria) {
+            <div class="categoria-card">
+              <div class="categoria-header">
+                <h4 class="categoria-nombre">{{ getCategoriaNombre(categoria.categoria) }}</h4>
+                <span class="categoria-ventas">{{ categoria.totalVentas }} ventas</span>
+              </div>
+              <div class="categoria-stats">
+                <div class="stat-item">
+                  <span class="stat-label">Ingresos:</span>
+                  <span class="stat-value">{{ formatPrice(categoria.ingresos) }}</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-label">Productos:</span>
+                  <span class="stat-value">{{ categoria.totalProductos }}</span>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Actividad Reciente -->
+      <div class="actividad-section">
+        <h2 class="section-title">Actividad Reciente</h2>
+        <div class="actividad-list">
+          @for (actividad of reportes.actividadReciente; track actividad.id) {
+            <div class="actividad-item">
+              <div class="actividad-icon">
+                @if (actividad.tipo === 'VENTA') {
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                  </svg>
+                } @else if (actividad.tipo === 'REGISTRO') {
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+                  </svg>
+                } @else {
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+                  </svg>
+                }
+              </div>
+              <div class="actividad-content">
+                <p class="actividad-descripcion">{{ actividad.descripcion }}</p>
+                <span class="actividad-fecha">{{ formatDate(actividad.fecha) }}</span>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+
+    </div>
+  </div>
+}

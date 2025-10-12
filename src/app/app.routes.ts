@@ -11,6 +11,7 @@ import { PagoFallidoComponent } from './pago-fallido/pago-fallido';
 import { PagoPendienteComponent } from './pago-pendiente/pago-pendiente';
 import { MisOrdenesComponent } from './mis-ordenes/mis-ordenes';
 import { MisVentasComponent } from './mis-ventas/mis-ventas';
+import { AdminReportesComponent } from './admin-reportes/admin-reportes';
 
 export const routes: Routes = [
   {
@@ -64,5 +65,9 @@ export const routes: Routes = [
   {
     path: 'mis-ventas',
     component: MisVentasComponent
+  },
+  {
+    path: 'admin-reportes',
+    component: AdminReportesComponent
   }
 ];
