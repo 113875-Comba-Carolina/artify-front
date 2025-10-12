@@ -61,7 +61,7 @@ export class ProductoService {
   constructor(private http: HttpClient) {}
 
   // Obtener todos los productos (público)
-  obtenerProductos(page: number = 0, size: number = 10): Observable<ProductoResponse> {
+  obtenerProductos(page: number = 0, size: number = 15): Observable<ProductoResponse> {
     const headers = new HttpHeaders({
       'ngrok-skip-browser-warning': 'true' // Saltar la página de advertencia de ngrok
     });
@@ -85,7 +85,7 @@ export class ProductoService {
   }
 
   // Obtener productos por categoría (público)
-  obtenerProductosPorCategoria(categoria: string, page: number = 0, size: number = 10): Observable<ProductoResponse> {
+  obtenerProductosPorCategoria(categoria: string, page: number = 0, size: number = 15): Observable<ProductoResponse> {
     const headers = new HttpHeaders({
       'ngrok-skip-browser-warning': 'true' // Saltar la página de advertencia de ngrok
     });

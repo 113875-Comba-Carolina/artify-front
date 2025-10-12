@@ -22,8 +22,13 @@ export class ExplorarProductosComponent implements OnInit {
   terminoBusqueda: string = '';
   isLoading = false;
   page = 0;
-  size = 20;
+  size = 15;
   hasMore = true;
+  totalPages = 0;
+  totalElements = 0;
+  
+  // Hacer Math disponible en el template
+  Math = Math;
 
   // Mapeo de categorías para mostrar nombres amigables
   categoriaNombres: { [key: string]: string } = {
@@ -59,15 +64,17 @@ export class ExplorarProductosComponent implements OnInit {
     this.categorias = Object.keys(this.categoriaNombres);
   }
 
-  loadProductos() {
+  loadProductos(page: number = 0) {
     this.isLoading = true;
-    this.page = 0;
-    this.hasMore = true;
+    this.page = page;
 
     this.productoService.obtenerProductos(this.page, this.size).subscribe({
       next: (response) => {
         this.productos = response.content || response as any;
         this.productosFiltrados = [...this.productos];
+        this.totalPages = response.totalPages || 0;
+        this.totalElements = response.totalElements || 0;
+        this.hasMore = this.page < this.totalPages - 1;
         this.isLoading = false;
       },
       error: (error) => {
@@ -83,6 +90,45 @@ export class ExplorarProductosComponent implements OnInit {
 
   onCategoriaChange() {
     this.filtrarProductos();
+  }
+
+  // Métodos de paginación
+  irAPagina(pagina: number) {
+    if (pagina >= 0 && pagina < this.totalPages) {
+      this.loadProductos(pagina);
+    }
+  }
+
+  paginaAnterior() {
+    if (this.page > 0) {
+      this.irAPagina(this.page - 1);
+    }
+  }
+
+  paginaSiguiente() {
+    if (this.page < this.totalPages - 1) {
+      this.irAPagina(this.page + 1);
+    }
+  }
+
+  primeraPagina() {
+    this.irAPagina(0);
+  }
+
+  ultimaPagina() {
+    this.irAPagina(this.totalPages - 1);
+  }
+
+  // Generar array de números de página para mostrar
+  getPaginasVisibles(): number[] {
+    const paginas: number[] = [];
+    const inicio = Math.max(0, this.page - 2);
+    const fin = Math.min(this.totalPages - 1, this.page + 2);
+    
+    for (let i = inicio; i <= fin; i++) {
+      paginas.push(i);
+    }
+    return paginas;
   }
 
   filtrarProductos() {
@@ -111,7 +157,7 @@ export class ExplorarProductosComponent implements OnInit {
   limpiarFiltros() {
     this.terminoBusqueda = '';
     this.categoriaSeleccionada = '';
-    this.productosFiltrados = [...this.productos];
+    this.loadProductos(0); // Recargar desde la primera página
   }
 
   onAgregarAlCarrito(event: Event, producto: Producto) {
