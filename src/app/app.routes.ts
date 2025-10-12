@@ -10,6 +10,7 @@ import { PagoExitosoComponent } from './pago-exitoso/pago-exitoso';
 import { PagoFallidoComponent } from './pago-fallido/pago-fallido';
 import { PagoPendienteComponent } from './pago-pendiente/pago-pendiente';
 import { MisOrdenesComponent } from './mis-ordenes/mis-ordenes';
+import { MisVentasComponent } from './mis-ventas/mis-ventas';
 
 export const routes: Routes = [
   {
@@ -59,5 +60,9 @@ export const routes: Routes = [
   {
     path: 'mis-ordenes',
     component: MisOrdenesComponent
+  },
+  {
+    path: 'mis-ventas',
+    component: MisVentasComponent
   }
 ];

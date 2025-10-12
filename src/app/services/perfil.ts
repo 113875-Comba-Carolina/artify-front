@@ -8,6 +8,7 @@ export interface Usuario {
   nombre: string;
   email: string;
   rol: 'USUARIO' | 'ARTESANO';
+  telefono?: string;
   fechaCreacion: string;
   fechaActualizacion: string;
 }
@@ -19,6 +20,7 @@ export interface Artesano {
   nombreEmprendimiento: string;
   descripcion: string;
   ubicacion: string;
+  telefono?: string;
   rol: 'ARTESANO';
   fechaCreacion: string;
   fechaActualizacion: string;
@@ -29,6 +31,7 @@ export interface PerfilUpdateRequest {
   descripcion?: string;
   nombreEmprendimiento?: string;
   ubicacion?: string;
+  telefono?: string;
 }
 
 export interface PasswordUpdateRequest {
