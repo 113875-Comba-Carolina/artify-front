@@ -92,6 +92,28 @@ export class ProductoService {
     return this.http.get<ProductoResponse>(`${this.apiUrl}/api/productos/categoria/${categoria}?page=${page}&size=${size}`, { headers });
   }
 
+  // Búsqueda avanzada de productos (público)
+  buscarProductosAvanzada(
+    nombre?: string, 
+    categoria?: string, 
+    precioMin?: number, 
+    precioMax?: number, 
+    page: number = 0, 
+    size: number = 15
+  ): Observable<ProductoResponse> {
+    const headers = new HttpHeaders({
+      'ngrok-skip-browser-warning': 'true' // Saltar la página de advertencia de ngrok
+    });
+    
+    let params = `page=${page}&size=${size}`;
+    if (nombre) params += `&nombre=${encodeURIComponent(nombre)}`;
+    if (categoria) params += `&categoria=${categoria}`;
+    if (precioMin !== undefined) params += `&precioMin=${precioMin}`;
+    if (precioMax !== undefined) params += `&precioMax=${precioMax}`;
+    
+    return this.http.get<ProductoResponse>(`${this.apiUrl}/api/productos/buscar-avanzada?${params}`, { headers });
+  }
+
 
   // Crear producto (requiere autenticación)
   crearProducto(producto: ProductoRequest): Observable<Producto> {

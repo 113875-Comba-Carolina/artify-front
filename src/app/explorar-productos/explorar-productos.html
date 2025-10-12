@@ -140,15 +140,15 @@
 
 <!-- Productos Grid -->
 @if (!isLoading) {
-  @if (productosFiltrados.length > 0) {
+  @if (productos.length > 0) {
     <div class="productos-section">
       <div class="container">
         <div class="results-info">
-          <p class="results-count">{{ productosFiltrados.length }} producto{{ productosFiltrados.length !== 1 ? 's' : '' }} encontrado{{ productosFiltrados.length !== 1 ? 's' : '' }}</p>
+          <p class="results-count">{{ totalElements }} producto{{ totalElements !== 1 ? 's' : '' }} encontrado{{ totalElements !== 1 ? 's' : '' }}</p>
         </div>
         
         <div class="productos-grid">
-          @for (producto of productosFiltrados; track producto.id) {
+          @for (producto of productos; track producto.id) {
             <div class="producto-card" (click)="verDetallesProducto(producto)">
               <div class="producto-image">
                 @if (producto.imagenUrl) {
