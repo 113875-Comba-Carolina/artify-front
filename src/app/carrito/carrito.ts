@@ -54,14 +54,6 @@ export class CarritoComponent implements OnInit {
     return this.carritoService.getCantidadTotal();
   }
 
-  actualizarCantidad(productoId: number, nuevaCantidad: number) {
-    if (nuevaCantidad < 1) {
-      this.eliminarItem(productoId);
-    } else {
-      this.carritoService.actualizarCantidad(productoId, nuevaCantidad);
-      this.cargarCarrito();
-    }
-  }
 
   eliminarItem(productoId: number) {
     this.carritoService.eliminarDelCarrito(productoId);

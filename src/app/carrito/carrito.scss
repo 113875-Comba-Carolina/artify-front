@@ -272,49 +272,24 @@ $artisan-900: #43302b;
   gap: 0.5rem;
 }
 
-.cantidad-controls {
+// Cantidad fija - minimalista
+.item-cantidad {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  padding: 0.5rem 0;
 }
 
-.cantidad-btn {
-  width: 2rem;
-  height: 2rem;
-  background: $artisan-600;
-  color: white;
-  border: none;
-  border-radius: 0.25rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  &:hover:not(:disabled) {
-    background: $artisan-700;
-  }
-
-  &:disabled {
-    background: #d1d5db;
-    cursor: not-allowed;
-  }
-}
-
-.cantidad-input {
-  width: 3rem;
-  height: 2rem;
-  text-align: center;
-  border: 2px solid $artisan-300;
-  border-radius: 0.25rem;
-  font-weight: 500;
+.cantidad-label {
   font-size: 0.875rem;
+  color: #6b7280;
+  font-weight: 400;
+}
 
-  &:focus {
-    outline: none;
-    border-color: $artisan-600;
-  }
+.cantidad-value {
+  font-size: 1rem;
+  font-weight: 600;
+  color: $artisan-800;
 }
 
 // Resumen del carrito
@@ -440,8 +415,8 @@ $artisan-900: #43302b;
     margin-top: 1rem;
   }
 
-  .cantidad-controls {
-    justify-content: center;
+  .item-cantidad {
+    padding: 0.25rem 0;
   }
 
   .header-content {

@@ -97,4 +97,8 @@ export class MisOrdenesComponent implements OnInit {
   verDetalleProducto(productoId: number): void {
     this.router.navigate(['/producto', productoId]);
   }
+
+  irAExplorarProductos(): void {
+    this.router.navigate(['/explorar-productos']);
+  }
 }
