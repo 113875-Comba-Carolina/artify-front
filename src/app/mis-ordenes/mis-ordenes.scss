@@ -326,26 +326,26 @@
           display: inline-flex;
           align-items: center;
           gap: 0.5rem;
-          background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-          color: white;
-          border: none;
+          background: white;
+          color: #846358;
+          border: 2px solid #846358;
           padding: 0.75rem 1.25rem;
           border-radius: 0.5rem;
           font-size: 0.875rem;
           font-weight: 600;
           cursor: pointer;
           transition: all 0.2s ease;
-          box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
 
           &:hover {
-            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            background: #fdf8f6;
+            border-color: #977669;
             transform: translateY(-1px);
-            box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3);
+            box-shadow: 0 4px 8px rgba(132, 99, 88, 0.2);
           }
 
           &:active {
             transform: translateY(0);
-            box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
+            box-shadow: 0 2px 4px rgba(132, 99, 88, 0.1);
           }
 
           svg {

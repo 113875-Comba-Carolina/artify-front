@@ -73,7 +73,8 @@ export class CarritoComponent implements OnInit {
     // Verificar si viene de una página de pago exitoso
     const referrer = document.referrer;
     
-    if (referrer && (referrer.includes('/pago-exitoso') || referrer.includes('/mis-ordenes'))) {
+    // Solo limpiar carrito si viene específicamente de pago-exitoso
+    if (referrer && referrer.includes('/pago-exitoso')) {
       console.log('Regresando de página de pago exitoso, limpiando carrito...');
       this.carritoService.forzarLimpiezaCarrito();
       this.cargarCarrito();

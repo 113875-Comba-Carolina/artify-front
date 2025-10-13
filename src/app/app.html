@@ -167,17 +167,6 @@
               }
             </button>
             
-            <!-- User Info -->
-            <div class="flex items-center space-x-3 py-2">
-              <div class="w-10 h-10 bg-gradient-to-br from-artisan-600 to-artisan-700 rounded-full flex items-center justify-center">
-                <span class="text-white text-sm font-medium">{{ currentUser?.nombre?.charAt(0) }}</span>
-              </div>
-              <div>
-                <p class="text-sm font-medium text-artisan-800">{{ currentUser?.nombre }}</p>
-                <p class="text-xs text-artisan-500">{{ currentUser?.rol }}</p>
-              </div>
-            </div>
-            
             <!-- Mobile User Menu -->
             <div class="space-y-2">
               @if (currentUser?.rol === 'ARTESANO') {
@@ -216,6 +205,18 @@
                 </svg>
                 Mi Perfil
               </button>
+              
+              <!-- User Info -->
+              <div class="flex items-center space-x-3 py-2 px-4">
+                <div class="w-10 h-10 bg-gradient-to-br from-artisan-600 to-artisan-700 rounded-full flex items-center justify-center">
+                  <span class="text-white text-sm font-medium">{{ currentUser?.nombre?.charAt(0) }}</span>
+                </div>
+                <div>
+                  <p class="text-sm font-medium text-artisan-800">{{ currentUser?.nombre }}</p>
+                  <p class="text-xs text-artisan-500">{{ currentUser?.rol }}</p>
+                </div>
+              </div>
+              
               <div class="border-t border-artisan-200 my-2"></div>
               <button (click)="logout(); closeMobileMenu()" class="flex items-center w-full px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg transition-colors duration-200">
                 <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
