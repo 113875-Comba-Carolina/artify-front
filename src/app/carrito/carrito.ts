@@ -54,14 +54,6 @@ export class CarritoComponent implements OnInit {
     return this.carritoService.getCantidadTotal();
   }
 
-  actualizarCantidad(productoId: number, nuevaCantidad: number) {
-    if (nuevaCantidad < 1) {
-      this.eliminarItem(productoId);
-    } else {
-      this.carritoService.actualizarCantidad(productoId, nuevaCantidad);
-      this.cargarCarrito();
-    }
-  }
 
   eliminarItem(productoId: number) {
     this.carritoService.eliminarDelCarrito(productoId);
@@ -78,39 +70,17 @@ export class CarritoComponent implements OnInit {
   }
 
   verificarCompraExitosa() {
-    // Verificar si se regresó de una compra exitosa
-    const urlParams = new URLSearchParams(window.location.search);
-    const status = urlParams.get('status');
-    const paymentId = urlParams.get('payment_id');
-    
-    // Si hay parámetros de pago exitoso, limpiar el carrito
-    if (status === 'approved' && paymentId) {
-      console.log('Compra exitosa detectada, limpiando carrito...');
-      this.carritoService.limpiarCarrito();
-      
-      // Mostrar mensaje de confirmación
-      alert('¡Compra realizada exitosamente! El carrito ha sido vaciado.');
-      
-      // Limpiar los parámetros de la URL para evitar limpiezas repetidas
-      const url = new URL(window.location.href);
-      url.searchParams.delete('status');
-      url.searchParams.delete('payment_id');
-      url.searchParams.delete('external_reference');
-      window.history.replaceState({}, '', url.toString());
-    }
-    
-    // Verificar si se regresó de mis-órdenes (posible compra exitosa)
+    // Verificar si viene de una página de pago exitoso
     const referrer = document.referrer;
-    if (referrer && referrer.includes('/mis-ordenes')) {
-      // Verificar si hay items en el carrito que podrían ser de una compra reciente
-      const carritoActual = this.carritoService.getCarrito();
-      if (carritoActual.length > 0) {
-        console.log('Regresando de mis-órdenes con carrito no vacío, limpiando...');
-        this.carritoService.limpiarCarrito();
-        alert('¡Compra realizada exitosamente! El carrito ha sido vaciado.');
-      }
+    
+    // Solo limpiar carrito si viene específicamente de pago-exitoso
+    if (referrer && referrer.includes('/pago-exitoso')) {
+      console.log('Regresando de página de pago exitoso, limpiando carrito...');
+      this.carritoService.forzarLimpiezaCarrito();
+      this.cargarCarrito();
     }
   }
+
 
   async procederAlPago() {
     if (this.carritoItems.length === 0) {
@@ -135,8 +105,8 @@ export class CarritoComponent implements OnInit {
         items: items,
         externalReference: `ORDER-${Date.now()}`,
         notificationUrl: 'https://alberta-postsymphysial-buddy.ngrok-free.dev/api/payments/webhook',
-        successUrl: `${ngrokUrl}/mis-ordenes`,
-        failureUrl: `${ngrokUrl}/carrito`,
+        successUrl: `${ngrokUrl}/pago-exitoso`,
+        failureUrl: `${ngrokUrl}/pago-fallido`,
         pendingUrl: `${ngrokUrl}/pago-pendiente`,
         autoReturn: true
       }).toPromise();

@@ -1,0 +1,121 @@
+<!-- Header -->
+<div class="comprobante-header">
+  <div class="container">
+    <div class="header-content">
+      <h1 class="comprobante-title">Comprobante de Pago</h1>
+      <p class="comprobante-subtitle">Detalles de tu compra realizada</p>
+    </div>
+  </div>
+</div>
+
+<!-- Content -->
+<div class="comprobante-container">
+  <div class="container">
+    @if (isLoading) {
+      <div class="loading-container">
+        <div class="loading-spinner"></div>
+        <p>Cargando comprobante...</p>
+      </div>
+    } @else if (error) {
+      <div class="error-container">
+        <div class="error-icon">⚠️</div>
+        <p>{{ error }}</p>
+        <button (click)="volverAMisOrdenes()" class="retry-button">
+          Volver a Mis Órdenes
+        </button>
+      </div>
+    } @else if (orden) {
+      <div class="comprobante-content">
+        <!-- Icono de éxito -->
+        <div class="success-icon">
+          <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+        </div>
+
+        <!-- Información del pago -->
+        <div class="payment-info">
+          <h2 class="info-title">Detalles del Pago</h2>
+          
+          <div class="info-card">
+            <div class="info-row">
+              <span class="info-label">Estado:</span>
+              <span class="info-value success">Aprobado</span>
+            </div>
+            
+            <div class="info-row">
+              <span class="info-label">Orden #:</span>
+              <span class="info-value">{{ orden.id }}</span>
+            </div>
+            
+            <div class="info-row">
+              <span class="info-label">Referencia:</span>
+              <span class="info-value">{{ orden.externalReference }}</span>
+            </div>
+            
+            <div class="info-row">
+              <span class="info-label">ID de MercadoPago:</span>
+              <span class="info-value">{{ orden.mercadoPagoId }}</span>
+            </div>
+            
+            <div class="info-row">
+              <span class="info-label">Fecha de Compra:</span>
+              <span class="info-value">{{ fechaPago }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Productos comprados -->
+        <div class="productos-section">
+          <h3 class="section-title">Productos Comprados</h3>
+          <div class="productos-list">
+            @for (item of orden.items; track item.id) {
+              <div class="producto-item">
+                <div class="producto-image">
+                  @if (item.imagenUrl) {
+                    <img [src]="item.imagenUrl" [alt]="item.nombreProducto">
+                  } @else {
+                    <div class="no-image">📦</div>
+                  }
+                </div>
+                <div class="producto-details">
+                  <h4>{{ item.nombreProducto }}</h4>
+                  <p class="categoria">{{ item.categoria }}</p>
+                  <p class="cantidad">Cantidad: {{ item.cantidad }}</p>
+                </div>
+                <div class="producto-price">
+                  <p class="precio-unitario">{{ formatPrice(item.precioUnitario) }}</p>
+                  <p class="subtotal">{{ formatPrice(item.subtotal) }}</p>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+
+        <!-- Total -->
+        <div class="total-section">
+          <div class="total-row">
+            <span class="total-label">Total Pagado:</span>
+            <span class="total-amount">{{ formatPrice(orden.total) }}</span>
+          </div>
+        </div>
+
+        <!-- Mensaje de confirmación -->
+        <div class="confirmation-message">
+          <h3 class="message-title">¡Compra Confirmada!</h3>
+          <p class="message-text">
+            Este comprobante confirma que tu compra fue procesada exitosamente.
+            Los productos artesanales serán preparados con cuidado por nuestros artesanos.
+          </p>
+        </div>
+
+        <!-- Acciones -->
+        <div class="comprobante-actions">
+          <button (click)="volverAMisOrdenes()" class="primary-button">
+            Volver a Mis Órdenes
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+</div>

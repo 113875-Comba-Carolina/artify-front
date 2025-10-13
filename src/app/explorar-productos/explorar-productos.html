@@ -62,12 +62,12 @@
 </div>
 
 <!-- Paginador Superior -->
-@if (!isLoading && totalPages > 1) {
+@if (!isLoading && (totalPages > 1 || productos.length >= size)) {
   <div class="pagination-section">
     <div class="container">
       <div class="pagination-info">
         <p class="pagination-text">
-          Mostrando {{ (page * size) + 1 }} - {{ Math.min((page + 1) * size, totalElements) }} de {{ totalElements }} productos
+          Mostrando {{ (page * size) + 1 }} - {{ Math.min((page + 1) * size, productos.length) }} de {{ productos.length }} productos
         </p>
       </div>
       <div class="pagination-controls">
@@ -140,7 +140,7 @@
 
 <!-- Productos Grid -->
 @if (!isLoading) {
-  @if (productos.length > 0) {
+  @if (productosPaginados.length > 0) {
     <div class="productos-section">
       <div class="container">
         <div class="results-info">
@@ -148,7 +148,7 @@
         </div>
         
         <div class="productos-grid">
-          @for (producto of productos; track producto.id) {
+          @for (producto of productosPaginados; track producto.id) {
             <div class="producto-card" (click)="verDetallesProducto(producto)">
               <div class="producto-image">
                 @if (producto.imagenUrl) {
@@ -235,12 +235,12 @@
 }
 
 <!-- Paginador Inferior -->
-@if (!isLoading && totalPages > 1) {
+@if (!isLoading && (totalPages > 1 || productos.length >= size)) {
   <div class="pagination-section">
     <div class="container">
       <div class="pagination-info">
         <p class="pagination-text">
-          Mostrando {{ (page * size) + 1 }} - {{ Math.min((page + 1) * size, totalElements) }} de {{ totalElements }} productos
+          Mostrando {{ (page * size) + 1 }} - {{ Math.min((page + 1) * size, productos.length) }} de {{ productos.length }} productos
         </p>
       </div>
       <div class="pagination-controls">

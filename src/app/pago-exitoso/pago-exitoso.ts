@@ -30,10 +30,19 @@ export class PagoExitosoComponent implements OnInit {
     this.fechaPago = new Date().toLocaleString('es-AR');
 
     // Limpiar el carrito ya que el pago fue exitoso
-    this.carritoService.limpiarCarrito();
+    this.carritoService.forzarLimpiezaCarrito();
+    
+    // Marcar la compra como exitosa en localStorage para detección posterior
+    localStorage.setItem('ultima_compra_exitosa', Date.now().toString());
+    console.log('Compra exitosa marcada en localStorage');
 
     // Scroll hacia arriba
     window.scrollTo(0, 0);
+
+    // Redirigir automáticamente a mis-ordenes después de 3 segundos
+    setTimeout(() => {
+      this.router.navigate(['/mis-ordenes']);
+    }, 5000);
   }
 
   volverAlInicio() {

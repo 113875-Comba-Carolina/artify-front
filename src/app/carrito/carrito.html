@@ -33,6 +33,7 @@
       </div>
     } @else {
       <div class="carrito-content">
+        
         <!-- Items del carrito -->
         <div class="carrito-items">
           @for (item of carritoItems; track item.producto.id) {
@@ -74,30 +75,10 @@
                 </div>
               </div>
 
-              <!-- Controles de cantidad -->
-              <div class="item-controls">
-                <div class="cantidad-controls">
-                  <button 
-                    (click)="actualizarCantidad(item.producto.id, item.cantidad - 1)"
-                    class="cantidad-btn"
-                    [disabled]="item.cantidad <= 1"
-                  >
-                    -
-                  </button>
-                  <input 
-                    type="number" 
-                    [value]="item.cantidad"
-                    (change)="actualizarCantidad(item.producto.id, +$event.target.value)"
-                    min="1"
-                    class="cantidad-input"
-                  >
-                  <button 
-                    (click)="actualizarCantidad(item.producto.id, item.cantidad + 1)"
-                    class="cantidad-btn"
-                  >
-                    +
-                  </button>
-                </div>
+              <!-- Cantidad fija -->
+              <div class="item-cantidad">
+                <span class="cantidad-label">Cantidad:</span>
+                <span class="cantidad-value">{{ item.cantidad }}</span>
               </div>
             </div>
           }

@@ -140,7 +140,23 @@ $success-100: #d1fae5;
 .message-text {
   color: $artisan-700;
   line-height: 1.6;
+  margin: 0 0 1rem 0;
+}
+
+.redirect-message {
+  color: $success-500;
+  font-weight: 500;
+  font-style: italic;
   margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  &::before {
+    content: "⏳";
+    font-size: 1.2rem;
+  }
 }
 
 // Actions

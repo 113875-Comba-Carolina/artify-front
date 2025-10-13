@@ -91,6 +91,38 @@
       margin-bottom: 2rem;
     }
 
+    .explorar-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, #8B5A2B 0%, #A67C52 100%);
+      color: white;
+      border: none;
+      padding: 0.875rem 1.75rem;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(139, 90, 43, 0.3);
+
+      &:hover {
+        background: linear-gradient(135deg, #7c4f26 0%, #8b5a2b 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(139, 90, 43, 0.4);
+      }
+
+      &:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 8px rgba(139, 90, 43, 0.3);
+      }
+
+      svg {
+        width: 1.25rem;
+        height: 1.25rem;
+      }
+    }
+
     .primary-button {
       background-color: #3498db;
       color: white;
@@ -286,6 +318,42 @@
       }
 
       .orden-actions {
+        display: flex;
+        gap: 0.75rem;
+        align-items: center;
+
+        .comprobante-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          background: white;
+          color: #846358;
+          border: 2px solid #846358;
+          padding: 0.75rem 1.25rem;
+          border-radius: 0.5rem;
+          font-size: 0.875rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.2s ease;
+
+          &:hover {
+            background: #fdf8f6;
+            border-color: #977669;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(132, 99, 88, 0.2);
+          }
+
+          &:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(132, 99, 88, 0.1);
+          }
+
+          svg {
+            width: 1rem;
+            height: 1rem;
+          }
+        }
+
         .secondary-button {
           background-color: transparent;
           color: #3498db;
@@ -360,6 +428,16 @@
         flex-direction: column;
         align-items: flex-start;
         gap: 1rem;
+
+        .orden-actions {
+          width: 100%;
+          justify-content: flex-start;
+
+          .comprobante-btn {
+            width: 100%;
+            justify-content: center;
+          }
+        }
       }
     }
   }

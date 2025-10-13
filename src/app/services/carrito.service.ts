@@ -96,8 +96,18 @@ export class CarritoService {
 
   // Limpiar carrito
   limpiarCarrito(): void {
+    console.log('Limpiando carrito...');
     this.carritoSubject.next([]);
     this.guardarCarritoEnStorage();
+    console.log('Carrito limpiado exitosamente');
+  }
+
+  // Forzar limpieza del carrito (para casos de compra exitosa)
+  forzarLimpiezaCarrito(): void {
+    console.log('Forzando limpieza del carrito...');
+    this.carritoSubject.next([]);
+    localStorage.removeItem('carrito');
+    console.log('Carrito forzadamente limpiado');
   }
 
   // Verificar si un producto está en el carrito

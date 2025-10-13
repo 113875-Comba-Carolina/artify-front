@@ -146,7 +146,7 @@
           <!-- Guest User Buttons -->
           @if (!isLoggedIn) {
             <div class="space-y-3">
-              <a routerLink="/auth/login" (click)="closeMobileMenu()" class="block text-artisan-600 hover:text-artisan-800 font-medium transition-colors duration-300 py-2 px-4 rounded-lg hover:bg-artisan-50">
+              <a routerLink="/auth/login" (click)="closeMobileMenu()" class="block text-artisan-600 hover:text-artisan-800 font-medium transition-colors duration-300 py-2 px-4 rounded-lg hover:bg-artisan-50 text-center">
                 Iniciar Sesión
               </a>
               <a routerLink="/auth/register" (click)="closeMobileMenu()" class="block bg-gradient-to-r from-artisan-600 to-artisan-700 text-white text-center py-3 px-4 rounded-lg font-medium hover:from-artisan-700 hover:to-artisan-800 transition-all duration-300 shadow-lg">
@@ -166,17 +166,6 @@
                 <span class="carrito-badge-mobile">{{ carritoService.getCantidadTotal() }}</span>
               }
             </button>
-            
-            <!-- User Info -->
-            <div class="flex items-center space-x-3 py-2">
-              <div class="w-10 h-10 bg-gradient-to-br from-artisan-600 to-artisan-700 rounded-full flex items-center justify-center">
-                <span class="text-white text-sm font-medium">{{ currentUser?.nombre?.charAt(0) }}</span>
-              </div>
-              <div>
-                <p class="text-sm font-medium text-artisan-800">{{ currentUser?.nombre }}</p>
-                <p class="text-xs text-artisan-500">{{ currentUser?.rol }}</p>
-              </div>
-            </div>
             
             <!-- Mobile User Menu -->
             <div class="space-y-2">
@@ -216,6 +205,18 @@
                 </svg>
                 Mi Perfil
               </button>
+              
+              <!-- User Info -->
+              <div class="flex items-center space-x-3 py-2 px-4">
+                <div class="w-10 h-10 bg-gradient-to-br from-artisan-600 to-artisan-700 rounded-full flex items-center justify-center">
+                  <span class="text-white text-sm font-medium">{{ currentUser?.nombre?.charAt(0) }}</span>
+                </div>
+                <div>
+                  <p class="text-sm font-medium text-artisan-800">{{ currentUser?.nombre }}</p>
+                  <p class="text-xs text-artisan-500">{{ currentUser?.rol }}</p>
+                </div>
+              </div>
+              
               <div class="border-t border-artisan-200 my-2"></div>
               <button (click)="logout(); closeMobileMenu()" class="flex items-center w-full px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg transition-colors duration-200">
                 <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -278,7 +279,7 @@
               </a>
             </li>
             <li>
-              <a href="#" class="text-artisan-600 hover:text-artisan-800 transition-colors duration-300">
+              <a routerLink="/terminos-condiciones" class="text-artisan-600 hover:text-artisan-800 transition-colors duration-300">
                 Términos y Condiciones
               </a>
             </li>

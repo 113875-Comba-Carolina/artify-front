@@ -104,7 +104,7 @@ export class ProductoDetalleComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/']);
+    this.router.navigate(['/explorar-productos']);
   }
 
   formatPrice(precio: number): string {

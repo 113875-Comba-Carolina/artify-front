@@ -10,8 +10,10 @@ import { PagoExitosoComponent } from './pago-exitoso/pago-exitoso';
 import { PagoFallidoComponent } from './pago-fallido/pago-fallido';
 import { PagoPendienteComponent } from './pago-pendiente/pago-pendiente';
 import { MisOrdenesComponent } from './mis-ordenes/mis-ordenes';
+import { ComprobanteComponent } from './comprobante/comprobante';
 import { MisVentasComponent } from './mis-ventas/mis-ventas';
 import { AdminReportesComponent } from './admin-reportes/admin-reportes';
+import { TerminosCondicionesComponent } from './terminos-condiciones/terminos-condiciones';
 
 export const routes: Routes = [
   {
@@ -63,11 +65,19 @@ export const routes: Routes = [
     component: MisOrdenesComponent
   },
   {
+    path: 'comprobante',
+    component: ComprobanteComponent
+  },
+  {
     path: 'mis-ventas',
     component: MisVentasComponent
   },
   {
     path: 'admin-reportes',
     component: AdminReportesComponent
+  },
+  {
+    path: 'terminos-condiciones',
+    component: TerminosCondicionesComponent
   }
 ];

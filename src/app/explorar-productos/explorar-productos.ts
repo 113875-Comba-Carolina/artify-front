@@ -16,6 +16,8 @@ import { AlertService } from '../services/alert.service';
 })
 export class ExplorarProductosComponent implements OnInit {
   productos: Producto[] = [];
+  productosFiltrados: Producto[] = [];
+  productosPaginados: Producto[] = [];
   categorias: string[] = [];
   categoriaSeleccionada: string = '';
   terminoBusqueda: string = '';
@@ -68,17 +70,13 @@ export class ExplorarProductosComponent implements OnInit {
     this.isLoading = true;
     this.page = page;
 
-    // Si hay filtros activos, usar búsqueda avanzada
-    if (this.hasActiveFilters) {
-      this.buscarProductosConFiltros(page);
-    } else {
-      // Cargar todos los productos
-      this.productoService.obtenerProductos(this.page, this.size).subscribe({
-        next: (response) => {
-          this.productos = response.content || response as any;
-          this.totalPages = response.totalPages || 0;
-          this.totalElements = response.totalElements || 0;
-          this.hasMore = this.page < this.totalPages - 1;
+    // Si es la primera carga, obtener todos los productos del backend
+    if (this.productos.length === 0) {
+      this.productoService.obtenerTodosLosProductos().subscribe({
+        next: (productos) => {
+          console.log('Productos obtenidos del backend:', productos.length);
+          this.productos = productos;
+          this.aplicarFiltrosYActualizarPaginacion();
           this.isLoading = false;
         },
         error: (error) => {
@@ -86,29 +84,36 @@ export class ExplorarProductosComponent implements OnInit {
           this.isLoading = false;
         }
       });
+    } else {
+      // Si ya tenemos productos, solo aplicar filtros y paginación
+      this.aplicarFiltrosYActualizarPaginacion();
+      this.isLoading = false;
     }
   }
 
-  buscarProductosConFiltros(page: number = 0) {
-    this.isLoading = true;
-    this.page = page;
-
-    const nombre = this.terminoBusqueda.trim() || undefined;
-    const categoria = this.categoriaSeleccionada || undefined;
-
-    this.productoService.buscarProductosAvanzada(nombre, categoria, undefined, undefined, page, this.size).subscribe({
-      next: (response) => {
-        this.productos = response.content || response as any;
-        this.totalPages = response.totalPages || 0;
-        this.totalElements = response.totalElements || 0;
-        this.hasMore = this.page < this.totalPages - 1;
-        this.isLoading = false;
-      },
-      error: (error) => {
-        console.error('Error buscando productos:', error);
-        this.isLoading = false;
-      }
+  aplicarFiltrosYActualizarPaginacion() {
+    // Aplicar filtros
+    this.productosFiltrados = this.productos.filter(producto => {
+      const coincideNombre = !this.terminoBusqueda.trim() || 
+        producto.nombre.toLowerCase().includes(this.terminoBusqueda.toLowerCase()) ||
+        producto.descripcion.toLowerCase().includes(this.terminoBusqueda.toLowerCase()) ||
+        (producto.artesano && producto.artesano.nombre.toLowerCase().includes(this.terminoBusqueda.toLowerCase()));
+      
+      const coincideCategoria = !this.categoriaSeleccionada || 
+        producto.categoria === this.categoriaSeleccionada;
+      
+      return coincideNombre && coincideCategoria;
     });
+
+    // Actualizar totales
+    this.totalElements = this.productosFiltrados.length;
+    this.totalPages = Math.ceil(this.totalElements / this.size);
+    this.hasMore = this.page < this.totalPages - 1;
+
+    // Aplicar paginación
+    const inicio = this.page * this.size;
+    const fin = inicio + this.size;
+    this.productosPaginados = this.productosFiltrados.slice(inicio, fin);
   }
 
   onBuscar() {
@@ -124,13 +129,15 @@ export class ExplorarProductosComponent implements OnInit {
     this.hasActiveFilters = !!(this.terminoBusqueda.trim() || this.categoriaSeleccionada);
     
     // Ir a la primera página cuando se aplican filtros
-    this.loadProductos(0);
+    this.page = 0;
+    this.aplicarFiltrosYActualizarPaginacion();
   }
 
   // Métodos de paginación
   irAPagina(pagina: number) {
     if (pagina >= 0 && pagina < this.totalPages) {
-      this.loadProductos(pagina);
+      this.page = pagina;
+      this.aplicarFiltrosYActualizarPaginacion();
     }
   }
 
@@ -170,7 +177,8 @@ export class ExplorarProductosComponent implements OnInit {
     this.terminoBusqueda = '';
     this.categoriaSeleccionada = '';
     this.hasActiveFilters = false;
-    this.loadProductos(0); // Recargar desde la primera página
+    this.page = 0;
+    this.aplicarFiltrosYActualizarPaginacion();
   }
 
   onAgregarAlCarrito(event: Event, producto: Producto) {
