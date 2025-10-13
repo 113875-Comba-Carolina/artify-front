@@ -79,6 +79,7 @@ export class ExplorarProductosComponent implements OnInit {
           this.totalPages = response.totalPages || 0;
           this.totalElements = response.totalElements || 0;
           this.hasMore = this.page < this.totalPages - 1;
+          console.log('Paginador debug - totalPages:', this.totalPages, 'totalElements:', this.totalElements, 'productos.length:', this.productos.length);
           this.isLoading = false;
         },
         error: (error) => {
@@ -102,6 +103,7 @@ export class ExplorarProductosComponent implements OnInit {
         this.totalPages = response.totalPages || 0;
         this.totalElements = response.totalElements || 0;
         this.hasMore = this.page < this.totalPages - 1;
+        console.log('Paginador debug (filtros) - totalPages:', this.totalPages, 'totalElements:', this.totalElements, 'productos.length:', this.productos.length);
         this.isLoading = false;
       },
       error: (error) => {
