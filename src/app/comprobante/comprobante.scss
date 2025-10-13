@@ -1,0 +1,367 @@
+// Variables
+$artisan-50: #fdf8f6;
+$artisan-100: #f2e8e5;
+$artisan-200: #eaddd7;
+$artisan-300: #e0cec7;
+$artisan-400: #d2bab0;
+$artisan-500: #bfa094;
+$artisan-600: #a18072;
+$artisan-700: #977669;
+$artisan-800: #846358;
+$artisan-900: #43302b;
+
+$success-500: #10b981;
+$success-100: #d1fae5;
+
+// Container
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+// Header
+.comprobante-header {
+  background: linear-gradient(135deg, $success-500 0%, $artisan-600 100%);
+  color: white;
+  padding: 3rem 0;
+  text-align: center;
+}
+
+.header-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.comprobante-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.comprobante-subtitle {
+  font-size: 1.25rem;
+  margin: 0;
+  opacity: 0.9;
+}
+
+// Content
+.comprobante-container {
+  padding: 3rem 0;
+  background: $artisan-50;
+  min-height: 60vh;
+}
+
+.comprobante-content {
+  background: white;
+  border-radius: 1rem;
+  padding: 3rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+// Success icon
+.success-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  background: $success-100;
+  color: $success-500;
+  border-radius: 50%;
+  margin-bottom: 2rem;
+}
+
+// Payment info
+.payment-info {
+  margin-bottom: 2rem;
+}
+
+.info-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: $artisan-800;
+  margin-bottom: 1.5rem;
+}
+
+.info-card {
+  background: $artisan-50;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  text-align: left;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid $artisan-200;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.info-label {
+  font-weight: 600;
+  color: $artisan-700;
+}
+
+.info-value {
+  color: $artisan-800;
+  font-family: 'Courier New', monospace;
+}
+
+.info-value.success {
+  color: $success-500;
+  font-weight: 600;
+}
+
+// Productos section
+.productos-section {
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: $artisan-800;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.productos-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.producto-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: $artisan-50;
+  border-radius: 0.5rem;
+  border: 1px solid $artisan-200;
+}
+
+.producto-image {
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0.5rem;
+  }
+
+  .no-image {
+    width: 100%;
+    height: 100%;
+    background: white;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+  }
+}
+
+.producto-details {
+  flex: 1;
+
+  h4 {
+    margin: 0 0 0.25rem;
+    color: $artisan-800;
+    font-size: 1.1rem;
+  }
+
+  .categoria {
+    margin: 0 0 0.25rem;
+    color: $artisan-600;
+    font-size: 0.9rem;
+    text-transform: capitalize;
+  }
+
+  .cantidad {
+    margin: 0;
+    color: $artisan-600;
+    font-size: 0.9rem;
+  }
+}
+
+.producto-price {
+  text-align: right;
+
+  .precio-unitario {
+    margin: 0 0 0.25rem;
+    color: $artisan-600;
+    font-size: 0.9rem;
+  }
+
+  .subtotal {
+    margin: 0;
+    color: $artisan-800;
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+}
+
+// Total section
+.total-section {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: $success-100;
+  border-radius: 0.75rem;
+  border-left: 4px solid $success-500;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.total-label {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: $artisan-800;
+}
+
+.total-amount {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: $success-500;
+}
+
+// Confirmation message
+.confirmation-message {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: $success-100;
+  border-radius: 0.75rem;
+  border-left: 4px solid $success-500;
+}
+
+.message-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: $artisan-800;
+  margin-bottom: 0.75rem;
+}
+
+.message-text {
+  color: $artisan-700;
+  line-height: 1.6;
+  margin: 0;
+}
+
+// Actions
+.comprobante-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.primary-button {
+  background: $success-500;
+  color: white;
+  border: none;
+  padding: 0.875rem 2rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: darken($success-500, 10%);
+    transform: translateY(-1px);
+  }
+}
+
+
+// Loading and error states
+.loading-container, .error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  text-align: center;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid $artisan-200;
+  border-top: 4px solid $success-500;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.error-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.retry-button {
+  background: $success-500;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 1rem;
+
+  &:hover {
+    background: darken($success-500, 10%);
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .comprobante-title {
+    font-size: 2rem;
+  }
+
+  .comprobante-content {
+    padding: 2rem;
+  }
+
+  .producto-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+
+    .producto-price {
+      text-align: left;
+      width: 100%;
+    }
+  }
+
+  .comprobante-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .primary-button {
+    width: 100%;
+    max-width: 300px;
+  }
+}

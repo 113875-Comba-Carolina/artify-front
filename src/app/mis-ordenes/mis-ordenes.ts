@@ -101,4 +101,16 @@ export class MisOrdenesComponent implements OnInit {
   irAExplorarProductos(): void {
     this.router.navigate(['/explorar-productos']);
   }
+
+  verComprobante(orden: OrdenResponse): void {
+    // Construir la URL del comprobante con los parámetros de la orden
+    const baseUrl = 'https://treasurable-almeda-unsimply.ngrok-free.dev/comprobante';
+    const params = new URLSearchParams({
+      external_reference: orden.externalReference,
+      payment_id: orden.mercadoPagoId
+    });
+    
+    const url = `${baseUrl}?${params.toString()}`;
+    window.open(url, '_blank');
+  }
 }

@@ -318,6 +318,42 @@
       }
 
       .orden-actions {
+        display: flex;
+        gap: 0.75rem;
+        align-items: center;
+
+        .comprobante-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+          color: white;
+          border: none;
+          padding: 0.75rem 1.25rem;
+          border-radius: 0.5rem;
+          font-size: 0.875rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
+
+          &:hover {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3);
+          }
+
+          &:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
+          }
+
+          svg {
+            width: 1rem;
+            height: 1rem;
+          }
+        }
+
         .secondary-button {
           background-color: transparent;
           color: #3498db;
@@ -392,6 +428,16 @@
         flex-direction: column;
         align-items: flex-start;
         gap: 1rem;
+
+        .orden-actions {
+          width: 100%;
+          justify-content: flex-start;
+
+          .comprobante-btn {
+            width: 100%;
+            justify-content: center;
+          }
+        }
       }
     }
   }
