@@ -68,6 +68,14 @@ export class ProductoService {
     return this.http.get<ProductoResponse>(`${this.apiUrl}/api/productos?page=${page}&size=${size}`, { headers });
   }
 
+  // Obtener todos los productos sin paginación (para paginación del lado del cliente)
+  obtenerTodosLosProductos(): Observable<Producto[]> {
+    const headers = new HttpHeaders({
+      'ngrok-skip-browser-warning': 'true' // Saltar la página de advertencia de ngrok
+    });
+    return this.http.get<Producto[]>(`${this.apiUrl}/api/productos/todos`, { headers });
+  }
+
   // Obtener producto por ID (público)
   obtenerProductoPorId(id: number): Observable<Producto> {
     const headers = new HttpHeaders({
