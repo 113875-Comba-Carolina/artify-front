@@ -12,6 +12,7 @@ import { PagoPendienteComponent } from './pago-pendiente/pago-pendiente';
 import { MisOrdenesComponent } from './mis-ordenes/mis-ordenes';
 import { MisVentasComponent } from './mis-ventas/mis-ventas';
 import { AdminReportesComponent } from './admin-reportes/admin-reportes';
+import { TerminosCondicionesComponent } from './terminos-condiciones/terminos-condiciones';
 
 export const routes: Routes = [
   {
@@ -69,5 +70,9 @@ export const routes: Routes = [
   {
     path: 'admin-reportes',
     component: AdminReportesComponent
+  },
+  {
+    path: 'terminos-condiciones',
+    component: TerminosCondicionesComponent
   }
 ];
