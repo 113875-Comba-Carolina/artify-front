@@ -20,6 +20,66 @@
     }
   }
 
+  .payment-cancelled-message {
+    background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+    border: 1px solid #f39c12;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 12px rgba(243, 156, 18, 0.2);
+    animation: slideIn 0.3s ease-out;
+
+    .message-content {
+      display: flex;
+      align-items: center;
+      padding: 1.5rem;
+      gap: 1rem;
+
+      .message-icon {
+        font-size: 2rem;
+        flex-shrink: 0;
+      }
+
+      .message-text {
+        flex: 1;
+
+        h3 {
+          margin: 0 0 0.5rem 0;
+          color: #d68910;
+          font-size: 1.2rem;
+          font-weight: 600;
+        }
+
+        p {
+          margin: 0;
+          color: #8b6914;
+          font-size: 1rem;
+          line-height: 1.4;
+        }
+      }
+
+      .close-button {
+        background: none;
+        border: none;
+        color: #d68910;
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 50%;
+        transition: all 0.2s ease;
+        flex-shrink: 0;
+
+        &:hover {
+          background: rgba(214, 137, 16, 0.1);
+          color: #b7950b;
+        }
+
+        svg {
+          width: 1.25rem;
+          height: 1.25rem;
+        }
+      }
+    }
+  }
+
   .loading-container {
     text-align: center;
     padding: 4rem 0;
@@ -322,6 +382,38 @@
         gap: 0.75rem;
         align-items: center;
 
+        .pagar-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+          color: white;
+          border: none;
+          padding: 0.75rem 1.25rem;
+          border-radius: 0.5rem;
+          font-size: 0.875rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          box-shadow: 0 2px 8px rgba(39, 174, 96, 0.3);
+
+          &:hover {
+            background: linear-gradient(135deg, #229954 0%, #27ae60 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(39, 174, 96, 0.4);
+          }
+
+          &:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 6px rgba(39, 174, 96, 0.3);
+          }
+
+          svg {
+            width: 1rem;
+            height: 1rem;
+          }
+        }
+
         .comprobante-btn {
           display: inline-flex;
           align-items: center;
@@ -397,6 +489,17 @@
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+@keyframes slideIn {
+  0% { 
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% { 
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 // Responsive design

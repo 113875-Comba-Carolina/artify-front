@@ -5,7 +5,7 @@ import { environment } from '../../environments/environment';
 
 export interface MercadoPagoItem {
   title: string;
-  description: string;
+  description?: string;
   quantity: number;
   unitPrice: number;
   pictureUrl?: string;
@@ -122,7 +122,7 @@ export class MercadoPagoService {
   /**
    * Mapea las categorías del marketplace a categorías de Mercado Pago
    */
-  private mapearCategoria(categoria: string): string {
+  mapearCategoria(categoria: string): string {
     const categoriaMap: { [key: string]: string } = {
       'CERAMICA': 'artesanias',
       'METALES': 'artesanias',
