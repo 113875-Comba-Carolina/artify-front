@@ -42,14 +42,14 @@ export class PagoExitosoComponent implements OnInit {
     // Redirigir automáticamente a mis-ordenes después de 3 segundos
     setTimeout(() => {
       this.router.navigate(['/mis-ordenes']);
-    }, 5000);
+    }, 3000);
   }
 
   volverAlInicio() {
     this.router.navigate(['/']);
   }
 
-  verProductos() {
-    this.router.navigate(['/carrito']);
+  volverATienda() {
+    this.router.navigate(['/explorar-productos']);
   }
 }
