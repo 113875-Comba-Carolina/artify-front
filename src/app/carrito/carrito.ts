@@ -106,7 +106,7 @@ export class CarritoComponent implements OnInit {
         externalReference: `ORDER-${Date.now()}`,
         notificationUrl: 'https://alberta-postsymphysial-buddy.ngrok-free.dev/api/payments/webhook',
         successUrl: `${ngrokUrl}/pago-exitoso`,
-        failureUrl: `${ngrokUrl}/mis-ordenes`,
+        failureUrl: `${ngrokUrl}/mis-ordenes?status=cancelled`,
         pendingUrl: `${ngrokUrl}/pago-pendiente`,
         autoReturn: true
       }).toPromise();

@@ -386,26 +386,27 @@
           display: inline-flex;
           align-items: center;
           gap: 0.5rem;
-          background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
-          color: white;
-          border: none;
+          background: white;
+          color: #8B5A2B;
+          border: 2px solid #8B5A2B;
           padding: 0.75rem 1.25rem;
           border-radius: 0.5rem;
           font-size: 0.875rem;
           font-weight: 600;
           cursor: pointer;
           transition: all 0.2s ease;
-          box-shadow: 0 2px 8px rgba(39, 174, 96, 0.3);
 
           &:hover {
-            background: linear-gradient(135deg, #229954 0%, #27ae60 100%);
+            background: #fdf8f6;
+            border-color: #7c4f26;
+            color: #7c4f26;
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(39, 174, 96, 0.4);
+            box-shadow: 0 4px 12px rgba(139, 90, 43, 0.2);
           }
 
           &:active {
             transform: translateY(0);
-            box-shadow: 0 2px 6px rgba(39, 174, 96, 0.3);
+            box-shadow: 0 2px 6px rgba(139, 90, 43, 0.1);
           }
 
           svg {
