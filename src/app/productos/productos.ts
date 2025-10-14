@@ -564,38 +564,6 @@ export class ProductosComponent implements OnInit {
     });
   }
 
-  async eliminarProductoDefinitivamente(producto: Producto) {
-    if (!producto.id) return;
-    
-    const confirmed = await this.alertService.confirmCustom(
-      '¿Eliminar DEFINITIVAMENTE?',
-      `¿Estás seguro de que quieres eliminar DEFINITIVAMENTE "${producto.nombre}"? Esta acción no se puede deshacer y el producto será eliminado permanentemente.`,
-      'Sí, eliminar',
-      'Cancelar',
-      'error',
-      '#dc2626'
-    );
-    
-    if (!confirmed) return;
-
-    this.alertService.loading('Eliminando definitivamente...');
-    this.productoService.eliminarProductoDefinitivamente(producto.id).subscribe({
-      next: () => {
-        // Remover de la lista de inactivos
-        this.productosInactivos = this.productosInactivos.filter(p => p.id !== producto.id);
-        this.productosInactivosFiltrados = [...this.productosInactivos];
-        
-        this.alertService.closeLoading();
-        this.alertService.success('Producto eliminado', 'El producto ha sido eliminado definitivamente');
-        this.loadEstadisticas();
-      },
-      error: (error) => {
-        console.error('Error eliminando producto definitivamente:', error);
-        this.alertService.closeLoading();
-        this.alertService.error('Error al eliminar', 'No se pudo eliminar el producto definitivamente. Inténtalo de nuevo.');
-      }
-    });
-  }
 
   getEstadoProducto(producto: Producto): string {
     if (producto.estado) {

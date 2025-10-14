@@ -201,6 +201,23 @@ $success-100: #d1fae5;
   }
 }
 
+.tertiary-button {
+  background: $artisan-100;
+  color: $artisan-700;
+  border: 2px solid $artisan-200;
+  padding: 0.875rem 2rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: $artisan-200;
+    border-color: $artisan-300;
+  }
+}
+
 // Responsive
 @media (max-width: 768px) {
   .success-title {
@@ -217,7 +234,8 @@ $success-100: #d1fae5;
   }
 
   .primary-button,
-  .secondary-button {
+  .secondary-button,
+  .tertiary-button {
     width: 100%;
     max-width: 300px;
   }
