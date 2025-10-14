@@ -175,15 +175,10 @@ export class MisOrdenesComponent implements OnInit {
         return convertedItem;
       });
 
-      // Generar un externalReference único para este intento de pago
-      const timestamp = new Date().getTime();
-      const randomId = Math.random().toString(36).substring(2, 8);
-      const uniqueExternalReference = `ORDER-${orden.id}-PAY-${timestamp}-${randomId}`;
-
-      // Crear la preferencia de pago
+      // Usar el externalReference original de la orden para actualizar el estado existente
       const preferenceRequest = {
         items: items,
-        externalReference: uniqueExternalReference,
+        externalReference: orden.externalReference,
         notificationUrl: `${environment.apiUrl}/api/payments/webhook`,
         successUrl: `${environment.frontendUrl}/pago-exitoso`,
         failureUrl: `${environment.frontendUrl}/mis-ordenes?status=cancelled`, // Agregar parámetro para detectar cancelación
@@ -191,8 +186,7 @@ export class MisOrdenesComponent implements OnInit {
         autoReturn: false // NO usar autoReturn para mantener el botón "Volver a la tienda"
       };
 
-      console.log('ExternalReference original:', orden.externalReference);
-      console.log('ExternalReference único generado:', uniqueExternalReference);
+      console.log('ExternalReference de la orden:', orden.externalReference);
       console.log('Items de la orden:', orden.items);
       console.log('Items convertidos:', items);
       console.log('Datos de la preferencia:', preferenceRequest);
