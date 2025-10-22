@@ -1,8 +1,9 @@
 <!-- Hero Section -->
-<section class="bg-gradient-to-r from-artisan-50 to-artisan-100 py-20">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-    <h2 class="text-4xl md:text-6xl font-bold text-artisan-800 mb-6">Descubre Arte Único</h2>
-    <p class="text-xl text-artisan-600 mb-8 max-w-3xl mx-auto">
+<section class="hero-section py-20">
+  <div class="hero-background"></div>
+  <div class="hero-content max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+    <h2 class="text-4xl md:text-6xl font-bold text-white mb-6 drop-shadow-lg">Descubre Arte Único</h2>
+    <p class="text-xl text-white mb-8 max-w-3xl mx-auto drop-shadow-md">
       Conectamos artesanos talentosos con amantes del arte. Encuentra piezas únicas, hechas a mano
       con pasión y tradición.
     </p>
@@ -10,14 +11,14 @@
       @if (!isLoggedIn) {
         <a
           routerLink="/auth/register"
-          class="bg-artisan-600 text-white px-8 py-3 rounded-lg text-lg font-medium hover:bg-artisan-700 transition-colors"
+          class="bg-artisan-600 text-white px-8 py-3 rounded-lg text-lg font-medium hover:bg-artisan-700 transition-colors shadow-lg"
         >
           Únete a Artify
         </a>
       } @else {
         <a
           routerLink="/explorar-productos"
-          class="bg-artisan-600 text-white px-8 py-3 rounded-lg text-lg font-medium hover:bg-artisan-700 transition-colors cursor-pointer"
+          class="bg-artisan-600 text-white px-8 py-3 rounded-lg text-lg font-medium hover:bg-artisan-700 transition-colors cursor-pointer shadow-lg"
         >
           Explorar Productos
         </a>
