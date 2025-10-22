@@ -2,17 +2,17 @@
   <!-- Header -->
   <header class="bg-white shadow-lg border-b border-artisan-100 sticky top-0 z-50">
     <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-20 md:h-20 h-24">
+      <div class="flex items-center justify-between h-24 md:h-24 lg:h-28">
         <!-- Logo -->
         <div class="flex items-center">
           <a routerLink="/" class="flex items-center space-x-3 group" (click)="closeMobileMenu(); scrollToTop()">
-            <!-- Logo más grande en móviles -->
-            <div class="w-24 h-24 md:w-16 md:h-16 transition-all duration-300 group-hover:scale-110 overflow-hidden">
+            <!-- Logo responsive -->
+            <div class="w-24 h-24 md:w-20 md:h-20 lg:w-24 lg:h-24 transition-all duration-300 group-hover:scale-110 overflow-hidden">
               <img src="assets/images/logo.png" alt="Artify Logo" class="w-full h-full object-contain">
             </div>
             <div>
-              <h1 class="text-4xl md:text-2xl font-bold text-artisan-800 group-hover:text-artisan-600 transition-colors duration-300">Artify</h1>
-              <p class="text-base md:text-xs text-artisan-500 -mt-1">Marketplace de Artesanías</p>
+              <h1 class="text-4xl md:text-3xl lg:text-4xl font-bold text-artisan-800 group-hover:text-artisan-600 transition-colors duration-300">Artify</h1>
+              <p class="text-base md:text-sm lg:text-base text-artisan-500 -mt-1">Marketplace de Artesanías</p>
             </div>
           </a>
         </div>
@@ -245,12 +245,12 @@
         <!-- Columna 1 - Logo y descripción -->
         <div class="md:col-span-1">
           <a routerLink="/" class="flex items-center space-x-3 mb-4 group">
-            <div class="w-16 h-16 rounded-lg overflow-hidden group-hover:scale-105 transition-transform duration-300">
+            <div class="w-20 h-20 md:w-24 md:h-24 rounded-lg overflow-hidden group-hover:scale-105 transition-transform duration-300">
               <img src="assets/images/logo.png" alt="Artify Logo" class="w-full h-full object-contain">
             </div>
             <div>
-              <h3 class="text-xl font-bold text-artisan-800 group-hover:text-artisan-600 transition-colors duration-300">Artify</h3>
-              <p class="text-xs text-artisan-600 -mt-1">Marketplace de Artesanías</p>
+              <h3 class="text-xl md:text-2xl font-bold text-artisan-800 group-hover:text-artisan-600 transition-colors duration-300">Artify</h3>
+              <p class="text-xs md:text-sm text-artisan-600 -mt-1">Marketplace de Artesanías</p>
             </div>
           </a>
           <p class="text-artisan-600 text-sm leading-relaxed mb-4">

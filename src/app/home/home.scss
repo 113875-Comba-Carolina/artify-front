@@ -1,5 +1,41 @@
 // Estilos específicos del componente Home
 
+// Hero Section con imagen de fondo
+.hero-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('/assets/images/banner.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 1;
+  
+  // Overlay oscuro para mejorar legibilidad del texto
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 2;
+  }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 3;
+}
+
 // Animaciones suaves para las tarjetas de productos
 .product-card {
   transition: all 0.3s ease;
@@ -45,12 +81,34 @@
 
 // Responsive adjustments
 @media (max-width: 768px) {
-  .hero-title {
+  .hero-section {
+    padding: 3rem 0;
+  }
+  
+  .hero-background {
+    background-position: center top;
+  }
+  
+  .hero-content h2 {
     font-size: 2.5rem;
   }
   
-  .hero-subtitle {
+  .hero-content p {
     font-size: 1.1rem;
+  }
+}
+
+// Efectos adicionales para mejorar la presentación
+.hero-section {
+  min-height: 500px;
+  display: flex;
+  align-items: center;
+}
+
+// Ajuste para pantallas muy grandes
+@media (min-width: 1200px) {
+  .hero-section {
+    min-height: 600px;
   }
 }
 
