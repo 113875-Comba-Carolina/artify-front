@@ -1,0 +1,76 @@
+<div class="modal-overlay" (click)="onBackdropClick($event)">
+  <div class="modal-container">
+    <!-- Modal Header -->
+    <div class="modal-header">
+      <h2 class="modal-title">Preguntas Frecuentes</h2>
+      <button (click)="onClose()" class="close-button" aria-label="Cerrar modal">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Category Tabs -->
+    <div class="category-tabs">
+      @for (category of categories; track category.id) {
+        <button 
+          (click)="selectCategory(category.id)"
+          class="category-tab"
+          [class.active]="selectedCategory === category.id">
+          <span class="category-icon">{{ category.icon }}</span>
+          <span class="category-name">{{ category.name }}</span>
+        </button>
+      }
+    </div>
+
+    <!-- FAQ Content -->
+    <div class="faq-content">
+      @for (item of filteredItems; track $index) {
+        <div class="faq-item">
+          <button 
+            (click)="toggleItem($index)"
+            class="faq-question"
+            [class.open]="isItemOpen($index)">
+            <span class="question-text">{{ item.question }}</span>
+            <svg 
+              class="expand-icon"
+              [class.rotated]="isItemOpen($index)"
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
+          
+          @if (isItemOpen($index)) {
+            <div class="faq-answer">
+              <p>{{ item.answer }}</p>
+            </div>
+          }
+        </div>
+      }
+    </div>
+
+    <!-- Modal Footer -->
+    <div class="modal-footer">
+      <div class="help-section">
+        <h3 class="help-title">¿No encontraste lo que buscabas?</h3>
+        <p class="help-text">Contáctanos y te ayudaremos con cualquier duda</p>
+        <div class="contact-buttons">
+          <a href="mailto:contacto@artify.com" class="contact-button email">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+            </svg>
+            Email
+          </a>
+          <a href="tel:+123456789" class="contact-button phone">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+            </svg>
+            Teléfono
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

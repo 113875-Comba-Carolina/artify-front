@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../services/auth';
+import { TermsModalComponent } from '../../shared/terms-modal/terms-modal.component';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, TermsModalComponent],
   templateUrl: './register.html',
   styleUrls: ['./register.scss']
 })
@@ -18,6 +19,7 @@ export class RegisterComponent implements OnInit {
   submitted = false;
   error = '';
   redirectUrl = '/';
+  showTermsModal = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -51,7 +53,9 @@ export class RegisterComponent implements OnInit {
       // Campos adicionales para artesanos
       nombreEmprendimiento: [''],
       ubicacion: [''],
-      descripcion: ['', Validators.maxLength(1000)]
+      descripcion: ['', Validators.maxLength(1000)],
+      // Checkbox de términos y condiciones
+      aceptaTerminos: [false, Validators.requiredTrue]
     }, {
       validators: this.passwordMatchValidator
     });
@@ -136,6 +140,14 @@ export class RegisterComponent implements OnInit {
 
   onRoleSelect(rol: 'ARTESANO' | 'USUARIO') {
     this.registerForm.patchValue({ rol });
+  }
+
+  openTermsModal() {
+    this.showTermsModal = true;
+  }
+
+  closeTermsModal() {
+    this.showTermsModal = false;
   }
 }
 
