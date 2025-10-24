@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
 export class TermsModalComponent {
   @Output() close = new EventEmitter<void>();
 
-  fechaActualizacion: Date = new Date('2025-10-12');
+  fechaActualizacion: Date = new Date('2025-10-24');
 
   onClose() {
     this.close.emit();
