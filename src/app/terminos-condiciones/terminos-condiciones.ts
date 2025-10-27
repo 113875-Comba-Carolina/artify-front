@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   styleUrl: './terminos-condiciones.scss'
 })
 export class TerminosCondicionesComponent implements OnInit {
-  fechaActualizacion: Date = new Date('2025-10-12');
+  fechaActualizacion: Date = new Date('2025-10-24');
 
   constructor(private router: Router) {}
 

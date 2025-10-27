@@ -283,6 +283,11 @@
                 Términos y Condiciones
               </a>
             </li>
+            <li>
+              <button (click)="openFaqModal()" class="text-artisan-600 hover:text-artisan-800 transition-colors duration-300 text-left">
+                Preguntas Frecuentes
+              </button>
+            </li>
           </ul>
         </div>
         
@@ -340,4 +345,9 @@
       </div>
     </div>
   </footer>
+
+  <!-- Modal de FAQ -->
+  @if (showFaqModal) {
+    <app-faq-modal (close)="closeFaqModal()"></app-faq-modal>
+  }
 </div>
