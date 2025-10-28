@@ -12,6 +12,9 @@ export interface ItemOrdenResponse {
   cantidad: number;
   precioUnitario: number;
   subtotal: number;
+  artesanoNombre?: string;
+  artesanoEmail?: string;
+  artesanoTelefono?: string;
 }
 
 export interface OrdenResponse {
