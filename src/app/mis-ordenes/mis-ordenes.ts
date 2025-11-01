@@ -6,6 +6,36 @@ import { AuthService } from '../auth/services/auth';
 import { MercadoPagoService, MercadoPagoItem } from '../services/mercado-pago.service';
 import { AlertService } from '../services/alert.service';
 import { environment } from '../../environments/environment';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+interface BuyerStatistics {
+  totalOrdenes: number;
+  totalGastado: number;
+  totalProductos: number;
+  promedioPorCompra: number;
+  categoriasFavoritas: CategoriaFavorita[];
+  productosMasComprados: ProductoMasComprado[];
+  artesanosFavoritos: ArtesanoFavorito[];
+}
+
+interface CategoriaFavorita {
+  categoria: string;
+  cantidadComprada: number;
+  totalGastado: number;
+}
+
+interface ProductoMasComprado {
+  nombre: string;
+  imagenUrl: string;
+  totalComprado: number;
+  totalGastado: number;
+}
+
+interface ArtesanoFavorito {
+  nombre: string;
+  ordenesConArtesano: number;
+  totalGastado: number;
+}
 
 @Component({
   selector: 'app-mis-ordenes',
@@ -16,7 +46,9 @@ import { environment } from '../../environments/environment';
 })
 export class MisOrdenesComponent implements OnInit {
   ordenes: OrdenResponse[] = [];
+  estadisticas: BuyerStatistics | null = null;
   isLoading = false;
+  isLoadingStats = false;
   error: string | null = null;
   showPaymentCancelledMessage = false;
 
@@ -25,7 +57,8 @@ export class MisOrdenesComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private mercadoPagoService: MercadoPagoService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private http: HttpClient
   ) {}
 
   ngOnInit() {
@@ -44,6 +77,7 @@ export class MisOrdenesComponent implements OnInit {
     
     console.log('Usuario autenticado, cargando órdenes...');
     this.cargarOrdenes();
+    this.cargarEstadisticas();
   }
 
   checkPaymentReturn() {
@@ -80,6 +114,35 @@ export class MisOrdenesComponent implements OnInit {
       this.error = 'Error al cargar tus órdenes. Por favor, intenta nuevamente.';
     } finally {
       this.isLoading = false;
+    }
+  }
+
+  async cargarEstadisticas() {
+    this.isLoadingStats = true;
+
+    try {
+      const auth = localStorage.getItem('auth');
+      if (!auth) {
+        console.log('No hay credenciales de autenticación');
+        this.isLoadingStats = false;
+        return;
+      }
+
+      const headers = new HttpHeaders({
+        'Authorization': `Basic ${auth}`,
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': 'true'
+      });
+
+      this.estadisticas = await this.http.get<BuyerStatistics>(
+        `${environment.apiUrl}/api/ordenes/estadisticas`,
+        { headers }
+      ).toPromise() || null;
+    } catch (error) {
+      console.error('Error cargando estadísticas:', error);
+      // No mostramos error al usuario, solo en consola
+    } finally {
+      this.isLoadingStats = false;
     }
   }
 
@@ -128,6 +191,30 @@ export class MisOrdenesComponent implements OnInit {
 
   verDetalleProducto(productoId: number): void {
     this.router.navigate(['/producto', productoId]);
+  }
+
+  contactarArtesano(item: OrdenResponse['items'][0]): void {
+    if (!item.artesanoTelefono) {
+      this.alertService.warning('Sin teléfono', 'El artesano no tiene número de teléfono registrado');
+      return;
+    }
+
+    const nombreArtesano = item.artesanoNombre || 'Artesano';
+    const nombreProducto = item.nombreProducto || 'producto';
+    const mensaje = `Hola ${nombreArtesano}, he realizado una compra de ${nombreProducto}. Me gustaría coordinar contigo la forma de entrega para este producto. ¿Cuál sería el método más conveniente para ti?`;
+    
+    this.abrirWhatsApp(item.artesanoTelefono, mensaje);
+  }
+
+  private abrirWhatsApp(telefono: string, mensaje: string): void {
+    // Limpiar el número de teléfono (quitar espacios, guiones, etc.)
+    const numeroLimpio = telefono.replace(/[\s\-\(\)]/g, '');
+    // Codificar el mensaje para URL
+    const mensajeCodificado = encodeURIComponent(mensaje);
+    // Construir la URL de WhatsApp
+    const whatsappUrl = `https://wa.me/${numeroLimpio}?text=${mensajeCodificado}`;
+    // Abrir WhatsApp en una nueva ventana/pestaña
+    window.open(whatsappUrl, '_blank');
   }
 
   irAExplorarProductos(): void {
@@ -213,5 +300,21 @@ export class MisOrdenesComponent implements OnInit {
       console.error('Error en procederAlPago:', error);
       this.alertService.error('Error', 'No se pudo procesar el pago');
     }
+  }
+
+  formatearCategoria(categoria: string): string {
+    const categorias: { [key: string]: string } = {
+      'CERAMICA': 'Cerámica',
+      'MADERA': 'Madera',
+      'TEXTILES': 'Textiles',
+      'CUERO': 'Cuero',
+      'JOYERIA_ARTESANAL': 'Joy architecture',
+      'AROMAS_VELAS': 'Aromas y Velas',
+      'VIDRIO': 'Vidrio',
+      'METALES': 'Metales',
+      'CESTERIA_FIBRAS': 'Cestería y Fibras',
+      'MATE': 'Mate'
+    };
+    return categorias[categoria] || categoria;
   }
 }

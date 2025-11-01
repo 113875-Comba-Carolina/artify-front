@@ -17,6 +17,7 @@ interface Venta {
   fechaCreacion: string;
   compradorNombre: string;
   compradorEmail: string;
+  compradorTelefono?: string;
 }
 
 interface Estadisticas {
@@ -217,5 +218,28 @@ export class MisVentasComponent implements OnInit {
 
   goToHome() {
     this.router.navigate(['/']);
+  }
+
+  contactarComprador(venta: Venta): void {
+    if (!venta.compradorTelefono) {
+      alert('El comprador no tiene número de teléfono registrado');
+      return;
+    }
+
+    const nombreComprador = venta.compradorNombre || 'Cliente';
+    const mensaje = `Hola ${nombreComprador}, he recibido una compra de tu parte y quiero agradecerte por confiar en mi trabajo. Me gustaría coordinar contigo la forma de entrega para tu(s) producto(s). ¿Podrías indicarme cuál es el método que prefieres?`;
+    
+    this.abrirWhatsApp(venta.compradorTelefono, mensaje);
+  }
+
+  private abrirWhatsApp(telefono: string, mensaje: string): void {
+    // Limpiar el número de teléfono (quitar espacios, guiones, etc.)
+    const numeroLimpio = telefono.replace(/[\s\-\(\)]/g, '');
+    // Codificar el mensaje para URL
+    const mensajeCodificado = encodeURIComponent(mensaje);
+    // Construir la URL de WhatsApp
+    const whatsappUrl = `https://wa.me/${numeroLimpio}?text=${mensajeCodificado}`;
+    // Abrir WhatsApp en una nueva ventana/pestaña
+    window.open(whatsappUrl, '_blank');
   }
 }

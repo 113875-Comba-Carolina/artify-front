@@ -77,4 +77,18 @@ export class AuthService {
     });
     return this.http.post(`${this.apiUrl}/api/registro/usuario`, formData, { headers });
   }
+
+  forgotPassword(email: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'ngrok-skip-browser-warning': 'true'
+    });
+    return this.http.post(`${this.apiUrl}/api/auth/forgot-password`, { email }, { headers });
+  }
+
+  resetPassword(token: string, newPassword: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'ngrok-skip-browser-warning': 'true'
+    });
+    return this.http.post(`${this.apiUrl}/api/auth/reset-password`, { token, newPassword }, { headers });
+  }
 }
