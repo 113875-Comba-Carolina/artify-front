@@ -318,6 +318,96 @@
   }
 }
 
+// Checkbox de términos y condiciones
+.terms-checkbox-container {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: #faf9f7;
+  border-radius: 12px;
+  border: 1px solid #e5ddd6;
+}
+
+.terms-checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  cursor: pointer;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #8b5a3c;
+}
+
+.terms-checkbox {
+  display: none;
+}
+
+.checkbox-custom {
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid #c4a484;
+  border-radius: 4px;
+  background: white;
+  position: relative;
+  flex-shrink: 0;
+  margin-top: 0.125rem;
+  transition: all 0.3s ease;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0.25rem;
+    top: 0.125rem;
+    width: 0.375rem;
+    height: 0.625rem;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+}
+
+.terms-checkbox:checked + .checkbox-custom {
+  background: #8b5a3c;
+  border-color: #8b5a3c;
+
+  &::after {
+    opacity: 1;
+  }
+}
+
+.terms-checkbox.error + .checkbox-custom {
+  border-color: #ef4444;
+}
+
+.checkbox-text {
+  flex: 1;
+  line-height: 1.5;
+}
+
+.terms-link {
+  background: none;
+  border: none;
+  color: #8b5a3c;
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 600;
+  padding: 0;
+  font-size: inherit;
+  transition: all 0.3s ease;
+
+  &:hover {
+    color: #6d4429;
+    text-decoration: none;
+  }
+
+  &:focus {
+    outline: 2px solid #8b5a3c;
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+}
+
 // Responsive design
 @media (max-width: 640px) {
   .register-card,
@@ -337,5 +427,14 @@
   
   .role-selection-button {
     padding: 1.25rem;
+  }
+
+  .terms-checkbox-container {
+    padding: 1rem;
+    margin: 1.5rem 0;
+  }
+
+  .terms-checkbox-label {
+    font-size: 0.875rem;
   }
 }

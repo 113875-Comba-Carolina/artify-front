@@ -1,16 +1,22 @@
-<div class="terminos-container">
-  <div class="container">
-    <!-- Header -->
-    <div class="terminos-header">
-      <h1 class="terminos-title">Términos y Condiciones</h1>
-      <p class="terminos-subtitle">Última actualización: {{ fechaActualizacion | date:'dd/MM/yyyy' }}</p>
+<div class="modal-overlay" (click)="onBackdropClick($event)">
+  <div class="modal-container">
+    <!-- Modal Header -->
+    <div class="modal-header">
+      <h2 class="modal-title">Términos y Condiciones</h2>
+      <button (click)="onClose()" class="close-button" aria-label="Cerrar modal">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
     </div>
 
-    <!-- Content -->
-    <div class="terminos-content">
+    <!-- Modal Content -->
+    <div class="modal-content">
+      <p class="modal-subtitle">Última actualización: {{ fechaActualizacion | date:'dd/MM/yyyy' }}</p>
+
       <!-- Introducción -->
-      <section class="terminos-section">
-        <h2 class="section-title">1. Introducción</h2>
+      <section class="terms-section">
+        <h3 class="section-title">1. Introducción</h3>
         <p class="section-text">
           Bienvenido a Artify Marketplace. 
           Nos complace ofrecerle acceso al Servicio (como se define más abajo), sujeto a estos términos 
@@ -27,8 +33,8 @@
       </section>
 
       <!-- Definiciones -->
-      <section class="terminos-section">
-        <h2 class="section-title">2. Definiciones</h2>
+      <section class="terms-section">
+        <h3 class="section-title">2. Definiciones</h3>
         <div class="definitions-list">
           <div class="definition-item">
             <strong>"Artify"</strong> se refiere a la plataforma web y móvil de marketplace de artesanías.
@@ -49,8 +55,8 @@
       </section>
 
       <!-- Operaciones Habilitadas -->
-      <section class="terminos-section">
-        <h2 class="section-title">3. Operaciones Habilitadas</h2>
+      <section class="terms-section">
+        <h3 class="section-title">3. Operaciones Habilitadas</h3>
         <p class="section-text">
           Las operaciones habilitadas son aquellas que estarán disponibles para los clientes, quienes 
           deberán cumplir los requisitos que se encuentren vigentes en su momento para operar el 
@@ -58,7 +64,7 @@
           previamente con una antelación no menor a 60 días, y comprenden entre otras, sin que pueda 
           entenderse taxativamente las que se indican a continuación:
         </p>
-        <h3 class="subsection-title">3.1 Transacciones</h3>
+        <h4 class="subsection-title">3.1 Transacciones</h4>
         <p class="section-text">
           En ningún caso debe entenderse que la solicitud de un producto o servicio implica obligación 
           alguna para el Acceso y uso del Servicio.
@@ -77,8 +83,8 @@
       </section>
 
       <!-- Costo del Servicio -->
-      <section class="terminos-section">
-        <h2 class="section-title">4. Costo del Servicio</h2>
+      <section class="terms-section">
+        <h3 class="section-title">4. Costo del Servicio</h3>
         <p class="section-text">
           La empresa Artify podrá cobrar comisiones por el mantenimiento y/o uso de este Servicio o los 
           que en el futuro implemente, entendiéndose facultado expresamente para efectuar los 
@@ -89,8 +95,8 @@
       </section>
 
       <!-- Vigencia -->
-      <section class="terminos-section">
-        <h2 class="section-title">5. Vigencia</h2>
+      <section class="terms-section">
+        <h3 class="section-title">5. Vigencia</h3>
         <p class="section-text">
           El Usuario podrá dejar sin efecto la relación que surja de la presente, en forma inmediata, sin 
           otra responsabilidad que la derivada de los gastos originados hasta ese momento. Si el cliente 
@@ -103,8 +109,8 @@
       </section>
 
       <!-- Validez de operaciones y notificaciones -->
-      <section class="terminos-section">
-        <h2 class="section-title">6. Validez de operaciones y notificaciones</h2>
+      <section class="terms-section">
+        <h3 class="section-title">6. Validez de operaciones y notificaciones</h3>
         <p class="section-text">
           Los registros emitidos por la app serán prueba suficiente de las operaciones cursadas por dicho 
           canal. Renuncio expresamente a cuestionar la idoneidad o habilidad de ese medio de prueba.
@@ -117,16 +123,16 @@
       </section>
 
       <!-- Registro y Cuentas -->
-      <section class="terminos-section">
-        <h2 class="section-title">7. Registro y Cuentas de Usuario</h2>
+      <section class="terms-section">
+        <h3 class="section-title">7. Registro y Cuentas de Usuario</h3>
         <div class="section-content">
-          <h3 class="subsection-title">7.1 Registro</h3>
+          <h4 class="subsection-title">7.1 Registro</h4>
           <p class="section-text">
             Para utilizar Artify, debe crear una cuenta proporcionando información veraz y actualizada. 
             Es responsable de mantener la confidencialidad de su cuenta y contraseña.
           </p>
           
-          <h3 class="subsection-title">7.2 Tipos de Cuenta</h3>
+          <h4 class="subsection-title">7.2 Tipos de Cuenta</h4>
           <ul class="section-list">
             <li><strong>Usuario:</strong> Puede comprar productos artesanales.</li>
             <li><strong>Artesano:</strong> Puede vender productos y acceder a herramientas de gestión.</li>
@@ -136,10 +142,10 @@
       </section>
 
       <!-- Uso de la Plataforma -->
-      <section class="terminos-section">
-        <h2 class="section-title">8. Uso de la Plataforma</h2>
+      <section class="terms-section">
+        <h3 class="section-title">8. Uso de la Plataforma</h3>
         <div class="section-content">
-          <h3 class="subsection-title">8.1 Uso Permitido</h3>
+          <h4 class="subsection-title">8.1 Uso Permitido</h4>
           <p class="section-text">
             Puede utilizar Artify para:
           </p>
@@ -150,7 +156,7 @@
             <li>Acceder a herramientas de gestión de ventas</li>
           </ul>
 
-          <h3 class="subsection-title">8.2 Uso Prohibido</h3>
+          <h4 class="subsection-title">8.2 Uso Prohibido</h4>
           <p class="section-text">
             No está permitido:
           </p>
@@ -165,22 +171,22 @@
       </section>
 
       <!-- Productos y Ventas -->
-      <section class="terminos-section">
-        <h2 class="section-title">9. Productos y Ventas</h2>
+      <section class="terms-section">
+        <h3 class="section-title">9. Productos y Ventas</h3>
         <div class="section-content">
-          <h3 class="subsection-title">9.1 Productos Artesanales</h3>
+          <h4 class="subsection-title">9.1 Productos Artesanales</h4>
           <p class="section-text">
             Todos los productos deben ser artesanales, únicos y hechos a mano. Los artesanos son 
             responsables de la calidad, autenticidad y descripción precisa de sus productos.
           </p>
 
-          <h3 class="subsection-title">9.2 Precios y Pagos</h3>
+          <h4 class="subsection-title">9.2 Precios y Pagos</h4>
           <p class="section-text">
             Los precios son establecidos por los artesanos. Los pagos se procesan de forma segura 
             a través de Mercado Pago. Artify no se responsabiliza por disputas de pago entre usuarios.
           </p>
 
-          <h3 class="subsection-title">9.3 Envíos y Entregas</h3>
+          <h4 class="subsection-title">9.3 Envíos y Entregas</h4>
           <p class="section-text">
             Los artesanos son responsables de los envíos y entregas. Los tiempos de entrega pueden 
             variar según la complejidad del producto y la ubicación del comprador.
@@ -189,17 +195,17 @@
       </section>
 
       <!-- Política de Devoluciones -->
-      <section class="terminos-section">
-        <h2 class="section-title">10. Política de Devoluciones</h2>
+      <section class="terms-section">
+        <h3 class="section-title">10. Política de Devoluciones</h3>
         <div class="section-content">
-          <h3 class="subsection-title">10.1 Condiciones de Devolución</h3>
+          <h4 class="subsection-title">10.1 Condiciones de Devolución</h4>
           <p class="section-text">
             Las devoluciones están sujetas a las políticas individuales de cada artesano. 
             En general, se aceptan devoluciones dentro de los 7 días posteriores a la entrega, 
             siempre que el producto esté en condiciones originales.
           </p>
 
-          <h3 class="subsection-title">10.2 Proceso de Devolución</h3>
+          <h4 class="subsection-title">10.2 Proceso de Devolución</h4>
           <p class="section-text">
             Para solicitar una devolución, contacte directamente al artesano a través de la plataforma. 
             Artify puede mediar en disputas cuando sea necesario.
@@ -208,20 +214,20 @@
       </section>
 
       <!-- Propiedad Intelectual -->
-      <section class="terminos-section">
-        <h2 class="section-title">11. Propiedad Intelectual</h2>
+      <section class="terms-section">
+        <h3 class="section-title">11. Propiedad Intelectual</h3>
         <div class="section-content">
           <p class="section-text">
             El software en Argentina está protegido por la ley 11.723, que regula la propiedad intelectual y 
             los derechos de autor de todos aquellos creadores de obras artísticas, literarias y científicas.
           </p>
-          <h3 class="subsection-title">11.1 Contenido de Usuario</h3>
+          <h4 class="subsection-title">11.1 Contenido de Usuario</h4>
           <p class="section-text">
             Los usuarios mantienen todos los derechos sobre sus productos y contenido. Al publicar 
             en Artify, otorgan una licencia limitada para mostrar y promocionar sus productos.
           </p>
 
-          <h3 class="subsection-title">11.2 Contenido de Artify</h3>
+          <h4 class="subsection-title">11.2 Contenido de Artify</h4>
           <p class="section-text">
             Todo el contenido de la plataforma (diseño, código, textos) está protegido por derechos 
             de autor y pertenece a Artify o sus licenciantes.
@@ -230,8 +236,8 @@
       </section>
 
       <!-- Privacidad de la información -->
-      <section class="terminos-section">
-        <h2 class="section-title">12. Privacidad de la información</h2>
+      <section class="terms-section">
+        <h3 class="section-title">12. Privacidad de la información</h3>
         <p class="section-text">
           Para utilizar los Servicios ofrecidos por Artify, los Usuarios deberán facilitar determinados 
           datos de carácter personal. Su información personal se procesa y almacena en servidores o 
@@ -243,8 +249,8 @@
       </section>
 
       <!-- Limitación de Responsabilidad -->
-      <section class="terminos-section">
-        <h2 class="section-title">13. Limitación de Responsabilidad</h2>
+      <section class="terms-section">
+        <h3 class="section-title">13. Limitación de Responsabilidad</h3>
         <p class="section-text">
           Artify actúa como intermediario entre compradores y artesanos. No nos responsabilizamos 
           por la calidad de los productos, entregas tardías, o disputas entre usuarios. 
@@ -253,24 +259,20 @@
       </section>
 
       <!-- Modificaciones -->
-      <section class="terminos-section">
-        <h2 class="section-title">14. Modificaciones de los Términos</h2>
+      <section class="terms-section">
+        <h3 class="section-title">14. Modificaciones de los Términos</h3>
         <p class="section-text">
           Nos reservamos el derecho de modificar estos términos en cualquier momento. 
           Las modificaciones entrarán en vigor inmediatamente después de su publicación. 
           El uso continuado de la plataforma constituye aceptación de los nuevos términos.
         </p>
       </section>
-
     </div>
 
-    <!-- Footer -->
-    <div class="terminos-footer">
-      <button (click)="goBack()" class="back-button">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-        </svg>
-        Volver
+    <!-- Modal Footer -->
+    <div class="modal-footer">
+      <button (click)="onClose()" class="btn-accept">
+        Entendido
       </button>
     </div>
   </div>

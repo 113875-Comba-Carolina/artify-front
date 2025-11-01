@@ -270,6 +270,36 @@
       </div>
     }
 
+    <!-- Checkbox de términos y condiciones -->
+    <div class="terms-checkbox-container">
+      <label class="terms-checkbox-label">
+        <input
+          type="checkbox"
+          formControlName="aceptaTerminos"
+          class="terms-checkbox"
+          [class.error]="submitted && f['aceptaTerminos'].errors"
+        />
+        <span class="checkbox-custom"></span>
+        <span class="checkbox-text">
+          He leído y acepto los 
+          <button 
+            type="button" 
+            (click)="openTermsModal()" 
+            class="terms-link">
+            términos y condiciones
+          </button>
+        </span>
+      </label>
+      @if (submitted && f['aceptaTerminos'].errors) {
+        <div class="error-message">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+          </svg>
+          <span>Debe aceptar los términos y condiciones para continuar</span>
+        </div>
+      }
+    </div>
+
     <!-- Error general -->
     @if (error) {
       <div class="error-message justify-center">
@@ -318,6 +348,11 @@
       </div>
     </div>
     </form>
+  }
+
+  <!-- Modal de términos y condiciones -->
+  @if (showTermsModal) {
+    <app-terms-modal (close)="closeTermsModal()"></app-terms-modal>
   }
 </div>
 

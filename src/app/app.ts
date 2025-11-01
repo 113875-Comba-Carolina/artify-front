@@ -5,11 +5,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthService, LoginResponse } from './auth/services/auth';
 import { CarritoService } from './services/carrito.service';
 import { Subscription } from 'rxjs';
+import { FaqModalComponent } from './shared/faq-modal/faq-modal.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, RouterLink, HttpClientModule],
+  imports: [CommonModule, RouterOutlet, RouterLink, HttpClientModule, FaqModalComponent],
   templateUrl: './app.html',
   styleUrls: ['./app.scss']
 })
@@ -19,6 +20,7 @@ export class AppComponent implements OnInit, OnDestroy {
   currentUser: LoginResponse | null = null;
   isMobileMenuOpen = false;
   isUserMenuOpen = false;
+  showFaqModal = false;
   private userSubscription?: Subscription;
 
   constructor(
@@ -111,5 +113,13 @@ export class AppComponent implements OnInit, OnDestroy {
       top: 0,
       behavior: 'smooth'
     });
+  }
+
+  openFaqModal() {
+    this.showFaqModal = true;
+  }
+
+  closeFaqModal() {
+    this.showFaqModal = false;
   }
 }
