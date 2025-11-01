@@ -58,7 +58,7 @@
 .role-selection-button {
   width: 100%;
   padding: 1.5rem;
-  text-align: left;
+  text-align: center;
   border: 2px solid #e5ddd6;
   border-radius: 16px;
   background: #faf9f7;
@@ -94,7 +94,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1rem;
+  margin: 0 auto 1rem auto;
   
   svg {
     width: 1.5rem;
