@@ -498,6 +498,44 @@
       font-size: 1rem;
     }
   }
+
+  .venta-actions {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e9ecef;
+
+    .whatsapp-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #25D366;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.25rem;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 4px rgba(37, 211, 102, 0.3);
+
+      &:hover {
+        background: #20BA5A;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+      }
+
+      &:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 6px rgba(37, 211, 102, 0.3);
+      }
+
+      svg {
+        width: 1.25rem;
+        height: 1.25rem;
+      }
+    }
+  }
 }
 
 // Responsive

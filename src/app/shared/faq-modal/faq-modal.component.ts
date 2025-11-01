@@ -115,7 +115,7 @@ export class FaqModalComponent {
     },
     {
       question: '¿Hacen envíos a todo el país?',
-      answer: 'Sí, la mayoría de nuestros artesanos hacen envíos a todo el país. Sin embargo, algunos productos frágiles o de gran tamaño pueden tener restricciones. Esto se indica claramente en la descripción del producto.',
+      answer: 'Sí, la mayoría de nuestros artesanos hacen envíos a todo el país. Sin embargo, algunos productos frágiles o de gran tamaño pueden tener restricciones.',
       category: 'envios'
     },
     {

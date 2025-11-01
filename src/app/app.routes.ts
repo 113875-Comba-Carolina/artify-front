@@ -12,6 +12,7 @@ import { PagoPendienteComponent } from './pago-pendiente/pago-pendiente';
 import { MisOrdenesComponent } from './mis-ordenes/mis-ordenes';
 import { ComprobanteComponent } from './comprobante/comprobante';
 import { MisVentasComponent } from './mis-ventas/mis-ventas';
+import { MisEstadisticasComponent } from './mis-estadisticas/mis-estadisticas';
 import { AdminReportesComponent } from './admin-reportes/admin-reportes';
 import { TerminosCondicionesComponent } from './terminos-condiciones/terminos-condiciones';
 
@@ -71,6 +72,10 @@ export const routes: Routes = [
   {
     path: 'mis-ventas',
     component: MisVentasComponent
+  },
+  {
+    path: 'mis-estadisticas',
+    component: MisEstadisticasComponent
   },
   {
     path: 'admin-reportes',
