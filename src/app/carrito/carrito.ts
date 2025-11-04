@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { CarritoService, CarritoItem } from '../services/carrito.service';
 import { AuthService } from '../auth/services/auth';
 import { MercadoPagoService } from '../services/mercado-pago.service';
@@ -13,10 +14,11 @@ import { MercadoPagoService } from '../services/mercado-pago.service';
   templateUrl: './carrito.html',
   styleUrl: './carrito.scss'
 })
-export class CarritoComponent implements OnInit {
+export class CarritoComponent implements OnInit, OnDestroy {
   carritoItems: CarritoItem[] = [];
   totalCarrito = 0;
   isLoading = false;
+  private carritoSubscription?: Subscription;
 
   constructor(
     private carritoService: CarritoService,
@@ -38,12 +40,28 @@ export class CarritoComponent implements OnInit {
     // Verificar si se regresó de una compra exitosa
     this.verificarCompraExitosa();
 
+    // Suscribirse a los cambios del carrito (actualización reactiva)
     this.cargarCarrito();
   }
 
+  ngOnDestroy() {
+    // Limpiar la suscripción para evitar memory leaks
+    if (this.carritoSubscription) {
+      this.carritoSubscription.unsubscribe();
+    }
+  }
+
   cargarCarrito() {
-    this.carritoItems = this.carritoService.getCarrito();
-    this.calcularTotal();
+    // Suscribirse al Observable del carrito para recibir actualizaciones automáticas
+    this.carritoSubscription = this.carritoService.carrito$.subscribe({
+      next: (items) => {
+        this.carritoItems = items;
+        this.calcularTotal();
+      },
+      error: (error) => {
+        console.error('Error al cargar carrito:', error);
+      }
+    });
   }
 
   calcularTotal() {
@@ -57,12 +75,12 @@ export class CarritoComponent implements OnInit {
 
   eliminarItem(productoId: number) {
     this.carritoService.eliminarDelCarrito(productoId);
-    this.cargarCarrito();
+    // No es necesario llamar a cargarCarrito() porque ya estamos suscritos al Observable
   }
 
   limpiarCarrito() {
     this.carritoService.limpiarCarrito();
-    this.cargarCarrito();
+    // No es necesario llamar a cargarCarrito() porque ya estamos suscritos al Observable
   }
 
   continuarComprando() {
@@ -77,7 +95,7 @@ export class CarritoComponent implements OnInit {
     if (referrer && referrer.includes('/pago-exitoso')) {
       console.log('Regresando de página de pago exitoso, limpiando carrito...');
       this.carritoService.forzarLimpiezaCarrito();
-      this.cargarCarrito();
+      // No es necesario llamar a cargarCarrito() porque ya estamos suscritos al Observable
     }
   }
 
