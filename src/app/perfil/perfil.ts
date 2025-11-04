@@ -59,6 +59,22 @@ export class PerfilComponent implements OnInit {
     return this.perfil?.rol === 'ARTESANO';
   }
 
+  // Verificar si el usuario es admin
+  esAdmin(): boolean {
+    return this.perfil?.rol === 'ADMIN';
+  }
+
+  // Obtener el nombre del rol para mostrar
+  getRolNombre(): string {
+    if (this.perfil?.rol === 'ADMIN') {
+      return 'Administrador';
+    } else if (this.perfil?.rol === 'ARTESANO') {
+      return 'Artesano';
+    } else {
+      return 'Usuario';
+    }
+  }
+
   // Obtener información del artesano de forma segura
   getArtesanoInfo(): Artesano {
     return this.perfil as Artesano;

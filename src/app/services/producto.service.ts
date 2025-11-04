@@ -186,13 +186,13 @@ export class ProductoService {
   }
 
   // Obtener productos del artesano autenticado
-  obtenerMisProductos(page: number = 0, size: number = 10): Observable<ProductoResponse> {
+  obtenerMisProductos(page: number = 0, size: number = 15): Observable<ProductoResponse> {
     const headers = this.getAuthHeaders();
     return this.http.get<ProductoResponse>(`${this.apiUrl}/api/productos/mis-productos?page=${page}&size=${size}`, { headers });
   }
 
   // Obtener productos activos del artesano autenticado
-  obtenerMisProductosActivos(page: number = 0, size: number = 10): Observable<ProductoResponse> {
+  obtenerMisProductosActivos(page: number = 0, size: number = 15): Observable<ProductoResponse> {
     const headers = this.getAuthHeaders();
     return this.http.get<ProductoResponse>(`${this.apiUrl}/api/productos/mis-productos-activos?page=${page}&size=${size}`, { headers });
   }
@@ -204,7 +204,7 @@ export class ProductoService {
   }
 
   // Obtener productos inactivos del artesano
-  obtenerMisProductosInactivos(page: number = 0, size: number = 10): Observable<ProductoResponse> {
+  obtenerMisProductosInactivos(page: number = 0, size: number = 15): Observable<ProductoResponse> {
     const headers = this.getAuthHeaders();
     return this.http.get<ProductoResponse>(`${this.apiUrl}/api/productos/inactivos?page=${page}&size=${size}`, { headers });
   }
