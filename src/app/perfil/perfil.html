@@ -104,7 +104,7 @@
 
         <!-- Formulario de edición de perfil -->
         @if (editandoPerfil) {
-          <div class="form-card">
+          <div id="form-editar-perfil" class="form-card">
             <h3 class="form-title">Editar Perfil</h3>
             <form (ngSubmit)="guardarPerfil()" #perfilFormRef="ngForm">
               <div class="form-group">
@@ -201,7 +201,7 @@
 
         <!-- Formulario de cambio de contraseña -->
         @if (editandoPassword) {
-          <div class="form-card">
+          <div id="form-cambiar-password" class="form-card">
             <h3 class="form-title">Cambiar Contraseña</h3>
             <form (ngSubmit)="cambiarPassword()" #passwordFormRef="ngForm">
               <div class="form-group">
@@ -251,7 +251,7 @@
 
         <!-- Formulario de conversión a artesano -->
         @if (convirtiendoArtesano) {
-          <div class="form-card">
+          <div id="form-convertir-artesano" class="form-card">
             <h3 class="form-title">Convertirse en Artesano</h3>
             <p class="form-description">
               Completa la información de tu emprendimiento para comenzar a vender tus productos.

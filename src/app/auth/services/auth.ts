@@ -40,6 +40,8 @@ export class AuthService {
         localStorage.setItem('currentUser', JSON.stringify(response));
         localStorage.setItem('auth', btoa(email + ':' + password));
         this.userSubject.next(response);
+        // Nota: La sincronización del carrito se maneja automáticamente en CarritoService
+        // cuando detecta cambios en el estado de autenticación
       })
     );
   }
@@ -47,6 +49,8 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('currentUser');
     localStorage.removeItem('auth');
+    // Limpiar el carrito local al cerrar sesión
+    localStorage.removeItem('carrito');
     this.userSubject.next(null);
   }
 
