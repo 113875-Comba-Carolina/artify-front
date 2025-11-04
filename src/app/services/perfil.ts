@@ -7,7 +7,7 @@ export interface Usuario {
   id: number;
   nombre: string;
   email: string;
-  rol: 'USUARIO' | 'ARTESANO';
+  rol: 'USUARIO' | 'ARTESANO' | 'ADMIN';
   telefono?: string;
   fechaCreacion: string;
   fechaActualizacion: string;

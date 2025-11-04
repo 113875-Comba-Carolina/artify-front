@@ -41,8 +41,8 @@
                 {{ perfil.telefono }}
               </p>
               <div class="perfil-rol">
-                <span class="rol-badge" [class.artesano]="esArtesano()">
-                  {{ esArtesano() ? 'Artesano' : 'Usuario' }}
+                <span class="rol-badge" [class.artesano]="esArtesano()" [class.admin]="esAdmin()">
+                  {{ getRolNombre() }}
                 </span>
               </div>
             </div>
