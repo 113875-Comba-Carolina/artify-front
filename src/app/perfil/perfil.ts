@@ -125,6 +125,10 @@ export class PerfilComponent implements OnInit {
   iniciarEdicionPerfil() {
     this.editandoPerfil = true;
     this.formErrors = {};
+    // Hacer scroll al formulario después de que se renderice
+    setTimeout(() => {
+      this.scrollToElement('form-editar-perfil');
+    }, 100);
   }
 
   cancelarEdicionPerfil() {
@@ -142,6 +146,8 @@ export class PerfilComponent implements OnInit {
         this.perfil = perfilActualizado;
         this.editandoPerfil = false;
         this.isLoading = false;
+        // Actualizar el usuario en el AuthService para reflejar cambios en el header
+        this.authService.updateUser(perfilActualizado);
         this.alertService.success('Perfil actualizado', 'Los datos del perfil han sido actualizados exitosamente');
       },
       error: (error) => {
@@ -156,6 +162,10 @@ export class PerfilComponent implements OnInit {
     this.editandoPassword = true;
     this.passwordForm = { passwordActual: '', passwordNuevo: '' };
     this.formErrors = {};
+    // Hacer scroll al formulario después de que se renderice
+    setTimeout(() => {
+      this.scrollToElement('form-cambiar-password');
+    }, 100);
   }
 
   cancelarEdicionPassword() {
@@ -195,6 +205,10 @@ export class PerfilComponent implements OnInit {
       ubicacion: ''
     };
     this.formErrors = {};
+    // Hacer scroll al formulario después de que se renderice
+    setTimeout(() => {
+      this.scrollToElement('form-convertir-artesano');
+    }, 100);
   }
 
   cancelarConversionArtesano() {
@@ -317,6 +331,18 @@ export class PerfilComponent implements OnInit {
     }
 
     return isValid;
+  }
+
+  // Utilidades
+  scrollToElement(elementId: string) {
+    const element = document.getElementById(elementId);
+    if (element) {
+      element.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start',
+        inline: 'nearest' 
+      });
+    }
   }
 
   // Navegación

@@ -54,47 +54,75 @@ export class AlertService {
     return result.isConfirmed;
   }
 
-  // Éxito
+  // Éxito (Toast - sin confirmación, desaparece automáticamente)
   success(title: string, text: string = ''): void {
     Swal.fire({
+      toast: true,
+      position: 'top-start',
+      icon: 'success',
       title: title,
       text: text,
-      icon: 'success',
-      confirmButtonColor: '#10b981',
-      confirmButtonText: 'Entendido'
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer);
+        toast.addEventListener('mouseleave', Swal.resumeTimer);
+      }
     });
   }
 
-  // Error
+  // Error (Toast - sin confirmación, desaparece automáticamente)
   error(title: string, text: string = ''): void {
     Swal.fire({
+      toast: true,
+      position: 'top-start',
+      icon: 'error',
       title: title,
       text: text,
-      icon: 'error',
-      confirmButtonColor: '#dc2626',
-      confirmButtonText: 'Entendido'
+      showConfirmButton: false,
+      timer: 4000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer);
+        toast.addEventListener('mouseleave', Swal.resumeTimer);
+      }
     });
   }
 
-  // Información
+  // Información (Toast - sin confirmación, desaparece automáticamente)
   info(title: string, text: string = ''): void {
     Swal.fire({
+      toast: true,
+      position: 'top-start',
+      icon: 'info',
       title: title,
       text: text,
-      icon: 'info',
-      confirmButtonColor: '#3b82f6',
-      confirmButtonText: 'Entendido'
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer);
+        toast.addEventListener('mouseleave', Swal.resumeTimer);
+      }
     });
   }
 
-  // Advertencia
+  // Advertencia (Toast - sin confirmación, desaparece automáticamente)
   warning(title: string, text: string = ''): void {
     Swal.fire({
+      toast: true,
+      position: 'top-start',
+      icon: 'warning',
       title: title,
       text: text,
-      icon: 'warning',
-      confirmButtonColor: '#f59e0b',
-      confirmButtonText: 'Entendido'
+      showConfirmButton: false,
+      timer: 3500,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer);
+        toast.addEventListener('mouseleave', Swal.resumeTimer);
+      }
     });
   }
 
