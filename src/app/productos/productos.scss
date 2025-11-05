@@ -589,6 +589,11 @@
   display: flex;
   gap: 1rem;
   align-items: center;
+  
+  @media (max-width: 768px) {
+    width: 100%;
+    justify-content: center;
+  }
 }
 
 // Estilos para estados de productos
