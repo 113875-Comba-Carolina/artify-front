@@ -34,7 +34,6 @@ export class PagoExitosoComponent implements OnInit {
     
     // Marcar la compra como exitosa en localStorage para detección posterior
     localStorage.setItem('ultima_compra_exitosa', Date.now().toString());
-    console.log('Compra exitosa marcada en localStorage');
 
     // Scroll hacia arriba
     window.scrollTo(0, 0);
