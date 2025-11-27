@@ -64,7 +64,6 @@ export class MisOrdenesComponent implements OnInit {
   ngOnInit() {
     // Verificar si el usuario está autenticado
     if (!this.authService.isLoggedIn()) {
-      console.log('Usuario no autenticado, redirigiendo al login...');
       // Redirigir al login y guardar la URL de destino
       this.router.navigate(['/auth/login'], { 
         queryParams: { returnUrl: '/mis-ordenes' } 
@@ -75,7 +74,6 @@ export class MisOrdenesComponent implements OnInit {
     // Verificar si el usuario regresó de MercadoPago sin completar el pago
     this.checkPaymentReturn();
     
-    console.log('Usuario autenticado, cargando órdenes...');
     this.cargarOrdenes();
     this.cargarEstadisticas();
   }
@@ -85,18 +83,12 @@ export class MisOrdenesComponent implements OnInit {
     const status = urlParams.get('status');
     const paymentStatus = urlParams.get('payment_status');
     
-    console.log('URL actual:', window.location.href);
-    console.log('Parámetros de URL:', Object.fromEntries(urlParams.entries()));
-    console.log('Status:', status);
-    console.log('Payment Status:', paymentStatus);
-    
     // Detectar diferentes tipos de cancelación
     if (status === 'cancelled' || 
         status === 'rejected' || 
         paymentStatus === 'cancelled' || 
         paymentStatus === 'rejected' ||
         window.location.href.includes('status=cancelled')) {
-      console.log('Detectada cancelación de pago');
       this.showPaymentCancelledMessage = true;
       // Limpiar los parámetros de la URL
       this.router.navigate(['/mis-ordenes'], { replaceUrl: true });
@@ -123,7 +115,6 @@ export class MisOrdenesComponent implements OnInit {
     try {
       const auth = localStorage.getItem('auth');
       if (!auth) {
-        console.log('No hay credenciales de autenticación');
         this.isLoadingStats = false;
         return;
       }
@@ -139,8 +130,7 @@ export class MisOrdenesComponent implements OnInit {
         { headers }
       ).toPromise() || null;
     } catch (error) {
-      console.error('Error cargando estadísticas:', error);
-      // No mostramos error al usuario, solo en consola
+      // Error silencioso - las estadísticas son opcionales
     } finally {
       this.isLoadingStats = false;
     }
@@ -248,19 +238,14 @@ export class MisOrdenesComponent implements OnInit {
 
     try {
       // Convertir los items de la orden al formato esperado por el backend
-      const items = orden.items.map(item => {
-        const convertedItem = {
-          title: item.nombreProducto,
-          description: `Producto artesanal - ${item.categoria}`,
-          quantity: item.cantidad,
-          unitPrice: item.precioUnitario,
-          pictureUrl: item.imagenUrl || undefined, // Asegurar que sea undefined si es null
-          categoryId: this.mercadoPagoService.mapearCategoria(item.categoria)
-        };
-        
-        console.log('Item convertido:', convertedItem);
-        return convertedItem;
-      });
+      const items = orden.items.map(item => ({
+        title: item.nombreProducto,
+        description: `Producto artesanal - ${item.categoria}`,
+        quantity: item.cantidad,
+        unitPrice: item.precioUnitario,
+        pictureUrl: item.imagenUrl || undefined,
+        categoryId: this.mercadoPagoService.mapearCategoria(item.categoria)
+      }));
 
       // Usar el externalReference original de la orden para actualizar el estado existente
       const preferenceRequest = {
@@ -268,19 +253,13 @@ export class MisOrdenesComponent implements OnInit {
         externalReference: orden.externalReference,
         notificationUrl: `${environment.apiUrl}/api/payments/webhook`,
         successUrl: `${environment.frontendUrl}/pago-exitoso`,
-        failureUrl: `${environment.frontendUrl}/mis-ordenes?status=cancelled`, // Agregar parámetro para detectar cancelación
+        failureUrl: `${environment.frontendUrl}/mis-ordenes?status=cancelled`,
         pendingUrl: `${environment.frontendUrl}/pago-pendiente`,
-        autoReturn: false // NO usar autoReturn para mantener el botón "Volver a la tienda"
+        autoReturn: false
       };
-
-      console.log('ExternalReference de la orden:', orden.externalReference);
-      console.log('Items de la orden:', orden.items);
-      console.log('Items convertidos:', items);
-      console.log('Datos de la preferencia:', preferenceRequest);
       
       this.mercadoPagoService.crearPreferencia(preferenceRequest).subscribe({
         next: (response) => {
-          console.log('Respuesta de MercadoPago:', response);
           if (response.success) {
             // Redirigir a MercadoPago
             this.mercadoPagoService.redirigirAPago(response.initPoint);
@@ -289,10 +268,7 @@ export class MisOrdenesComponent implements OnInit {
           }
         },
         error: (error) => {
-          console.error('Error completo:', error);
-          console.error('Error status:', error.status);
-          console.error('Error message:', error.message);
-          console.error('Error body:', error.error);
+          console.error('Error al procesar el pago:', error);
           this.alertService.error('Error al procesar el pago', `Error ${error.status}: ${error.error?.message || error.message || 'No se pudo conectar con el sistema de pagos'}`);
         }
       });
@@ -308,7 +284,7 @@ export class MisOrdenesComponent implements OnInit {
       'MADERA': 'Madera',
       'TEXTILES': 'Textiles',
       'CUERO': 'Cuero',
-      'JOYERIA_ARTESANAL': 'Joy architecture',
+      'JOYERIA_ARTESANAL': 'Joyería Artesanal',
       'AROMAS_VELAS': 'Aromas y Velas',
       'VIDRIO': 'Vidrio',
       'METALES': 'Metales',

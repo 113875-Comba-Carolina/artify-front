@@ -174,6 +174,10 @@
   margin: 0 0 1rem 0;
   display: flex;
   align-items: center;
+  
+  @media (max-width: 768px) {
+    justify-content: center;
+  }
 }
 
 .rol-badge {
@@ -267,6 +271,10 @@
 .artesano-actions {
   display: flex;
   gap: 0.75rem;
+  
+  @media (max-width: 768px) {
+    justify-content: center;
+  }
 }
 
 .manage-products-button {
@@ -431,6 +439,7 @@
 .save-button {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   padding: 0.75rem 1.5rem;
   background: #8B5A2B;
@@ -458,6 +467,11 @@
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   padding: 2rem;
   text-align: center;
+  
+  @media (max-width: 768px) {
+    display: flex;
+    justify-content: center;
+  }
 }
 
 .password-button {

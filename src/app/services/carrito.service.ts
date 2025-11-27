@@ -269,7 +269,6 @@ export class CarritoService {
 
   // Limpiar carrito
   limpiarCarrito(): void {
-    console.log('Limpiando carrito...');
     this.isLoggedIn = !!localStorage.getItem('auth');
     
     if (this.isLoggedIn) {
@@ -277,7 +276,6 @@ export class CarritoService {
       this.limpiarCarritoBackend().subscribe({
         next: (response) => {
           this.actualizarCarritoDesdeBackend(response);
-          console.log('Carrito limpiado exitosamente');
         },
         error: (error) => {
           console.error('Error al limpiar carrito:', error);
@@ -294,12 +292,10 @@ export class CarritoService {
   private limpiarCarritoLocal(): void {
     this.carritoSubject.next([]);
     this.guardarCarritoEnStorage();
-    console.log('Carrito limpiado exitosamente');
   }
 
   // Forzar limpieza del carrito (para casos de compra exitosa)
   forzarLimpiezaCarrito(): void {
-    console.log('Forzando limpieza del carrito...');
     this.isLoggedIn = !!localStorage.getItem('auth');
     
     if (this.isLoggedIn) {
@@ -307,7 +303,6 @@ export class CarritoService {
         next: () => {
           this.carritoSubject.next([]);
           localStorage.removeItem('carrito');
-          console.log('Carrito forzadamente limpiado');
         },
         error: (error) => {
           console.error('Error al limpiar carrito:', error);
@@ -319,7 +314,6 @@ export class CarritoService {
     } else {
       this.carritoSubject.next([]);
       localStorage.removeItem('carrito');
-      console.log('Carrito forzadamente limpiado');
     }
   }
 

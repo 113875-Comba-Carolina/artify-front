@@ -114,7 +114,7 @@ export class MisEstadisticasComponent implements OnInit {
       'MADERA': 'Madera',
       'TEXTILES': 'Textiles',
       'CUERO': 'Cuero',
-      'JOYERIA_ARTESANAL': 'Joy architectural',
+      'JOYERIA_ARTESANAL': 'Joyería Artesanal',
       'AROMAS_VELAS': 'Aromas y Velas',
       'VIDRIO': 'Vidrio',
       'METALES': 'Metales',
