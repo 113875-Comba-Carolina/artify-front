@@ -7,17 +7,48 @@
       
       @if (estadisticas) {
         <div class="estadisticas">
-          <div class="stat-item total-only">
-            <span class="stat-number">{{ estadisticas.totalProductos }}</span>
-            <span class="stat-label">Total Productos</span>
+          <!-- Total Card - Destacada e informativa -->
+          <div class="stat-card-total">
+            <div class="stat-icon-wrapper">
+              <svg class="stat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+              </svg>
+            </div>
+            <div class="stat-content">
+              <span class="stat-number-large">{{ estadisticas.totalProductos }}</span>
+              <span class="stat-label-large">Total de Productos</span>
+            </div>
           </div>
-          <div class="stat-item" (click)="mostrarProductosActivos()" [class.active]="vistaActual === 'activos'">
-            <span class="stat-number">{{ estadisticas.productosActivos }}</span>
-            <span class="stat-label">Activos</span>
-          </div>
-          <div class="stat-item" (click)="mostrarProductosInactivos()" [class.active]="vistaActual === 'inactivos'">
-            <span class="stat-number">{{ estadisticas.productosInactivos }}</span>
-            <span class="stat-label">Inactivos</span>
+          
+          <!-- Filtros clickeables -->
+          <div class="stat-filters">
+            <button 
+              class="filter-btn filter-activos" 
+              (click)="mostrarProductosActivos()" 
+              [class.active]="vistaActual === 'activos'"
+              type="button">
+              <svg class="filter-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <div class="filter-content">
+                <span class="filter-number">{{ estadisticas.productosActivos }}</span>
+                <span class="filter-label">Activos</span>
+              </div>
+            </button>
+            
+            <button 
+              class="filter-btn filter-inactivos" 
+              (click)="mostrarProductosInactivos()" 
+              [class.active]="vistaActual === 'inactivos'"
+              type="button">
+              <svg class="filter-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <div class="filter-content">
+                <span class="filter-number">{{ estadisticas.productosInactivos }}</span>
+                <span class="filter-label">Inactivos</span>
+              </div>
+            </button>
           </div>
         </div>
       }
